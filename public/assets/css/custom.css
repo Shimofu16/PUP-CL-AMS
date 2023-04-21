@@ -1,0 +1,89 @@
+#time {
+	font-size: 3em;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+#date {
+	font-size: 1.6em;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+/* Maroon Button */
+.btn-maroon {
+  background-color: #8c0418 !important;
+  color: #fff;
+  border-color: #8c0418;
+  border-style: solid;
+}
+
+/* Maroon Button hover effect */
+.btn-maroon:hover {
+  background-color: #b30c28 !important;
+  border-color: #b30c28;
+  color: #fff;
+}
+
+/* Maroon Button focus effect */
+.btn-maroon:focus {
+   outline: none;
+  box-shadow: 0 0 0 3px rgba(140, 4, 24, 0.3);
+}
+
+/* Maroon Button active effect */
+.btn-maroon:active {
+  background-color: #6c0210 !important;
+  border-color: #6c0210;
+}
+
+/* Maroon Text */
+.text-maroon {
+  color: #8c0418 !important;
+}
+
+/* Maroon Text hover effect */
+.text-maroon:hover {
+  color: #b30c28 !important;
+}
+
+/* Maroon  btn-Outline */
+ .btn-outline-maroon {
+  background: transparent !important;
+  color: #fff;
+  border-color: #8c0418;
+}
+
+/* Maroon  btn-Outline hover effect */
+ .btn-outline-maroon:hover {
+  background-color: #8c0418 !important;
+  color: #fff !important;
+  border-color: #8c0418;
+}
+
+/* Maroon  btn-Outline focus effect */
+ .btn-outline-maroon:focus {
+   btn-outline-color: #8c0418;
+}
+
+/* Maroon  btn-Outline active effect */
+ .btn-outline-maroon:active {
+  background-color: #8c0418 !important;
+  color: #fff;
+  border-color: #8c0418;
+}
+
+
+.pup-bg{
+	background-image: url("../images/bg.jpg");
+	background-position: center;
+	background-size: cover;
+}
+
+.bg-glass{
+	background: rgba( 255, 255, 255, 0.25 );
+	box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+	backdrop-filter: blur( 4px );
+	-webkit-backdrop-filter: blur( 4px );
+	border-radius: 10px;
+	border: 1px solid rgba( 255, 255, 255, 0.18 );
+}

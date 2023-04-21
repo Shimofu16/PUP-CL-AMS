@@ -1,0 +1,104 @@
+Table Name: course
+
+Field Name	Data Type	Description
+id	int	unique identifier for the course record
+course_name	varchar(255)	name of the course
+description varchar(255)    course description
+
+Table Name: student
+
+Field Name	Data Type	Description
+id	int	unique identifier for the student record
+student_no	varchar(255)	student number or ID
+first_name	varchar(255)	first name of the student
+last_name	varchar(255)	last name of the student
+email	varchar(255)	email address of the student
+phone	varchar(255)	phone number of the student
+address	varchar(255)	home address of the student
+date_of_birth	date	date of birth of the student
+gender	varchar(255)	gender of the student
+course_id	int	unique identifier for the course the student is enrolled in
+
+Table Name: faculty_member
+
+Field Name	Data Type	Description
+id	int	unique identifier for the faculty member
+first_name	varchar(255)	first name of the faculty member
+last_name	varchar(255)	last name of the faculty member
+email	varchar(255)	email address of the faculty member
+phone	varchar(20)	phone number of the faculty member
+department_id	varchar(255)	department of the faculty member
+created_at	datetime	timestamp when the faculty member was created
+updated_at	datetime	timestamp when the faculty member was last updated
+deleted_at	datetime	timestamp when the faculty member was deleted (if applicable)
+
+
+Table Name: computer
+
+Field Name	Data Type	Description
+id	int	unique identifier for the computer
+computer_number	varchar(255)	unique number assigned to the computer
+computer_name	varchar(255)	name of the computer, such as its hostname or identifier
+os	varchar(255)	operating system installed on the computer
+os_version	varchar(255)	version of the operating system installed
+processor	varchar(255)	processor installed in the computer
+memory	int	amount of RAM installed in the computer
+storage	int	amount of storage (in GB) in the computer
+created_at	datetime	timestamp when the computer record was created
+updated_at	datetime	timestamp when the computer record was last updated
+deleted_at	datetime	timestamp when the computer record was deleted (if applicable)
+
+Table Name: teacher_class
+
+Field Name	Data Type	Description
+id	int	unique identifier for the teacher class
+teacher_id	int	identifier of the teacher assigned to the class
+class_name	varchar(255)	name of the class
+description	text	description of the class
+start_time	datetime	start time of the class
+end_time	datetime	end time of the class
+created_at	datetime	timestamp when the teacher class was created
+updated_at	datetime	timestamp when the teacher class was last updated
+deleted_at	datetime	timestamp when the teacher class was deleted (if applicable)
+
+Table Name: attendance_log
+
+Field Name	Data Type	Description
+id	int	unique identifier for the attendance log
+teacher_class_id	int	identifier of the class for which attendance is being logged
+student_id	int	identifier of the student for whom attendance is being logged
+computer_id	int	foreign key referencing the id field in the computer table
+
+date	date	date of the attendance log
+status	varchar(10)	attendance status (e.g. "present", "absent", "late")
+created_at	datetime	timestamp when the attendance log was created
+updated_at	datetime	timestamp when the attendance log was last updated
+deleted_at	datetime	timestamp when the attendance log was deleted (if applicable)
+
+
+Table Name: computer_status_log
+
+Field Name	Data Type	Description
+id	int	unique identifier for the computer status log
+computer_id
+status	varchar(20)	status of the computer, such as "online" or "offline"
+description varchar(255)
+checked_at	datetime	timestamp when the computer status was last checked
+created_at	datetime	timestamp when the computer status log was created
+updated_at	datetime	timestamp when the computer status log was last updated
+deleted_at	datetime	timestamp when the computer status log was deleted (if applicable)
+
+Table Name: role
+
+Field Name	Data Type	Description
+id	int	unique identifier for the role record
+name	varchar(255)	name of the role (e.g., admin, student, faculty member)
+
+Table Name: user
+
+Field Name	Data Type	Description
+id	int	unique identifier for the user record
+password	varchar(255)	password for user login
+role_id	varchar(255)	role of the user (e.g., admin, student, faculty member)
+student_id	int	foreign key referencing the unique identifier for the student record
+faculty_member_id	int	foreign key referencing the unique identifier for the faculty_member record
