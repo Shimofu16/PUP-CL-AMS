@@ -1,9 +1,9 @@
 <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-        <a href="index.html" class="logo d-flex align-items-center">
-            <img src="assets/img/logo.png" alt="">
-            <span class="d-none d-lg-block">{{ Auth::user()->role->display_name }} Dashboard</span>
+        <a href="#" class="logo d-flex align-items-center">
+            <img src="{{ asset('assets/images/PUP.png') }}" alt="">
+            <span class="d-none d-lg-block text-maroon">{{ Auth::user()->role->display_name }} Dashboard</span>
         </a>
         <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -170,15 +170,27 @@
 
             <li class="nav-item dropdown pe-3">
 
-                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
-                    data-bs-toggle="dropdown">
+                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                     <img src="{{ asset('assets/images/User.png') }}" alt="Profile" class="rounded-circle">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->getFacultyMemberFullName(Auth::user()->faculty_member_id) }}</span>
+                    <span class="d-none d-md-block dropdown-toggle ps-2">
+                        @if (Auth::user()->faculty_member_id !== null)
+                            {{ Auth::user()->getFacultyMemberFullName(Auth::user()->faculty_member_id) }}
+                        @else
+                            {{ Auth::user()->getStudentFullName(Auth::user()->student_id) }}
+                        @endif
+                    </span>
                 </a><!-- End Profile Iamge Icon -->
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                     <li class="dropdown-header">
-                        <h6>{{ Auth::user()->getFacultyMemberFullName(Auth::user()->faculty_member_id) }}</h6>
+                        <h6>
+                            @if (Auth::user()->faculty_member_id !== null)
+                                {{ Auth::user()->getFacultyMemberFullName(Auth::user()->faculty_member_id) }}
+                            @else
+                                {{ Auth::user()->getStudentFullName(Auth::user()->student_id) }}
+                            @endif
+                        </h6>
+
                         <span>{{ Auth::user()->role->display_name }}</span>
                     </li>
                     <li>
@@ -206,7 +218,8 @@
                     </li> --}}
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="#" data-bs-toggle="modal" data-bs-target="#logout">
+                        <a class="dropdown-item d-flex align-items-center" href="#" data-bs-toggle="modal"
+                            data-bs-target="#logout">
                             <i class="bi bi-box-arrow-right"></i>
                             <span>Sign Out</span>
                         </a>

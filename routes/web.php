@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\ComputerController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,8 +22,15 @@ Route::controller(HomeController::class)->group(function () {
     Route::post('/register', 'register')->name('register.store');
     Route::get('/login', 'loginForm')->name('login.index');
     Route::post('/login', 'login')->name('login.store');
-    Route::post('/logout', [HomeController::class,'logout'])->name('logout.delete')->middleware('auth');
+    Route::post('/logout', [HomeController::class, 'logout'])->name('logout.delete')->middleware('auth');
 });
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.index');
+
+
+    Route::prefix('computer')->name('computer.')->controller(ComputerController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::delete('/destroy', 'destroy')->name('destroy');
+        Route::put('/update', 'update')->name('update');
+    });
 });

@@ -29,10 +29,11 @@
     <link href="{{ asset('assets/packages/quill/quill.snow.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/packages/quill/quill.bubble.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/packages/remixicon/remixicon.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/packages/simple-datatables/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/packages/DataTables/datatables.min.css') }}" rel="stylesheet">
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
     {{-- sweetalert --}}
     @include('sweetalert::alert')
     {{-- page css --}}
@@ -53,7 +54,7 @@
     <main id="main" class="main">
         {{-- page titles --}}
         <div class="pagetitle">
-            <h1>@yield('page-title')</h1>
+
             <nav>
                 <ol class="breadcrumb">
                     @hasSection('page-breadcrumb')
@@ -86,7 +87,8 @@
     <script src="{{ asset('assets/packages/chart.js/chart.umd.js') }}"></script>
     <script src="{{ asset('assets/packages/echarts/echarts.min.js') }}"></script>
     <script src="{{ asset('assets/packages/quill/quill.min.js') }}"></script>
-    <script src="{{ asset('assets/packages/simple-datatables/simple-datatables.js') }}"></script>
+    <script src="{{ asset('assets/packages/jQuery-3.6.0/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ asset('assets/packages/DataTables/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/packages/tinymce/tinymce.min.js') }}"></script>
     <script src="{{ asset('assets/packages/php-email-form/validate.js') }}"></script>
 

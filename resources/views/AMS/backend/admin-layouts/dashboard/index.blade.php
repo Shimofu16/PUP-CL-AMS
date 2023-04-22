@@ -83,7 +83,7 @@
                 </div><!-- End Revenue Card -->
 
                 <!-- Customers Card -->
-                <div class="col-xxl-4 col-xl-12">
+                {{--   <div class="col-xxl-4 col-xl-12">
 
                     <div class="card info-card customers-card">
 
@@ -118,10 +118,11 @@
                         </div>
                     </div>
 
-                </div><!-- End Customers Card -->
+                </div> --}}
+                <!-- End Customers Card -->
 
                 <!-- Reports -->
-                <div class="col-12">
+                {{-- <div class="col-12">
                     <div class="card">
 
                         <div class="filter">
@@ -204,7 +205,8 @@
                         </div>
 
                     </div>
-                </div><!-- End Reports -->
+                </div> --}}
+                <!-- End Reports -->
 
                 <!-- Recent Sales -->
                 <div class="col-12">
@@ -223,7 +225,7 @@
                             </ul>
                         </div>
 
-                        <div class="card-body">
+                        {{--  <div class="card-body">
                             <h5 class="card-title">Recent Sales <span>| Today</span></h5>
 
                             <table class="table table-borderless datatable">
@@ -280,13 +282,13 @@
                                 </tbody>
                             </table>
 
-                        </div>
+                        </div> --}}
 
                     </div>
                 </div><!-- End Recent Sales -->
 
                 <!-- Top Selling -->
-                <div class="col-12">
+                {{--  <div class="col-12">
                     <div class="card top-selling overflow-auto">
 
                         <div class="filter">
@@ -368,7 +370,8 @@
                         </div>
 
                     </div>
-                </div><!-- End Top Selling -->
+                </div> --}}
+                <!-- End Top Selling -->
 
             </div>
         </div><!-- End Left side columns -->
@@ -452,7 +455,7 @@
             </div><!-- End Recent Activity -->
 
             <!-- Budget Report -->
-            <div class="card">
+            {{--   <div class="card">
                 <div class="filter">
                     <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -523,10 +526,11 @@
                     </script>
 
                 </div>
-            </div><!-- End Budget Report -->
+            </div> --}}
+            <!-- End Budget Report -->
 
             <!-- Website Traffic -->
-            <div class="card">
+            {{-- <div class="card">
                 <div class="filter">
                     <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -601,10 +605,10 @@
                     </script>
 
                 </div>
-            </div><!-- End Website Traffic -->
+            </div><!-- End Website Traffic --> --}}
 
             <!-- News & Updates Traffic -->
-            <div class="card">
+            {{--  <div class="card">
                 <div class="filter">
                     <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -659,7 +663,8 @@
                     </div><!-- End sidebar recent posts-->
 
                 </div>
-            </div><!-- End News & Updates -->
+            </div> --}}
+            <!-- End News & Updates -->
 
         </div><!-- End Right side columns -->
 

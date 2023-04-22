@@ -17,7 +17,7 @@
 </head>
 
 <body class="pup-bg">
-    <div class="container vh-100 overflow-hidden d-flex justify-content-center align-items-center">
+    <div class="container vh-100 d-flex justify-content-center align-items-center">
         <div class="row">
             <div class="col-12">
                 <div class="card bg-glass border-0 text-maroon text-center d-flex  border-maroon my-auto">
