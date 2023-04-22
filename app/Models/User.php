@@ -50,4 +50,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Student::class, 'student_id');
     }
+    public function facultyMember()
+    {
+        return $this->belongsTo(FacultyMember::class, 'faculty_member_id');
+    }
+    public function getFacultyMemberFullName($facultyID){
+        $this->facultyMember = FacultyMember::find($facultyID);
+        return $this->facultyMember->first_name . ' ' . $this->facultyMember->last_name;
+    }
 }

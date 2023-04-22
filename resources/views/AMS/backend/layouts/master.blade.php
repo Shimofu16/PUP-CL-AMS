@@ -6,12 +6,14 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
     <title>{{ Auth::user()->role->display_name }} @hasSection('page-title')
-            - @yield('page-tiitle')
+            - @yield('page-title')
         @else
         @endif
     </title>
 
     <!-- Icon -->
+    <link rel="icon" href="{{ asset('assets/images/PUP.png') }}" type="image/x-icon">
+
 
 
     <!-- Google Fonts -->
@@ -31,12 +33,17 @@
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+    {{-- sweetalert --}}
+    @include('sweetalert::alert')
+    {{-- page css --}}
+    @yield('styles')
 </head>
 
 <body>
 
     <!-- ======= Header ======= -->
     @include('AMS.backend.layouts.header')
+    @include('AMS.backend.layouts.logout-modal')
     <!-- End Header -->
 
     <!-- ======= Sidebar ======= -->
@@ -51,8 +58,8 @@
                 <ol class="breadcrumb">
                     @hasSection('page-breadcrumb')
                         <li class="breadcrumb-item"><a href="@yield('breadcrumb-link')">@yield('page-breadcrumb')</a></li>
-                    @else
                         <li class="breadcrumb-item active">@yield('page-title')</li>
+                    @else
                     @endif
                 </ol>
             </nav>
@@ -85,6 +92,8 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
+
+    @yield('scripts')
 
 </body>
 

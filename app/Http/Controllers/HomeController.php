@@ -42,12 +42,18 @@ class HomeController extends Controller
             // Authentication was successful...
             if (Auth::user()->role->name == 'admin') {
                 $request->session()->regenerate();
-                return redirect()->intended(route('admin.dashboard.index'));
+                return redirect()->intended(route('admin.dashboard.index'))->with('success', 'You have been logged in successfully');
             }
         }
 
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');
+    }
+    public function logout(Request $request){
+        $request->session()->invalidate();
+        Auth::logout();
+
+        return redirect()->route('home.index')->with('success', 'You have been logged out successfully');
     }
 }
