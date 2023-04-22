@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student;
+use App\Models\Faculty;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class StudentController extends Controller
+class FacultyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class StudentController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('AMS.backend.admin-layouts.student.index', compact('users'));
+        return view('AMS.backend.admin-layouts.faculty.index', compact('users'));
     }
 
     /**
@@ -36,7 +36,7 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Student $student)
+    public function show(Faculty $faculty)
     {
         //
     }
@@ -44,7 +44,7 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Student $student)
+    public function edit(Faculty $faculty)
     {
         //
     }
@@ -52,7 +52,7 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, Faculty $faculty)
     {
         //
     }
@@ -60,7 +60,7 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Student $student)
+    public function destroy(Faculty $faculty)
     {
         //
     }

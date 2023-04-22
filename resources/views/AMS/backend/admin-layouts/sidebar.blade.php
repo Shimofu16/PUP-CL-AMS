@@ -20,7 +20,7 @@
             </li><!-- End Components Nav -->
 
             <li class="nav-item">
-                <a class="nav-link "  href="#">
+                <a class="nav-link "  href="">
                     <i class="ri-history-line"></i><span>History</span>
                 </a>
 
@@ -45,7 +45,7 @@
             </li><!-- End Tables Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+                <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="{{ route('admin.schedule.index') }}">
                     <i class="ri-calendar-2-line"></i><span>Schedules</span>
                 </a>
                 {{-- <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -74,12 +74,12 @@
                 </a>
                 <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="icons-bootstrap.html">
+                        <a href="{{ route('admin.faculty.index') }}">
                             <i class="bi bi-circle"></i><span>Faculty</span>
                         </a>
                     </li>
                     <li>
-                        <a href="icons-remix.html">
+                        <a href="{{ route('admin.student.index') }}">
                             <i class="bi bi-circle"></i><span>Student</span>
                         </a>
                     </li>

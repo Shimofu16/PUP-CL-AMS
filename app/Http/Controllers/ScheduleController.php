@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Student;
-use App\Models\User;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 
-class StudentController extends Controller
+class ScheduleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = User::all();
-        return view('AMS.backend.admin-layouts.student.index', compact('users'));
+        $teacher_classes = Schedule::all();
+        return view('AMS.backend.admin-layouts.schedule.index', compact('teacher_classes'));
     }
 
     /**
@@ -36,7 +35,7 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Student $student)
+    public function show(Schedule $schedule)
     {
         //
     }
@@ -44,7 +43,7 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Student $student)
+    public function edit(Schedule $schedule)
     {
         //
     }
@@ -52,7 +51,7 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, Schedule $schedule)
     {
         //
     }
@@ -60,7 +59,7 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Student $student)
+    public function destroy(Schedule $schedule)
     {
         //
     }
