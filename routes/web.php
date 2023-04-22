@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\ComputerController;
+use App\Http\Controllers\FacultyController;
+use App\Http\Controllers\FacultyMemberController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ScheduleController;
@@ -31,7 +33,7 @@ Route::controller(HomeController::class)->group(function () {
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.index');
 
-/* COMPUTER */
+    /* COMPUTER */
     Route::prefix('computer')->name('computer.')->controller(ComputerController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::delete('/destroy', 'destroy')->name('destroy');
@@ -41,20 +43,19 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     /* SCHEDULE */
     Route::prefix('schedule')->name('schedule.')->controller(ScheduleController::class)->group(function () {
         Route::get('/', 'index')->name('index');
-
     });
 
-    /* FACULTY */
-    Route::prefix('faculty')->name('faculty.')->controller(FacultyController::class)->group(function () {
-        Route::get('/', 'index')->name('index');
+    /* USERS */
+    Route::prefix('user')->name('user.')->group(function () {
 
+        /* FACULTY */
+        Route::prefix('faculty')->name('faculty.')->controller(FacultyMemberController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+        });
+
+        /* STUDENT */
+        Route::prefix('student')->name('student.')->controller(StudentController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+        });
     });
-
-    /* STUDENT */
-    Route::prefix('student')->name('student.')->controller(StudentController::class)->group(function () {
-        Route::get('/', 'index')->name('index');
-
-    });
-
-
 });

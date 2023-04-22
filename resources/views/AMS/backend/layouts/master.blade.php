@@ -75,7 +75,7 @@
     <!-- End #main -->
 
     <!-- ======= Footer ======= -->
-    @include('AMS.backend.layouts.footer')
+    {{-- @include('AMS.backend.layouts.footer') --}}
     <!-- End Footer -->
 
     <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i

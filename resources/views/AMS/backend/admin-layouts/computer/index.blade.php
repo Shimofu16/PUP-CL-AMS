@@ -55,15 +55,15 @@
                                             {{ $computer->storage }}
                                         </td>
                                         <td>
-                                            <div class="d-flex justify-content-center px-2 py-1">
-                                                <button class="btn btn-link text-primary px-3 mb-0" type="button"
+                                            <div class="d-flex justify-content-center">
+                                                <button class="btn btn-link text-primary" type="button"
                                                     data-bs-toggle="modal" data-bs-target="#edit{{ $computer->id }}">
-                                                    <i class="ri-edit-line text-primary me-2" aria-hidden="true""></i>
+                                                    <i class="ri-edit-line text-primary" aria-hidden="true""></i>
                                                 </button>
 
-                                                <button class="btn btn-link text-danger px-3 mb-0" type="button"
+                                                <button class="btn btn-link text-danger" type="button"
                                                     data-bs-toggle="modal" data-bs-target="#delete{{ $computer->id }}">
-                                                    <i class="ri-delete-bin-line text-danger me-2" aria-hidden="true""></i>
+                                                    <i class="ri-delete-bin-line text-danger" aria-hidden="true""></i>
                                                 </button>
                                                 @include('AMS.backend.admin-layouts.computer.modal._edit')
                                                 @include('AMS.backend.admin-layouts.computer.modal._delete')

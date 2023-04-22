@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/custom.css') }}">
     {{-- icon --}}
     <link rel="icon" href="{{ asset('assets/images/PUP.png') }}" type="image/x-icon">
-
+    @include('sweetalert::alert')
     @yield('styles')
 </head>
 

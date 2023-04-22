@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\FacultyMember;
+use App\Models\Student;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -27,6 +28,12 @@ class UserSeeder extends Seeder
                 'role_id' => 2,
                 'faculty_member_id' => 2,
             ],
+            [
+                'email' => Student::find(1)->email,
+                'password' => Hash::make('password'),
+                'role_id' => 3,
+                'student_id' => 1,
+            ]
         ];
         foreach ($data as $item) {
             \App\Models\User::create($item);

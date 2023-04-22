@@ -39,8 +39,11 @@ class HomeController extends Controller
             'password' => ['required'],
         ]);
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
+
             // Authentication was successful...
             if (Auth::user()->role->name == 'admin') {
+                Auth::user()->status = "online";
+                Auth::user()->save();
                 $request->session()->regenerate();
                 return redirect()->intended(route('admin.dashboard.index'))->with('success', 'You have been logged in successfully');
             }
@@ -52,6 +55,9 @@ class HomeController extends Controller
     }
     public function logout(Request $request){
         $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        Auth::user()->status = "offline";
+        Auth::user()->save();
         Auth::logout();
 
         return redirect()->route('home.index')->with('success', 'You have been logged out successfully');

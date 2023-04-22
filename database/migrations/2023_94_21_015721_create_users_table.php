@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('status')->default('offline'); // online, offline, deactivated
             $table->unsignedBigInteger('role_id');
             $table->unsignedBigInteger('student_id')->nullable();
             $table->unsignedBigInteger('faculty_member_id')->nullable();

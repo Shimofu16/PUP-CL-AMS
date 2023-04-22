@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FacultyMember;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class FacultyMemberController extends Controller
@@ -12,7 +13,8 @@ class FacultyMemberController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::where('faculty_member_id', '!=', null)->get();
+        return view('AMS.backend.admin-layouts.user.faculty.index', compact('users'));
     }
 
     /**

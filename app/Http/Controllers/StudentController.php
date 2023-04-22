@@ -13,11 +13,11 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('AMS.backend.admin-layouts.student.index', compact('users'));
+        $users = User::where('student_id', '!=', null)->get();
+        return view('AMS.backend.admin-layouts.user.student.index', compact('users'));
     }
 
-    /**
+    /** 
      * Show the form for creating a new resource.
      */
     public function create()
