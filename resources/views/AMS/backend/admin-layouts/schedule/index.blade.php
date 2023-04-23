@@ -1,6 +1,8 @@
 @extends('AMS.backend.admin-layouts.sidebar')
 
-
+@section('page-title')
+    Schedules
+@endsection
 
 @section('contents')
     <section class="section">
@@ -9,8 +11,8 @@
 
                 <div class="card">
                     <div class="card-header d-flex justify-content-between border-bottom-0">
-                        <h3 class="text-maroon">Schedule</h3>
-                        <button class="btn btn-outline-maroon" data-bs-toggle="modal" data-bs-target="#add">Add Computer</button>
+                        <h3 class="text-maroon">@yield('page-title')</h3>
+                        <button class="btn btn-outline-maroon" data-bs-toggle="modal" data-bs-target="#add">Add Schedule</button>
                        {{--  @include('AMS.backend.admin-layouts.computer.modal._add') --}}
                     </div>
                     <div class="card-body">
@@ -19,36 +21,29 @@
                         <table class="table" id="schedules-table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Teacher ID</th>
+                                    <th scope="col">Teacher</th>
                                     <th scope="col">Course</th>
+                                    <th scope="col">Section</th>
+                                    <th scope="col">Description</th>
                                     <th scope="col">Date</th>
-                                    <th scope="col">Start Time</th>
-                                    <th scope="col">End Time</th>
                                     <th scope="col" class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($teacher_classes as $teacher_classes)
+                                @foreach ($schedules as $schedule)
                                     <tr>
-                                      {{--   <td>
-                                            {{ $teacher_classes->teacher_id }}
+                                        <td>
+                                            {{ $schedule->teacher_id }}
                                         </td>
 
                                         <td>
-                                            {{ $teacher_classes->course_id }}
+                                            {{ $schedule->course_id }}
                                         </td>
 
                                         <td>
-                                            {{ $teacher_classes->date }}
+                                            On {{ date('F d',strtotime($schedule->date)) }}
+                                            At {{ date('h:i:a', strtotime($schedule->start_time)) }} - {{ date('h:i:a', strtotime($schedule->end_time)) }}
                                         </td>
-
-                                        <td>
-                                            {{ $teacher_classes->start_time }}
-                                        </td>
-
-                                        <td>
-                                            {{ $teacher_classes->end_time }}
-                                        </td> --}}
 
 
                                         <td>
