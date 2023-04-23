@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\AttendanceLogController;
 use App\Http\Controllers\Admin\ComputerController;
 use App\Http\Controllers\Admin\ComputerStatusLogController;
 use App\Http\Controllers\Admin\FacultyMemberController;
-use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\ScheduleController;
 use App\Http\Controllers\Admin\StudentController;
 use Illuminate\Support\Facades\Route;
