@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Section;
+use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
 
-class SectionController extends Controller
+class AdminDashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return view('AMS.backend.admin-layouts.dashboard.index');
     }
 
     /**
@@ -34,7 +35,7 @@ class SectionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Section $section)
+    public function show(string $id)
     {
         //
     }
@@ -42,7 +43,7 @@ class SectionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Section $section)
+    public function edit(string $id)
     {
         //
     }
@@ -50,7 +51,7 @@ class SectionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Section $section)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -58,7 +59,7 @@ class SectionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Section $section)
+    public function destroy(string $id)
     {
         //
     }

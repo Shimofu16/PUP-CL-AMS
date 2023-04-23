@@ -26,6 +26,6 @@ class FacultyMember extends Model
     }
     public function user()
     {
-        return $this->hasOne(User::class, 'user_id');
+        return $this->hasOne(User::class, 'faculty_member_id');
     }
 }

@@ -1,23 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Student;
-use App\Models\User;
+use App\Http\Controllers\Controller;
+use App\Models\Section;
 use Illuminate\Http\Request;
 
-class StudentController extends Controller
+class SectionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = User::where('student_id', '!=', null)->get();
-        return view('AMS.backend.admin-layouts.user.student.index', compact('users'));
+        //
     }
 
-    /** 
+    /**
      * Show the form for creating a new resource.
      */
     public function create()
@@ -36,7 +35,7 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Student $student)
+    public function show(Section $section)
     {
         //
     }
@@ -44,7 +43,7 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Student $student)
+    public function edit(Section $section)
     {
         //
     }
@@ -52,7 +51,7 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, Section $section)
     {
         //
     }
@@ -60,7 +59,7 @@ class StudentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Student $student)
+    public function destroy(Section $section)
     {
         //
     }

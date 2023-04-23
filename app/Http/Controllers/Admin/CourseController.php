@@ -1,20 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\FacultyMember;
-use App\Models\User;
+use App\Http\Controllers\Controller;
+use App\Models\Course;
 use Illuminate\Http\Request;
 
-class FacultyMemberController extends Controller
+class CourseController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $users = User::where('faculty_member_id', '!=', null)->get();
-        return view('AMS.backend.admin-layouts.user.faculty.index', compact('users'));
+        //
     }
 
     /**
@@ -36,7 +35,7 @@ class FacultyMemberController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(FacultyMember $facultyMember)
+    public function show(Course $course)
     {
         //
     }
@@ -44,7 +43,7 @@ class FacultyMemberController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(FacultyMember $facultyMember)
+    public function edit(Course $course)
     {
         //
     }
@@ -52,7 +51,7 @@ class FacultyMemberController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, FacultyMember $facultyMember)
+    public function update(Request $request, Course $course)
     {
         //
     }
@@ -60,7 +59,7 @@ class FacultyMemberController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(FacultyMember $facultyMember)
+    public function destroy(Course $course)
     {
         //
     }

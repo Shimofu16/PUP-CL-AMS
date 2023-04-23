@@ -1,6 +1,8 @@
 @extends('AMS.backend.admin-layouts.sidebar')
 
-
+@section('page-title')
+    Computers
+@endsection
 
 @section('contents')
     <section class="section">
@@ -9,14 +11,14 @@
 
                 <div class="card">
                     <div class="card-header d-flex justify-content-between border-bottom-0">
-                        <h3 class="text-maroon">Computers</h3>
+                        <h3 class="text-maroon">@yield('page-title')</h3>
                         <button class="btn btn-outline-maroon" data-bs-toggle="modal" data-bs-target="#add">Add Computer</button>
                         @include('AMS.backend.admin-layouts.computer.modal._add')
                     </div>
                     <div class="card-body">
 
                         <!-- Table with stripped rows -->
-                        <table class="table" id="computers-talble">
+                        <table class="table" id="computers-table">
                             <thead>
                                 <tr>
                                     <th scope="col">Computer no.</th>
@@ -57,12 +59,11 @@
                                         <td>
                                             <div class="d-flex justify-content-center">
                                                 <button class="btn btn-link text-primary" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#edit{{ $computer->id }}">
-                                                    <i class="ri-edit-line text-primary" aria-hidden="true""></i>
+                                                    data-bs-toggle="modal" data-bs-target="#edit{{ $computer->id }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                                    <i class="ri-edit-line text-primary" aria-hidden="true"></i>
                                                 </button>
-
                                                 <button class="btn btn-link text-danger" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#delete{{ $computer->id }}">
+                                                    data-bs-toggle="modal" data-bs-target="#delete{{ $computer->id }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
                                                     <i class="ri-delete-bin-line text-danger" aria-hidden="true""></i>
                                                 </button>
                                                 @include('AMS.backend.admin-layouts.computer.modal._edit')
@@ -85,7 +86,10 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('#computers-talble').DataTable();
+            $('#computers-table').DataTable({
+                "ordering": false
+
+            });
         });
     </script>
 @endsection

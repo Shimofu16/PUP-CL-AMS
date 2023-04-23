@@ -16,7 +16,7 @@
                     <div class="card-body">
 
                         <!-- Table with stripped rows -->
-                        <table class="table" id="schedules-talble">
+                        <table class="table" id="schedules-table">
                             <thead>
                                 <tr>
                                     <th scope="col">Teacher ID</th>
@@ -79,7 +79,7 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('#schedules-talble').DataTable();
+            $('#schedules-table').DataTable();
         });
     </script>
 @endsection

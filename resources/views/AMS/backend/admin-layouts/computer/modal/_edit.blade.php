@@ -2,60 +2,60 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-primary">
-                <h5 class="modal-title text-white">Logout</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h5 class="modal-title text-white">Edit</h5>
+                
             </div>
-            <form action=" {{-- {{ route('admin.doctor.update', $doctor->id) }} --}}   " method="POST">
+            <form action="{{ route('admin.computer.update', ['id' => $computer->id]) }}" method="POST">
                 <div class="modal-body">
                     @csrf
                     @method('PUT')
 
-                    <div class="row g-3 mb-2">
+                    <div class="row mb-3">
                         <div class="col-md-12">
-                            <label for="name" class="text-dark text-black font-weight-bold">Computer no.</label>
-                            <input type="text" class="form-control" name="name" id="computer_number"
+                            <label for="name" class="form-label fw-bold text-black">Computer no.</label>
+                            <input type="text" class="form-control" name="computer_number" id="computer_number"
                                 placeholder="Computer no." value="{{ $computer->computer_number }}">
                         </div>
                     </div>
-                    <div class="row g-3 mb-2">
+                    <div class="row mb-3">
                         <div class="col-md-12">
-                            <label for="name" class="text-dark text-black font-weight-bold">Name</label>
-                            <input type="text" class="form-control" name="name" id="name" placeholder="Name"
+                            <label for="name" class="form-label fw-bold text-black">Name</label>
+                            <input type="text" class="form-control" name="computer_name" id="name" placeholder="Name"
                                 value="{{ $computer->computer_name }}">
                         </div>
                     </div>
-                    <div class="row g-3 mb-2">
+                    <div class="row mb-3">
                         <div class="col-md-12">
-                            <label for="name" class="text-dark text-black font-weight-bold">OS</label>
-                            <input type="text" class="form-control" name="name" id="os" placeholder="OS"
+                            <label for="name" class="form-label fw-bold text-black">OS</label>
+                            <input type="text" class="form-control" name="os" id="os" placeholder="OS"
                                 value="{{ $computer->os }}">
                         </div>
                     </div>
-                    <div class="row g-3 mb-2">
+                    <div class="row mb-3">
                         <div class="col-md-12">
-                            <label for="name" class="text-dark text-black font-weight-bold">Processor</label>
-                            <input type="text" class="form-control" name="name" id="processor"
+                            <label for="name" class="form-label fw-bold text-black">Processor</label>
+                            <input type="text" class="form-control" name="processor" id="processor"
                                 placeholder="Processor" value="{{ $computer->processor }}">
                         </div>
                     </div>
-                    <div class="row g-3 mb-2">
+                    <div class="row mb-3">
                         <div class="col-md-12">
-                            <label for="name" class="text-dark text-black font-weight-bold">Memory</label>
-                            <input type="text" class="form-control" name="name" id="memory"
+                            <label for="name" class="form-label fw-bold text-black">Memory</label>
+                            <input type="text" class="form-control" name="memory" id="memory"
                                 placeholder="Memory" value="{{ $computer->memory }}">
                         </div>
                     </div>
-                    <div class="row g-3 mb-2">
+                    <div class="row mb-3">
                         <div class="col-md-12">
-                            <label for="name" class="text-dark text-black font-weight-bold">Storage</label>
-                            <input type="text" class="form-control" name="name" id="storage"
+                            <label for="name" class="form-label fw-bold text-black">Storage</label>
+                            <input type="text" class="form-control" name="storage" id="storage"
                                 placeholder="Storage" value="{{ $computer->storage }}">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                    <button type="submit" class="btn btn-primary">Yes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
                 </div>
             </form>
         </div>

@@ -1,22 +1,21 @@
 <div class="modal fade" id="delete{{ $computer->id }}" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header bg-primary">
-                <h5 class="modal-title text-white">Logout</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title text-white">Delete</h5>
+
             </div>
             <div class="modal-body">
-                asd
+                Do you want to delete this data?
             </div>
             <div class="modal-footer">
-                <form action="" method="POST">
+                <form action="{{ route('admin.computer.destroy', ['id' => $computer->id]) }}" method="POST">
                     @csrf
-                    @method('delete')
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                    <button type="submit" class="btn btn-primary">Yes</button>
+                    @method('DELETE')
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Yes</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
-

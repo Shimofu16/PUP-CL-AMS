@@ -1,4 +1,4 @@
-<div class="modal fade" id="logout" tabindex="-1">
+<div class="modal fade" id="delete{{ $user->id }}" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-primary">
@@ -6,12 +6,12 @@
                 
             </div>
             <div class="modal-body">
-                Are you sure you want to end your session?
+                asd
             </div>
             <div class="modal-footer">
-                <form action="{{ route('logout.delete') }}" method="post">
+                <form action="" method="POST">
                     @csrf
-                    @method('POST')
+                    @method('delete')
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
                     <button type="submit" class="btn btn-primary">Yes</button>
                 </form>
@@ -19,3 +19,4 @@
         </div>
     </div>
 </div>
+
