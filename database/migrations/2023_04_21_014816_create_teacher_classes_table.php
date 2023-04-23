@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('teacher_classes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('teacher_id');
-            $table->unsignedBigInteger('course_id');
+            $table->unsignedBigInteger('subject_id');
             $table->unsignedBigInteger('section_id');
             $table->string('description')->nullable();
             $table->date('date');
             $table->time('start_time');
             $table->time('end_time');
             $table->foreign('teacher_id')->references('id')->on('faculty_members');
-            $table->foreign('course_id')->references('id')->on('courses');
+            $table->foreign('subject_id')->references('id')->on('subjects');
             $table->foreign('section_id')->references('id')->on('sections');
             $table->timestamps();
         });

@@ -41,11 +41,17 @@ class HomeController extends Controller
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
 
             // Authentication was successful...
+            Auth::user()->status = "online";
+            Auth::user()->save();
+            $request->session()->regenerate();
             if (Auth::user()->role->name == 'admin') {
-                Auth::user()->status = "online";
-                Auth::user()->save();
-                $request->session()->regenerate();
-                return redirect()->intended(route('admin.dashboard.index'))->with('success', 'You have been logged in successfully');
+                return redirect()->intended(route('admin.dashboard.index'));
+            }
+            if (Auth::user()->role->name == 'faculty') {
+                return redirect()->intended(route('faculty.dashboard.index'));
+            }
+            if (Auth::user()->role->name == 'student') {
+                return redirect()->intended(route('student.dashboard.index'));
             }
         }
 
@@ -53,13 +59,14 @@ class HomeController extends Controller
             'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');
     }
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         Auth::user()->status = "offline";
         Auth::user()->save();
         Auth::logout();
 
-        return redirect()->route('home.index')->with('success', 'You have been logged out successfully');
+        return redirect()->route('home.index');
     }
 }

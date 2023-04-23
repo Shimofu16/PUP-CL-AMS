@@ -16,14 +16,15 @@ class StudentSeeder extends Seeder
         $data = [
             [
                 'student_no' => '2019-00001',
-                'first_name' => 'John',
+                'first_name' => 'Johny',
                 'last_name' => 'Doe',
-                'email' => 'johndoe@gmail.com',
+                'email' => 'johnydoe@gmail.com',
                 'address' => '1234 Street, City, Country',
                 'phone' => '09123456789',
                 'date_of_birth' => '2000-08-16',
                 'gender' => 'Male',
                 'section_id' => 1,
+                'course_id' => 1,
             ],
         ];
         foreach ($data as $student) {

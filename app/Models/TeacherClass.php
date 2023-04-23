@@ -24,13 +24,16 @@ class TeacherClass extends Model
     {
         return $this->belongsTo(FacultyMember::class, 'teacher_id');
     }
+    public function subject()
+    {
+        return $this->belongsTo(Subject::class, 'subject_id');
+    }
     public function attendanceLogs()
     {
         return $this->hasMany(AttendanceLog::class, 'teacher_class_id');
     }
     public function sections()
     {
-        /* hasmany */
         return $this->belongsTo(Section::class, 'section_id');
     }
 }
