@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashboardController as DashboardController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AttendanceLogController;
 use App\Http\Controllers\Admin\ComputerController;
 use App\Http\Controllers\Admin\ComputerStatusLogController;

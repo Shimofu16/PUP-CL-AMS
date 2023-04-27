@@ -6,43 +6,73 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link {{ Route::is('admin.dashboard.index') ? "active" : "" }}" href="{{ route('admin.dashboard.index') }}">
+                <a class="nav-link {{ Route::is('admin.dashboard.index') ? 'active' : '' }}"
+                    href="{{ route('admin.dashboard.index') }}">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link {{ Route::is('admin.computer.index') ? "active" : "" }}"  href="{{ route('admin.computer.index') }}">
+                <a class="nav-link collapsed" data-bs-target="#academics" data-bs-toggle="collapse" href="#">
+                    <i class="ri-booklet-line"></i><span>Academics</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="academics" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a href="">
+                            <i class="bi bi-circle"></i><span>Course</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <i class="bi bi-circle"></i><span>Section</span>
+                        </a>
+                    </li>
+
+                </ul>
+
+            </li>
+
+
+            <li class="nav-item">
+                <a class="nav-link {{ Route::is('admin.computer.index') ? 'active' : '' }}"
+                    href="{{ route('admin.computer.index') }}">
                     <i class="ri-computer-line"></i><span>Computers</span>
                 </a>
 
             </li><!-- End Components Nav -->
 
-            <li class="nav-item">
+            {{--  <li class="nav-item">
                 <a class="nav-link "  href="">
                     <i class="ri-history-line"></i><span>History</span>
                 </a>
 
-            </li><!-- End Forms Nav -->
+            </li> --}}
+            <!-- End Forms Nav -->
+
+
+
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                    <i class="ri-file-chart-line"></i><span>Report</span>
+                <a class="nav-link collapsed" data-bs-target="#reports" data-bs-toggle="collapse" href="#">
+                    <i class="ri-booklet-line"></i><span>Reports</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-               {{--  <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <ul id="reports" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="tables-general.html">
-                            <i class="bi bi-circle"></i><span>General Tables</span>
+                        <a href="">
+                            <i class="bi bi-circle"></i><span>Attendance Log</span>
                         </a>
                     </li>
                     <li>
-                        <a href="tables-data.html">
-                            <i class="bi bi-circle"></i><span>Data Tables</span>
+                        <a href="">
+                            <i class="bi bi-circle"></i><span>Computer Status Log</span>
                         </a>
                     </li>
-                </ul> --}}
-            </li><!-- End Tables Nav -->
+
+                </ul>
+
+            </li>
+
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('admin.schedule.index') }}">
@@ -72,7 +102,7 @@
 
             </li><!-- End Icons Nav -->
 
-      {{--    <li class="nav-heading">Pages</li>
+            {{--    <li class="nav-heading">Pages</li>
 
 
 
