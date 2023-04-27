@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Faculty;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
+use App\Models\Section;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
@@ -14,7 +16,9 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::all();
-        return view('AMS.backend.faculty-layouts.student.index', compact('students'));
+        $courses = Course::all();
+        $sections = Section::all();
+        return view('AMS.backend.faculty-layouts.student.index', compact('students','courses','sections'));
     }
 
     /**

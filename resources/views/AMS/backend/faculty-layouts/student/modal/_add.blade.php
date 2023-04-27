@@ -53,14 +53,58 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label class="form-label fw-bold text-black">Department</label>
+                        <div class="col-md-12">
+                            <label for="address" class="form-label fw-bold text-black">Address</label>
+                            <input type="text" class="form-control @error('address') is-invalid @enderror"
+                                value="{{ old('address') }}" name="address" id="address" placeholder="Address">
+                            @error('address')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="date_of_birth" class="form-label fw-bold text-black">Date of birth</label>
+                            <input type="text" class="form-control @error('date_of_birth') is-invalid @enderror"
+                                value="{{ old('date_of_birth') }}" name="date_of_birth" id="date_of_birth" placeholder="date_of_birth">
+                            @error('date_of_birth')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="form-label fw-bold text-black">Gender</label>
                         <div class="col-12">
-                            <select class="form-select" aria-label="Default select example" id="department_id"
-                                name="department_id">
-                                <option selected value="">----Select Department----</option>
-                                @foreach ($departments as $department)
-                                    <option value="{{ $department->id }}">
-                                        {{ $department->department_name }}</option>
+                            <select class="form-select" aria-label="Default select example" id="gender"
+                                name="gender">
+                                <option selected value="">----Select Gender----</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Male">Male</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="form-label fw-bold text-black">Course</label>
+                        <div class="col-12">
+                            <select class="form-select" aria-label="Default select example" id="course_id"
+                                name="course_id">
+                                <option selected value="">----Select Course----</option>
+                                @foreach ($courses as $course)
+                                    <option value="{{ $course->id }}">
+                                        {{ $course->course_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="form-label fw-bold text-black">Course</label>
+                        <div class="col-12">
+                            <select class="form-select" aria-label="Default select example" id="course_id"
+                                name="course_id">
+                                <option selected value="">----Select Course----</option>
+                                @foreach ($courses as $course)
+                                    <option value="{{ $course->id }}">
+                                        {{ $course->course_name }}</option>
                                 @endforeach
                             </select>
                         </div>
