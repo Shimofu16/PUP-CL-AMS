@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
             [
                 'email' => Student::find(1)->email,
                 'password' => Hash::make('password'),
-                'role_id' => 3,
+                'role_id' => 4,
                 'student_id' => 1,
             ]
         ];

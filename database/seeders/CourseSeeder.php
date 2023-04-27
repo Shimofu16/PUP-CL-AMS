@@ -16,19 +16,23 @@ class CourseSeeder extends Seeder
         $data = [
             [
                 'course_code' => 'BSIT',
-                'course_name' => 'Bachelor of Science in Information Technology',
+                'display_name' => 'Bachelor of Science in Information Technology',
+                'description' => 'This is a course for IT students'
             ],
             [
                 'course_code' => 'BSENT',
-                'course_name' => 'Bachelor of Science in Entrepreneurship',
+                'display_name' => 'Bachelor of Science in Entrepreneurship',
+                'description' => 'This is a course for Entrepreneurship students'
             ],
             [
                 'course_code' => 'BBTE',
-                'course_name' => 'Bachelor of Business Technology Entrepreneurship',
+                'display_name' => 'Bachelor of Business Technology Entrepreneurship',
+                'description' => 'This is a course for BBTE students'
             ],
             [
                 'course_code' => 'BSCS',
-                'course_name' => 'Bachelor of Science in Computer Science',
+                'display_name' => 'Bachelor of Science in Computer Science',
+                'description' => 'This is a course for Computer Science students'
             ]
 
         ];

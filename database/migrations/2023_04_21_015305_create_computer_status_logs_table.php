@@ -13,10 +13,6 @@ return new class extends Migration
     {
         Schema::create('computer_status_logs', function (Blueprint $table) {
             $table->id();
-            /* computer_id
-status
-description
-checked_at */
             $table->unsignedBigInteger('computer_id');
             $table->foreign('computer_id')->references('id')->on('computers');
             $table->string('status'); // on, off, broken

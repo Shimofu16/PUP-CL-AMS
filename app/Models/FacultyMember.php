@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Str;
 class FacultyMember extends Model
 {
     use HasFactory;
@@ -27,5 +27,9 @@ class FacultyMember extends Model
     public function user()
     {
         return $this->hasOne(User::class, 'faculty_member_id');
+    }
+    public function getFullName()
+    {
+        return Str::ucfirst($this->first_name) . ' ' . Str::ucfirst($this->last_name);
     }
 }

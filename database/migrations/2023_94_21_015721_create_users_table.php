@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreign('role_id')->references('id')->on('roles');
             $table->foreign('student_id')->references('id')->on('students');
             $table->foreign('faculty_member_id')->references('id')->on('faculty_members');
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });

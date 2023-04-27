@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreign('student_id')->references('id')->on('students');
             $table->foreign('computer_id')->references('id')->on('computers');
             $table->string('status'); // present, absent, late
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -30,7 +30,20 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+            try {
+                Student::create([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'roll_number' => $request->roll_number,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'department_id' => $request->department_id,
+                ]);
+                return redirect()->back()->with('successToast', 'Student created successfully');
+            } catch (\Throwable $th) {
+                return redirect()->back()->with('errorAlert', $th->getMessage());
+            }
     }
 
     /**

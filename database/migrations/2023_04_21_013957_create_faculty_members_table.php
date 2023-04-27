@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('phone');
             $table->unsignedBigInteger('department_id');
             $table->foreign('department_id')->references('id')->on('departments');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

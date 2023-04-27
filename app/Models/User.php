@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -55,15 +56,18 @@ class User extends Authenticatable
     {
         return $this->belongsTo(FacultyMember::class, 'faculty_member_id');
     }
-    public function getFacultyMemberFullName($facultyID){
+    public function getFacultyMemberFullName($facultyID)
+    {
         $this->facultyMember = FacultyMember::find($facultyID);
-        return $this->facultyMember->first_name . ' ' . $this->facultyMember->last_name;
+        return Str::ucfirst($this->facultyMember->first_name) . ' ' . Str::ucfirst($this->facultyMember->last_name);
     }
-    public function getStudentFullName($studentID){
+    public function getStudentFullName($studentID)
+    {
         $this->student = Student::find($studentID);
-        return $this->student->first_name . ' ' . $this->student->last_name;
+        return Str::ucfirst($this->student->first_name) . ' ' . Str::ucfirst($this->student->last_name);
     }
-    public function getAllFacultyMembers(){
+    public function getAllFacultyMembers()
+    {
         return User::where('faculty_member_id', '!=', null)->get();
     }
 }
