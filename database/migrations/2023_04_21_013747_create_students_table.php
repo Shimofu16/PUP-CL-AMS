@@ -25,6 +25,7 @@ return new class extends Migration
             $table->foreign('section_id')->references('id')->on('sections');
             $table->unsignedBigInteger('course_id');
             $table->foreign('course_id')->references('id')->on('courses');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

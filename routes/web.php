@@ -121,7 +121,7 @@ Route::middleware(['auth', 'Alert', 'isFaculty'])->prefix('faculty')->name('facu
     Route::get('/dashboard', [FacultyDashboardController::class, 'index'])->name('dashboard.index');
 
     /* COURSE */
-    Route::prefix('couse')->name('couse.')->controller(FacultyCourseController::class)->group(function () {
+    Route::prefix('course')->name('course.')->controller(FacultyCourseController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/{id}', 'show')->name('show');
         Route::post('/store', 'store')->name('store');

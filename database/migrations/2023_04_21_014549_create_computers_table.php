@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('processor');
             $table->string('memory');
             $table->string('storage');
+            $table->string('graphics');
+
             $table->timestamps();
         });
     }

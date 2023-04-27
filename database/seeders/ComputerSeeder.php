@@ -28,6 +28,7 @@ storage
                 'processor' => 'Intel Core i5',
                 'memory' => '8GB',
                 'storage' => '500GB',
+                'graphics' => 'Nvidia GTX 1050'
             ],
             [
                 'computer_number' => '02',
@@ -36,6 +37,7 @@ storage
                 'processor' => 'Intel Core i5',
                 'memory' => '8GB',
                 'storage' => '500GB',
+                'graphics' => 'Nvidia GTX 1050'
             ],
             [
                 'computer_number' => '03',
@@ -44,6 +46,7 @@ storage
                 'processor' => 'Intel Core i5',
                 'memory' => '8GB',
                 'storage' => '500GB',
+                'graphics' => 'Nvidia GTX 1050'
             ],
             [
                 'computer_number' => '04',
@@ -52,6 +55,7 @@ storage
                 'processor' => 'Intel Core i5',
                 'memory' => '8GB',
                 'storage' => '500GB',
+                'graphics' => 'Nvidia GTX 1050'
             ],
             [
                 'computer_number' => '05',
@@ -60,6 +64,7 @@ storage
                 'processor' => 'Intel Core i5',
                 'memory' => '8GB',
                 'storage' => '500GB',
+                'graphics' => 'Nvidia GTX 1050'
             ],
             [
                 'computer_number' => '06',
@@ -68,6 +73,7 @@ storage
                 'processor' => 'Intel Core i5',
                 'memory' => '8GB',
                 'storage' => '500GB',
+                'graphics' => 'Nvidia GTX 1050'
             ],
             [
                 'computer_number' => '07',
@@ -76,6 +82,7 @@ storage
                 'processor' => 'Intel Core i5',
                 'memory' => '8GB',
                 'storage' => '500GB',
+                'graphics' => 'Nvidia GTX 1050'
             ],
             [
                 'computer_number' => '08',
@@ -84,6 +91,7 @@ storage
                 'processor' => 'Intel Core i5',
                 'memory' => '8GB',
                 'storage' => '500GB',
+                'graphics' => 'Nvidia GTX 1050'
             ],
             [
                 'computer_number' => '09',
@@ -92,6 +100,7 @@ storage
                 'processor' => 'Intel Core i5',
                 'memory' => '8GB',
                 'storage' => '500GB',
+                'graphics' => 'Nvidia GTX 1050'
             ],
             [
                 'computer_number' => '10',
@@ -100,6 +109,7 @@ storage
                 'processor' => 'Intel Core i5',
                 'memory' => '8GB',
                 'storage' => '500GB',
+                'graphics' => 'Nvidia GTX 1050'
             ],
         ];
         foreach ($data as $item) {

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('subject_name');
             $table->text('subject_description');
             $table->integer('units');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

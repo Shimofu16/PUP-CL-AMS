@@ -30,7 +30,16 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            Course::create([
+                'course_code' => $request->course_code,
+                'display_name' => $request->display_name,
+                'description' => $request->description
+            ]);
+            return redirect()->back()->with('successToast', 'Course successfully added!');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('errorAlert', $th->getMessage());
+        }
     }
 
     /**
@@ -52,9 +61,19 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $course = Course::find($id);
+            $course->update([
+                'course_code' => $request->course_code,
+                'display_name' => $request->display_name,
+                'description' => $request->description
+            ]);
+            return redirect()->back()->with('successToast', 'Course successfully updated!');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('errorAlert', $th->getMessage());
+        }
     }
 
     /**
@@ -62,6 +81,12 @@ class CourseController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $course = Course::find($id);
+            $course->delete();
+            return redirect()->back()->with('successToast', 'Course successfully deleted!');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('errorAlert', $th->getMessage());
+        }
     }
 }

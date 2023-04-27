@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreign('teacher_id')->references('id')->on('faculty_members');
             $table->foreign('subject_id')->references('id')->on('subjects');
             $table->foreign('section_id')->references('id')->on('sections');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
