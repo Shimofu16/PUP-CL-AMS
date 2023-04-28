@@ -3,18 +3,23 @@
 namespace App\Http\Controllers\Faculty;
 
 use App\Http\Controllers\Controller;
-use App\Models\Subject;
+use App\Models\Course;
+use App\Models\Section;
 use Illuminate\Http\Request;
 
-class SubjectController extends Controller
+class SectionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $subjects = Subject::all();
-        return view('AMS.backend.faculty-layouts.subject.index', compact('subjects'));
+        /* sort sections by course code */
+        $sections = Section::with('course')->get()->sortBy(function ($section) {
+            return $section->course->course_code;
+        });
+        $courses = Course::all();
+        return view('AMS.backend.faculty-layouts.section.index', compact('sections', 'courses'));
     }
 
     /**
@@ -31,13 +36,11 @@ class SubjectController extends Controller
     public function store(Request $request)
     {
         try {
-            Subject::create([
-                'subject_code' => $request->subject_code,
-                'subject_name' => $request->subject_name,
-                'subject_description' => $request->subject_description,
-                'units' => $request->units,
+            Section::create([
+                'section_name' => $request->section_name,
+                'course_id' => $request->course_id,
             ]);
-            return redirect()->back()->with('successToast', 'Subject Added Successfully!');
+            return redirect()->back()->with('successToast', 'Section created successfully');
         } catch (\Throwable $th) {
             return redirect()->back()->with('errorAlert', $th->getMessage());
         }
@@ -65,13 +68,11 @@ class SubjectController extends Controller
     public function update(Request $request, string $id)
     {
         try {
-            Subject::where('id', $id)->update([
-                'subject_code' => $request->subject_code,
-                'subject_name' => $request->subject_name,
-                'subject_description' => $request->subject_description,
-                'units' => $request->units,
+            Section::where('id', $id)->update([
+                'section_name' => $request->section_name,
+                'course_id' => $request->course_id,
             ]);
-            return redirect()->back()->with('successToast', 'Subject Updated Successfully!');
+            return redirect()->back()->with('successToast', 'Section updated successfully');
         } catch (\Throwable $th) {
             return redirect()->back()->with('errorAlert', $th->getMessage());
         }
@@ -83,8 +84,8 @@ class SubjectController extends Controller
     public function destroy(string $id)
     {
         try {
-            Subject::where('id', $id)->delete();
-            return redirect()->back()->with('successToast', 'Subject Deleted Successfully!');
+            Section::where('id', $id)->delete();
+            return redirect()->back()->with('successToast', 'Section deleted successfully');
         } catch (\Throwable $th) {
             return redirect()->back()->with('errorAlert', $th->getMessage());
         }

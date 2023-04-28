@@ -18,4 +18,8 @@ class Course extends Model
     {
         return $this->hasMany(Student::class, 'course_id');
     }
+    public function sections()
+    {
+        return $this->hasMany(Section::class, 'course_id');
+    }
 }

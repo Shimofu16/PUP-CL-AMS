@@ -15,39 +15,39 @@ class SectionSeeder extends Seeder
         $data = [
             [
                 'section_name' => 'BSIT-1A',
-                'type' => 'BSIT',
+                'course_id' => 1,
             ],
             [
                 'section_name' => 'BSIT-1B',
-                'type' => 'BSIT',
+                'course_id' => 1,
             ],
             [
                 'section_name' => 'BSIT-1C',
-                'type' => 'BSIT',
+                'course_id' => 1,
             ],
             [
                 'section_name' => 'BSENT-1A',
-                'type' => 'BSENT',
+                'course_id' => 2,
             ],
             [
                 'section_name' => 'BSENT-1B',
-                'type' => 'BSENT',
+                'course_id' => 2,
             ],
             [
                 'section_name' => 'BSENT-1C',
-                'type' => 'BSENT',
+                'course_id' => 2,
             ],
             [
                 'section_name' => 'BSED-1A',
-                'type' => 'BSED',
+                'course_id' => 3,
             ],
             [
                 'section_name' => 'BSED-1B',
-                'type' => 'BSED',
+                'course_id' => 3,
             ],
             [
                 'section_name' => 'BSED-1C',
-                'type' => 'BSED',
+                'course_id' => 3,
             ],
         ];
         foreach ($data as $item) {

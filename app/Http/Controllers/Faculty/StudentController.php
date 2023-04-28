@@ -18,7 +18,7 @@ class StudentController extends Controller
         $students = Student::all();
         $courses = Course::all();
         $sections = Section::all();
-        return view('AMS.backend.faculty-layouts.student.index', compact('students','courses','sections'));
+        return view('AMS.backend.faculty-layouts.student.index', compact('students', 'courses', 'sections'));
     }
 
     /**
@@ -35,19 +35,23 @@ class StudentController extends Controller
     public function store(Request $request)
     {
 
-            try {
-                Student::create([
-                    'first_name' => $request->first_name,
-                    'last_name' => $request->last_name,
-                    'roll_number' => $request->roll_number,
-                    'email' => $request->email,
-                    'phone' => $request->phone,
-                    'department_id' => $request->department_id,
-                ]);
-                return redirect()->back()->with('successToast', 'Student created successfully');
-            } catch (\Throwable $th) {
-                return redirect()->back()->with('errorAlert', $th->getMessage());
-            }
+        try {
+            Student::create([
+                'student_no' => $request->student_no,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'gender' => $request->gender,
+                'date_of_birth' => $request->date_of_birth,
+                'course_id' => $request->course_id,
+                'section_id' => $request->section_id,
+            ]);
+            return redirect()->back()->with('successToast', 'Student created successfully');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('errorAlert', $th->getMessage());
+        }
     }
 
     /**
@@ -71,7 +75,24 @@ class StudentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $student = Student::find($id);
+            $student->update([
+                'student_no' => $request->student_no,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'gender' => $request->gender,
+                'date_of_birth' => $request->date_of_birth,
+                'course_id' => $request->course_id,
+                'section_id' => $request->section_id,
+            ]);
+            return redirect()->back()->with('successToast', 'Student updated successfully');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('errorAlert', $th->getMessage());
+        }
     }
 
     /**
@@ -79,6 +100,11 @@ class StudentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            Student::find($id)->delete();
+            return redirect()->back()->with('successToast', 'Student deleted successfully');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('errorAlert', $th->getMessage());
+        }
     }
 }

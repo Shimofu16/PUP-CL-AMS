@@ -1,7 +1,7 @@
 @extends('AMS.backend.faculty-layouts.sidebar')
 
 @section('page-title')
-    Subjects
+    Sections
 @endsection
 
 @section('contents')
@@ -13,52 +13,45 @@
                     <div class="card-header d-flex justify-content-between border-bottom-0">
                         <h3 class="text-maroon">@yield('page-title')</h3>
                         <button class="btn btn-outline-maroon" data-bs-toggle="modal" data-bs-target="#add">Add
-                            Subject</button>
-                        @include('AMS.backend.faculty-layouts.subject.modal._add')
+                            Section</button>
+                            @include('AMS.backend.faculty-layouts.section.modal._add')
                     </div>
                     <div class="card-body">
 
                         <!-- Table with stripped rows -->
-                        <table class="table" id="subjects-table">
+                        <table class="table" id="sections-table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Subject Code</th>
-                                    <th scope="col">Subject Name</th>
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Units</th>
+                                    <th scope="col">Section Name</th>
+                                    <th scope="col">Course</th>
                                     <th scope="col" class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($subjects as $subject)
+                                @foreach ($sections as $section)
                                     <tr>
 
                                         <td>
-                                            {{ $subject->subject_code }}
+                                            {{ $section->section_name }}
                                         </td>
                                         <td>
-                                            {{ $subject->subject_name }}
-                                        </td>
-                                        <td>
-                                            {{ $subject->subject_description }}
-                                        </td>
-                                        <td>
-                                            {{ $subject->units }}
+                                            {{ $section->course->course_code }}
                                         </td>
                                         <td>
                                             <div class="d-flex justify-content-center px-2 py-1">
                                                 <button class="btn btn-link text-primary mb-0" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#edit{{ $subject->id }}">
+                                                    data-bs-toggle="modal" data-bs-target="#edit{{ $section->id }}">
                                                     <i class="ri-edit-line text-primary me-2" aria-hidden="true""></i>
                                                 </button>
                                                 <button class="btn btn-link text-danger mb-0" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#delete{{ $subject->id }}">
-                                                    <i class="ri-delete-bin-6-line text-danger" aria-hidden="true"></i>
+                                                    data-bs-toggle="modal" data-bs-target="#delete{{ $section->id }}">
+                                                    <i class="ri-delete-bin-6-line text-danger"
+                                                        aria-hidden="true"></i>
                                                 </button>
 
 
-                                                @include('AMS.backend.faculty-layouts.subject.modal._edit')
-                                                @include('AMS.backend.faculty-layouts.subject.modal._delete')
+                                                @include('AMS.backend.faculty-layouts.section.modal._edit')
+                                                @include('AMS.backend.faculty-layouts.section.modal._delete')
 
                                             </div>
                                         </td>
@@ -75,10 +68,11 @@
         </div>
     </section>
 @endsection
+
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('#subjects-table').DataTable({
+            $('#sections-table').DataTable({
                 "ordering": false
             });
         });

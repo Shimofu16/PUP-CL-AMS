@@ -2,14 +2,26 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-maroon">
-                <h5 class="modal-title text-white">add faculty</h5>
+                <h5 class="modal-title text-white">Add Student</h5>
 
             </div>
-            <form action="{{ route('faculty.faculty.store') }}" method="POST">
+            <form action="{{ route('faculty.student.store') }}" method="POST">
                 <div class="modal-body">
                     @csrf
                     @method('POST')
 
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="student_no" class="form-label fw-bold text-black">Student No.</label>
+                            <input type="text" class="form-control @error('student_no') is-invalid @enderror"
+                                value="{{ old('student_no') }}" name="student_no" id="student_no"
+                                placeholder="Student No.">
+                            @error('student_no')
+                                <div class="text-danger">{{ $message }}
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="first_name" class="form-label fw-bold text-black">First Name</label>

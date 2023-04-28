@@ -33,6 +33,12 @@
             </li><!-- End Tables Nav -->
 
             <li class="nav-item">
+                <a class="nav-link {{ Route::is('faculty.section.index') ? 'active' : '' }}" href="{{ route('faculty.section.index') }}">
+                    <i class="ri-home-3-line"></i>
+                    <span>Sections</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link {{ Route::is('faculty.student.index') ? 'active' : '' }}" href="{{ route('faculty.student.index') }}">
                     <i class="ri-user-line"></i>
                     <span>Students</span>

@@ -14,6 +14,7 @@ use App\Http\Controllers\Faculty\CourseController  as FacultyCourseController;
 use App\Http\Controllers\Faculty\DashboardController as FacultyDashboardController;
 use App\Http\Controllers\Faculty\SubjectController as FacultySubjectController;
 use App\Http\Controllers\Faculty\FacultyController as FacultyFacultyMemberController;
+use App\Http\Controllers\Faculty\SectionController as FacultySectionController;
 use App\Http\Controllers\Faculty\StudentController as FacultyStudentController;
 use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
 use App\Http\Controllers\Student\AttendanceController as StudentAttendanceController;
@@ -131,6 +132,15 @@ Route::middleware(['auth', 'Alert', 'isFaculty'])->prefix('faculty')->name('facu
     });
     /* FACULTY */
     Route::prefix('faculty')->name('faculty.')->controller(FacultyFacultyMemberController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/{id}', 'show')->name('show');
+        Route::post('/store', 'store')->name('store');
+        Route::put('/{id}/edit', 'edit')->name('edit');
+        Route::put('/{id}/update', 'update')->name('update');
+        Route::delete('/{id}/destroy', 'destroy')->name('destroy');
+    });
+    /* SECTION */
+    Route::prefix('section')->name('section.')->controller(FacultySectionController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/{id}', 'show')->name('show');
         Route::post('/store', 'store')->name('store');

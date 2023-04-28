@@ -8,10 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Section extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'section_name',
-        'type',
-    ];
+
+    protected $guarded = [];
+
     public function teacherClasses()
     {
         return $this->hasMany(TeacherClass::class, 'section_id');
@@ -19,5 +18,9 @@ class Section extends Model
     public function students()
     {
         return $this->hasMany(Student::class, 'section_id');
+    }
+    public function course()
+    {
+        return $this->belongsTo(Course::class, 'course_id');
     }
 }

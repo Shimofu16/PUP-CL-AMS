@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-danger">
-                <h5 class="modal-title text-white">Delete</h5>
+                <h5 class="modal-title text-white">Delete Faculty</h5>
 
             </div>
             <div class="modal-body">
