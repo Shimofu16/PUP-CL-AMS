@@ -19,7 +19,7 @@ class SectionController extends Controller
             return $section->course->course_code;
         });
         $courses = Course::all();
-        return view('AMS.backend.faculty-layouts.section.index', compact('sections', 'courses'));
+        return view('AMS.backend.faculty-layouts.academics.section.index', compact('sections', 'courses'));
     }
 
     /**

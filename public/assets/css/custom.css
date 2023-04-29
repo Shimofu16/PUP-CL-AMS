@@ -92,3 +92,39 @@
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.18);
 }
+.nav-item .nav-content.collapse{
+    position: relative;
+    background:#8c0418;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.sidebar-nav .nav-link:focus{
+    color: #f6f9ff !important;
+    background: #8c0418 !important;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    border-bottom: #6c0210  1px solid;
+
+}
+.sidebar-nav .nav-link:focus.collapsed i,.sidebar-nav .nav-link:focus i {
+    color: #f6f9ff;
+}
+.sidebar-nav .nav-link:focus > .nav-content.collapse li a{
+    color: #f6f9ff ;
+}
+.sidebar-nav .nav-link > .nav-content.collapse li a {
+    color: #fff ;
+}
+.nav-content.collapse li a {
+    color: white;
+}
+.nav-content.collapse li:hover a, .nav-content.collapse li.collapse-active a{
+    color: #8c0418 !important;
+}
+.nav-content.collapse li:hover,.nav-content.collapse li.collapse-active{
+    background-color: #fff !important;
+}
+.nav-content.collapse li{
+    border-radius: 4px;
+    margin-bottom: 5px;
+}

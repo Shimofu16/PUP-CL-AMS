@@ -120,15 +120,35 @@ Route::middleware(['auth', 'Alert', 'isAdmin'])->prefix('admin')->name('admin.')
 
 Route::middleware(['auth', 'Alert', 'isFaculty'])->prefix('faculty')->name('faculty.')->group(function () {
     Route::get('/dashboard', [FacultyDashboardController::class, 'index'])->name('dashboard.index');
+    Route::prefix('academics')->name('academic.')->group(function () {
 
-    /* COURSE */
-    Route::prefix('course')->name('course.')->controller(FacultyCourseController::class)->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/{id}', 'show')->name('show');
-        Route::post('/store', 'store')->name('store');
-        Route::put('/{id}/edit', 'edit')->name('edit');
-        Route::put('/{id}/update', 'update')->name('update');
-        Route::delete('/{id}/destroy', 'destroy')->name('destroy');
+        /* COURSE */
+        Route::prefix('course')->name('course.')->controller(FacultyCourseController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/{id}', 'show')->name('show');
+            Route::post('/store', 'store')->name('store');
+            Route::put('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}/update', 'update')->name('update');
+            Route::delete('/{id}/destroy', 'destroy')->name('destroy');
+        });
+        /* SECTION */
+        Route::prefix('section')->name('section.')->controller(FacultySectionController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/{id}', 'show')->name('show');
+            Route::post('/store', 'store')->name('store');
+            Route::put('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}/update', 'update')->name('update');
+            Route::delete('/{id}/destroy', 'destroy')->name('destroy');
+        });
+        /* SUBJECT */
+        Route::prefix('subject')->name('subject.')->controller(FacultySubjectController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/{id}', 'show')->name('show');
+            Route::post('/store', 'store')->name('store');
+            Route::put('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}/update', 'update')->name('update');
+            Route::delete('/{id}/destroy', 'destroy')->name('destroy');
+        });
     });
     /* FACULTY */
     Route::prefix('faculty')->name('faculty.')->controller(FacultyFacultyMemberController::class)->group(function () {
@@ -139,26 +159,9 @@ Route::middleware(['auth', 'Alert', 'isFaculty'])->prefix('faculty')->name('facu
         Route::put('/{id}/update', 'update')->name('update');
         Route::delete('/{id}/destroy', 'destroy')->name('destroy');
     });
-    /* SECTION */
-    Route::prefix('section')->name('section.')->controller(FacultySectionController::class)->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/{id}', 'show')->name('show');
-        Route::post('/store', 'store')->name('store');
-        Route::put('/{id}/edit', 'edit')->name('edit');
-        Route::put('/{id}/update', 'update')->name('update');
-        Route::delete('/{id}/destroy', 'destroy')->name('destroy');
-    });
+
     /* STUDENT */
     Route::prefix('student')->name('student.')->controller(FacultyStudentController::class)->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/{id}', 'show')->name('show');
-        Route::post('/store', 'store')->name('store');
-        Route::put('/{id}/edit', 'edit')->name('edit');
-        Route::put('/{id}/update', 'update')->name('update');
-        Route::delete('/{id}/destroy', 'destroy')->name('destroy');
-    });
-    /* SUBJECT */
-    Route::prefix('subject')->name('subject.')->controller(FacultySubjectController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/{id}', 'show')->name('show');
         Route::post('/store', 'store')->name('store');

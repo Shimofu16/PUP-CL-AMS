@@ -14,7 +14,7 @@
                         <h3 class="text-maroon">@yield('page-title')</h3>
                         <button class="btn btn-outline-maroon" data-bs-toggle="modal" data-bs-target="#add">Add
                             Course</button>
-                            @include('AMS.backend.faculty-layouts.course.modal._add')
+                            @include('AMS.backend.faculty-layouts.academics.course.modal._add')
                     </div>
                     <div class="card-body">
 
@@ -54,8 +54,8 @@
                                                 </button>
 
 
-                                                @include('AMS.backend.faculty-layouts.course.modal._edit')
-                                                @include('AMS.backend.faculty-layouts.course.modal._delete')
+                                                @include('AMS.backend.faculty-layouts.academics.course.modal._edit')
+                                                @include('AMS.backend.faculty-layouts.academics.course.modal._delete')
 
                                             </div>
                                         </td>

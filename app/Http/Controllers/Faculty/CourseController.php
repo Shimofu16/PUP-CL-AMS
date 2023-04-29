@@ -14,7 +14,7 @@ class CourseController extends Controller
     public function index()
     {
         $courses = Course::all();
-        return view('AMS.backend.faculty-layouts.course.index', compact('courses'));
+        return view('AMS.backend.faculty-layouts.academics.course.index', compact('courses'));
     }
 
     /**

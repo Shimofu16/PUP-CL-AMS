@@ -8,12 +8,13 @@
         <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
-    <div class="search-bar">
+    {{-- <div class="search-bar">
         <form class="search-form d-flex align-items-center" method="POST" action="#">
             <input type="text" name="query" placeholder="Search" title="Enter search keyword">
             <button type="submit" title="Search"><i class="bi bi-search"></i></button>
         </form>
-    </div><!-- End Search Bar -->
+    </div> --}}
+    <!-- End Search Bar -->
 
     <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
@@ -172,11 +173,11 @@
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                     <img src="{{ asset('assets/images/User.png') }}" alt="Profile" class="rounded-circle">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">
+                    <span class="d-none d-md-block dropdown-toggle ps-2 text-maroon">
                         @if (Auth::user()->faculty_member_id !== null)
-                            {{ Auth::user()->getFacultyMemberFullName(Auth::user()->faculty_member_id) }}
+                            {{ Auth::user()->facultyMember->getFullName() }}
                         @else
-                            {{ Auth::user()->getStudentFullName(Auth::user()->student_id) }}
+                            {{ Auth::user()->student->getFullName() }}
                         @endif
                     </span>
                 </a><!-- End Profile Iamge Icon -->
@@ -185,9 +186,9 @@
                     <li class="dropdown-header">
                         <h6>
                             @if (Auth::user()->faculty_member_id !== null)
-                                {{ Auth::user()->getFacultyMemberFullName(Auth::user()->faculty_member_id) }}
+                                {{ Auth::user()->facultyMember->getFullName() }}
                             @else
-                                {{ Auth::user()->getStudentFullName(Auth::user()->student_id) }}
+                                {{ Auth::user()->student->getFullName() }}
                             @endif
                         </h6>
 
@@ -197,7 +198,7 @@
                         <hr class="dropdown-divider">
                     </li>
 
-                    {{-- <li>
+                    <li>
                         <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                             <i class="bi bi-person"></i>
                             <span>My Profile</span>
@@ -215,7 +216,7 @@
                     </li>
                     <li>
                         <hr class="dropdown-divider">
-                    </li> --}}
+                    </li>
 
                     <li>
                         <a class="dropdown-item d-flex align-items-center" href="#" data-bs-toggle="modal"

@@ -14,13 +14,35 @@
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link {{ Route::is('faculty.course.index') ? 'active' : '' }}"
-                    href="{{ route('faculty.course.index') }}">
+                <a class="nav-link collapsed {{ Route::is('faculty.academic.*') ? 'active' : '' }}"
+                    data-bs-target="#academics" data-bs-toggle="collapse" href="#">
                     <i class="ri-book-open-line"></i>
-                    <span>Course</span>
+                    <span>Academics</span>
+                    <i class="bi bi-chevron-down ms-auto"></i>
                 </a>
+                <ul id="academics" class="nav-content collapse p-2" data-bs-parent="#sidebar-nav">
+                    <li class="{{ Route::is('faculty.academic.course.index') ? 'collapse-active' : '' }}">
+                        <a href="{{ route('faculty.academic.course.index') }}">
+                            <i class="ri-book-open-line"></i>
+                            <span>Course</span>
+                        </a>
+                    </li>
+                    <li class="{{ Route::is('faculty.academic.section.index') ? 'collapse-active' : '' }}">
+                        <a href="{{ route('faculty.academic.section.index') }}">
+                            <i class="ri-home-3-line"></i>
+                            <span>Section</span>
+                        </a>
+                    </li>
+                    <li class="{{ Route::is('faculty.academic.subject.index') ? 'collapse-active' : '' }}">
+                        <a href="{{ route('faculty.academic.subject.index') }}">
+                            <i class="ri-book-2-line"></i>
+                            <span>Subject</span>
+                        </a>
+                    </li>
 
-            </li><!-- End Components Nav -->
+                </ul>
+
+            </li>
 
             <!-- End Forms Nav -->
 
@@ -32,29 +54,15 @@
                 </a>
             </li><!-- End Tables Nav -->
 
-            <li class="nav-item">
-                <a class="nav-link {{ Route::is('faculty.section.index') ? 'active' : '' }}" href="{{ route('faculty.section.index') }}">
-                    <i class="ri-home-3-line"></i>
-                    <span>Sections</span>
-                </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ Route::is('faculty.student.index') ? 'active' : '' }}" href="{{ route('faculty.student.index') }}">
+                <a class="nav-link {{ Route::is('faculty.student.index') ? 'active' : '' }}"
+                    href="{{ route('faculty.student.index') }}">
                     <i class="ri-user-line"></i>
                     <span>Students</span>
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link {{ Route::is('faculty.subject.index') ? 'active' : '' }}" href="{{ route('faculty.subject.index') }}">
-                    <i class="ri-book-2-line"></i>
-                    <span>Subjects</span>
-                </a>
-            </li>
-            <!-- End Charts Nav -->
-
-
-            <!-- End Icons Nav -->
 
 
     </aside>

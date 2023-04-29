@@ -56,18 +56,4 @@ class User extends Authenticatable
     {
         return $this->belongsTo(FacultyMember::class, 'faculty_member_id');
     }
-    public function getFacultyMemberFullName($facultyID)
-    {
-        $this->facultyMember = FacultyMember::find($facultyID);
-        return Str::ucfirst($this->facultyMember->first_name) . ' ' . Str::ucfirst($this->facultyMember->last_name);
-    }
-    public function getStudentFullName($studentID)
-    {
-        $this->student = Student::find($studentID);
-        return Str::ucfirst($this->student->first_name) . ' ' . Str::ucfirst($this->student->last_name);
-    }
-    public function getAllFacultyMembers()
-    {
-        return User::where('faculty_member_id', '!=', null)->get();
-    }
 }

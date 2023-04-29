@@ -14,7 +14,7 @@ class SubjectController extends Controller
     public function index()
     {
         $subjects = Subject::all();
-        return view('AMS.backend.faculty-layouts.subject.index', compact('subjects'));
+        return view('AMS.backend.faculty-layouts.academics.subject.index', compact('subjects'));
     }
 
     /**

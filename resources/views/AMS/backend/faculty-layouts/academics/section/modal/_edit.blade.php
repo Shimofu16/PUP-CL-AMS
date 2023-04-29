@@ -5,7 +5,7 @@
                 <h5 class="modal-title text-white">Edit Section</h5>
 
             </div>
-            <form action="{{ route('faculty.section.update', ['id' => $section->id]) }}" method="POST">
+            <form action="{{ route('faculty.academic.section.update', ['id' => $section->id]) }}" method="POST">
                 <div class="modal-body">
                     @csrf
                     @method('PUT')

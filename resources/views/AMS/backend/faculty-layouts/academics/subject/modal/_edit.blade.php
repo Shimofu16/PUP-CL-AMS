@@ -5,7 +5,7 @@
                 <h5 class="modal-title text-white">Edit subject</h5>
 
             </div>
-            <form action="{{ route('faculty.subject.update', ['id' => $subject->id]) }}" method="POST">
+            <form action="{{ route('faculty.academic.subject.update', ['id' => $subject->id]) }}" method="POST">
                 <div class="modal-body">
                     @csrf
                     @method('PUT')
@@ -36,10 +36,8 @@
                         <div class="col-md-12">
                             <label for="subject_description" class="form-label fw-bold text-black">Subject
                                 Description</label>
-                            <input type="textarea"
-                                class="form-control @error('subject_description') is-invalid @enderror"
-                                value="{{ old('subject_description') }}" name="subject_description"
-                                id="subject_description" placeholder="Subject Description">
+                            <textarea class="form-control @error('subject_description') is-invalid @enderror" id="subject_description"
+                                rows="5" name="subject_description" placeholder="Subject Description">{{ $subject->subject_description }}</textarea>
                             @error('subject_description')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -48,8 +46,8 @@
                     <div class="row mb-3">
                         <div class="col-md-12">
                             <label for="units" class="form-label fw-bold text-black">Units</label>
-                            <input type="text" class="form-control @error('units') is-invalid @enderror"
-                                value="{{ old('units') }}" name="units" id="units" placeholder="Units">
+                            <input type="number" class="form-control @error('units') is-invalid @enderror"
+                                value="{{ $subject->units }}" name="units" id="units" placeholder="Units">
                             @error('units')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
