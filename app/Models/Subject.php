@@ -10,8 +10,8 @@ class Subject extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function schedule()
+    public function schedules()
     {
-        return $this->belongsTo(TeacherClass::class, 'subject_id');
+        return $this->hasMany(TeacherClass::class, 'subject_id');
     }
 }

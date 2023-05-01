@@ -49,7 +49,7 @@
                                     <tr>
                                         <td>
                                             <div class="d-flex flex-column">
-                                                <span>{{ $user->getFacultyMemberFullName($user->faculty_member_id) }}</span>
+                                                <span>{{ $user->facultyMember->getFullName() }}</span>
                                                 <span class="fs-6">{{ $user->facultyMember->email }}</span>
                                             </div>
                                         </td>
@@ -80,7 +80,7 @@
                                         </td>
                                         <td>
                                             <div class="d-flex flex-column">
-                                                <span>{{ $user->getStudentFullName($user->student_id) }}</span>
+                                                <span>{{ $user->student->getFullName() }}</span>
                                                 <span class="fs-6">{{ $user->student->email }}</span>
                                             </div>
                                         </td>

@@ -12,41 +12,54 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between border-bottom-0">
                         <h3 class="text-maroon">@yield('page-title')</h3>
-                        <button class="btn btn-outline-maroon" data-bs-toggle="modal" data-bs-target="#add">Add Schedule</button>
-                       {{--  @include('AMS.backend.admin-layouts.computer.modal._add') --}}
+                        <button class="btn btn-outline-maroon" data-bs-toggle="modal" data-bs-target="#add">Add
+                            Course</button>
+                            @include('AMS.backend.admin-layouts.academics.course.modal._add')
                     </div>
                     <div class="card-body">
 
                         <!-- Table with stripped rows -->
-                        <table class="table" id="course-table">
+                        <table class="table" id="courses-table">
                             <thead>
                                 <tr>
-                                    <th scope="col">one</th>
-                                    <th scope="col">two</th>
-                                    <th scope="col">three</th>
-                                    <th scope="col">four</th>
-                                    <th scope="col">five</th>
+                                    <th scope="col">Course Code</th>
+                                    <th scope="col">Course Name</th>
+                                    <th scope="col">Description</th>
                                     <th scope="col" class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($courses as $course)
-                                    {{-- <tr>
-
+                                    <tr>
 
                                         <td>
+                                            {{ $course->course_code }}
+                                        </td>
+                                        <td>
+                                            {{ $course->display_name }}
+                                        </td>
+                                        <td>
+                                            {{ $course->description }}
+                                        </td>
+                                        <td>
                                             <div class="d-flex justify-content-center px-2 py-1">
-                                                <button class="btn btn-link text-primary px-3 mb-0" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#edit{{ $schedule->id }}">
+                                                <button class="btn btn-link text-primary mb-0" type="button"
+                                                    data-bs-toggle="modal" data-bs-target="#edit{{ $course->id }}">
                                                     <i class="ri-edit-line text-primary me-2" aria-hidden="true""></i>
+                                                </button>
+                                                <button class="btn btn-link text-danger mb-0" type="button"
+                                                    data-bs-toggle="modal" data-bs-target="#delete{{ $course->id }}">
+                                                    <i class="ri-delete-bin-6-line text-danger"
+                                                        aria-hidden="true"></i>
                                                 </button>
 
 
-                                                @include('AMS.backend.admin-layouts.schedule.modal._edit')
+                                                @include('AMS.backend.admin-layouts.academics.course.modal._edit')
+                                                @include('AMS.backend.admin-layouts.academics.course.modal._delete')
 
                                             </div>
                                         </td>
-                                    </tr> --}}
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -59,10 +72,13 @@
         </div>
     </section>
 @endsection
+
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('#courses-table').DataTable();
+            $('#courses-table').DataTable({
+                "ordering": false
+            });
         });
     </script>
 @endsection

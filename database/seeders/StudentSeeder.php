@@ -26,6 +26,30 @@ class StudentSeeder extends Seeder
                 'section_id' => 1,
                 'course_id' => 1,
             ],
+            [
+                'student_no' => '2019-00002',
+                'first_name' => 'Jane',
+                'last_name' => 'Doe',
+                'email' => 'janedoe@gmail.com',
+                'address' => '1234 Street, City, Country',
+                'phone' => '09123456789',
+                'date_of_birth' => '2000-08-16',
+                'gender'=> 'Female',
+                'section_id' => 1,
+                'course_id' => 1,
+            ],
+            [
+                'student_no' => '2019-00003',
+                'first_name' => 'John',
+                'last_name' => 'Smith',
+                'email' => 'johnsmith@gmail.com',
+                'address' => '1234 Street, City, Country',
+                'phone' => '09123456789',
+                'date_of_birth' => '2000-08-16',
+                'gender' => 'Male',
+                'section_id' => 4,
+                'course_id' => 2,
+            ],
         ];
         foreach ($data as $student) {
             Student::create($student);

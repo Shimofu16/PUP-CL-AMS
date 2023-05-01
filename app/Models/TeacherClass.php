@@ -28,12 +28,18 @@ class TeacherClass extends Model
     {
         return $this->belongsTo(Subject::class, 'subject_id');
     }
+    public function section()
+    {
+        return $this->belongsTo(Section::class, 'section_id');
+    }
+
     public function attendanceLogs()
     {
         return $this->hasMany(AttendanceLog::class, 'teacher_class_id');
     }
-    public function sections()
+
+    public function scheduleRequests()
     {
-        return $this->belongsTo(Section::class, 'section_id');
+        return $this->hasMany(ScheduleRequest::class, 'teacher_class_id');
     }
 }

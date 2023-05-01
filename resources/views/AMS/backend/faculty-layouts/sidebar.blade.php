@@ -23,19 +23,19 @@
                 <ul id="academics" class="nav-content collapse p-2" data-bs-parent="#sidebar-nav">
                     <li class="{{ Route::is('faculty.academic.course.index') ? 'collapse-active' : '' }}">
                         <a href="{{ route('faculty.academic.course.index') }}">
-                            <i class="ri-book-open-line"></i>
+                            <i class="bi bi-circle"></i>
                             <span>Course</span>
                         </a>
                     </li>
                     <li class="{{ Route::is('faculty.academic.section.index') ? 'collapse-active' : '' }}">
                         <a href="{{ route('faculty.academic.section.index') }}">
-                            <i class="ri-home-3-line"></i>
+                            <i class="bi bi-circle"></i>
                             <span>Section</span>
                         </a>
                     </li>
                     <li class="{{ Route::is('faculty.academic.subject.index') ? 'collapse-active' : '' }}">
                         <a href="{{ route('faculty.academic.subject.index') }}">
-                            <i class="ri-book-2-line"></i>
+                            <i class="bi bi-circle"></i>
                             <span>Subject</span>
                         </a>
                     </li>

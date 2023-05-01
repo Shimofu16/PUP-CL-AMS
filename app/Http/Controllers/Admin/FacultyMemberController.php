@@ -43,7 +43,7 @@ class FacultyMemberController extends Controller
     {
         $user = User::find($id);
         $departments = Department::all();
-        $pageTitle = "Faculty - " . $user->getFacultyMemberFullName($user->faculty_member_id);
+        $pageTitle = "Faculty - " . $user->facultyMember->getFullName();
         return view('AMS.backend.admin-layouts.user.show', compact('user', 'departments', 'pageTitle'));
     }
 

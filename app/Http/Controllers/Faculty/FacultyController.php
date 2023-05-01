@@ -76,6 +76,9 @@ class FacultyController extends Controller
                 'phone' => $request->phone,
                 'department_id' => $request->department_id,
             ]);
+            $faculty_member->user->update([
+                'email' => $request->email,
+            ]);
             return redirect()->back()->with('successToast', 'Faculty member updated successfully');
         } catch (\Throwable $th) {
             return redirect()->back()->with('errorAlert', $th->getMessage());

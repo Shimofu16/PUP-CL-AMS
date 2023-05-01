@@ -22,4 +22,8 @@ class Course extends Model
     {
         return $this->hasMany(Section::class, 'course_id');
     }
+    public function attendanceLogs()
+    {
+        return $this->hasMany(AttendanceLog::class, 'course_id');
+    }
 }

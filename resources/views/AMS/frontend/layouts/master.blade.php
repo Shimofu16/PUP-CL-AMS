@@ -3,7 +3,7 @@
 
 <head>
     <title>AMS @hasSection('page-title')
-        - @yield('page-title')
+            - @yield('page-title')
         @else
         @endif
     </title>
@@ -12,8 +12,8 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/custom.css') }}">
     {{-- icon --}}
     <link rel="icon" href="{{ asset('assets/images/PUP.png') }}" type="image/x-icon">
-    @include('sweetalert::alert')
     @yield('styles')
+    @livewireStyles()
 </head>
 
 <body class="pup-bg">
@@ -33,6 +33,8 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
     </script>
     @yield('scripts')
+    @include('sweetalert::alert')
+    @livewireScripts
 </body>
 
 </html>

@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckUserStatusMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -40,7 +41,7 @@ class Kernel extends HttpKernel
 
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
+            \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
@@ -63,7 +64,8 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'Alert' => \App\Http\Middleware\AlertMiddleware::class,
+        'alert' => \App\Http\Middleware\AlertMiddleware::class,
+        'checkStatus' => \App\Http\Middleware\CheckUserStatusMiddleware::class,
         'isAdmin' => \App\Http\Middleware\isAdminMiddleware::class,
         'isFaculty' => \App\Http\Middleware\isFacultyMiddleware::class,
         'isStudent' => \App\Http\Middleware\isStudentMiddleware::class,

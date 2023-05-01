@@ -53,7 +53,22 @@
                             @enderror
                         </div>
                     </div>
-
+                    <div class="row mb-3">
+                        <label class="form-label fw-bold text-black">Department</label>
+                        <div class="col-12">
+                            <select class="form-select" aria-label="Default select example" id="department_id"
+                                name="department_id">
+                                <option selected value="{{ $faculty->department_id }}">
+                                    {{ $faculty->department->department_name }}</option>
+                                @foreach ($departments as $department)
+                                    @if ($department->id != $faculty->department_id)
+                                        <option value="{{ $department->id }}">
+                                            {{ $department->department_name }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

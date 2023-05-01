@@ -33,10 +33,10 @@
                                     <tr>
                                         <td>
                                             @if (Route::is('admin.user.faculty.index'))
-                                                {{ $user->getFacultyMemberFullName($user->faculty_member_id) }}
+                                                {{ $user->facultyMember->getFullName() }}
                                             @endif
                                             @if (Route::is('admin.user.student.index'))
-                                                {{ $user->getStudentFullName($user->student_id) }}
+                                                {{ $user->student->getFullName() }}
                                             @endif
                                         </td>
 

@@ -11,7 +11,7 @@ class Section extends Model
 
     protected $guarded = [];
 
-    public function teacherClasses()
+    public function schedules()
     {
         return $this->hasMany(TeacherClass::class, 'section_id');
     }

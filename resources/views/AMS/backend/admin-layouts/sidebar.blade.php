@@ -14,18 +14,35 @@
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#academics" data-bs-toggle="collapse" href="#">
-                    <i class="ri-booklet-line"></i><span>Academics</span><i class="bi bi-chevron-down ms-auto"></i>
+                <a class="nav-link collapsed {{ Route::is('admin.academic.*') ? 'active' : '' }}" data-bs-target="#academics"
+                    data-bs-toggle="collapse" href="#">
+                    <i class="ri-book-open-line"></i>
+                    <span>Academics</span>
+                    <i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="academics" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="">
-                            <i class="bi bi-circle"></i><span>Course</span>
+                <ul id="academics" class="nav-content collapse p-2" data-bs-parent="#sidebar-nav">
+                    <li class="{{ Route::is('admin.academic.course.index') ? 'collapse-active' : '' }}">
+                        <a href="{{ route('admin.academic.course.index') }}">
+                            <i class="bi bi-circle"></i>
+                            <span>Course</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="">
-                            <i class="bi bi-circle"></i><span>Section</span>
+                    <li class="{{ Route::is('admin.academic.schedule.index') ? 'collapse-active' : '' }}">
+                        <a href="{{ route('admin.academic.schedule.index') }}">
+                            <i class="bi bi-circle"></i>
+                            <span>Schedule</span>
+                        </a>
+                    </li>
+                    <li class="{{ Route::is('admin.academic.section.index') ? 'collapse-active' : '' }}">
+                        <a href="{{ route('admin.academic.section.index') }}">
+                            <i class="bi bi-circle"></i>
+                            <span>Section</span>
+                        </a>
+                    </li>
+                    <li class="{{ Route::is('admin.academic.subject.index') ? 'collapse-active' : '' }}">
+                        <a href="{{ route('admin.academic.subject.index') }}">
+                            <i class="bi bi-circle"></i>
+                            <span>Subject</span>
                         </a>
                     </li>
 
@@ -57,27 +74,22 @@
                 <a class="nav-link collapsed" data-bs-target="#reports" data-bs-toggle="collapse" href="#">
                     <i class="ri-booklet-line"></i><span>Reports</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="reports" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <ul id="reports" class="nav-content collapse p-2" data-bs-parent="#sidebar-nav">
                     <li>
-                        <a href="">
-                            <i class="bi bi-circle"></i><span>Attendance Log</span>
+                        <a href="{{ route('admin.report.attendance.index') }}">
+                            <i class="bi bi-circle"></i>
+                            <span>Attendance Log</span>
                         </a>
                     </li>
                     <li>
-                        <a href="">
-                            <i class="bi bi-circle"></i><span>Computer Status Log</span>
+                        <a href="{{ route('admin.report.schedule.request.index') }}">
+                            <i class="bi bi-circle"></i>
+                            <span>Requests</span>
                         </a>
                     </li>
 
                 </ul>
 
-            </li>
-
-
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.schedule.index') }}">
-                    <i class="ri-calendar-2-line"></i><span>Schedules</span>
-                </a>
             </li>
             <!-- End Charts Nav -->
 
@@ -86,7 +98,7 @@
                 <a class="nav-link collapsed" data-bs-target="#users" data-bs-toggle="collapse" href="#">
                     <i class="ri-user-settings-line"></i><span>Users</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="users" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <ul id="users" class="nav-content collapse p-2" data-bs-parent="#sidebar-nav">
                     <li>
                         <a href="{{ route('admin.user.faculty.index') }}">
                             <i class="bi bi-circle"></i><span>Faculty</span>
@@ -102,53 +114,9 @@
 
             </li><!-- End Icons Nav -->
 
-            {{--    <li class="nav-heading">Pages</li>
-
-
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="pages-faq.html">
-                    <i class="bi bi-question-circle"></i>
-                    <span>F.A.Q</span>
-                </a>
-            </li><!-- End F.A.Q Page Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="pages-contact.html">
-                    <i class="bi bi-envelope"></i>
-                    <span>Contact</span>
-                </a>
-            </li><!-- End Contact Page Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="pages-register.html">
-                    <i class="bi bi-card-list"></i>
-                    <span>Register</span>
-                </a>
-            </li><!-- End Register Page Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="pages-login.html">
-                    <i class="bi bi-box-arrow-in-right"></i>
-                    <span>Login</span>
-                </a>
-            </li><!-- End Login Page Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="pages-error-404.html">
-                    <i class="bi bi-dash-circle"></i>
-                    <span>Error 404</span>
-                </a>
-            </li><!-- End Error 404 Page Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="pages-blank.html">
-                    <i class="bi bi-file-earmark"></i>
-                    <span>Blank</span>
-                </a>
-            </li> <!-- End Blank Page Nav -->
-
-        </ul> --}}
 
     </aside>
+@endsection
+@section('scripts')
+
 @endsection

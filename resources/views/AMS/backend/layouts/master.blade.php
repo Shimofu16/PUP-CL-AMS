@@ -34,7 +34,6 @@
     <!-- Template Main CSS File -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
-
     {{-- page css --}}
     @yield('styles')
     {{-- livewire style --}}
@@ -96,11 +95,11 @@
     <!-- Template Main JS File -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
 
-    @yield('scripts')
     {{-- livewire scripts --}}
     @livewireScripts
     {{-- sweetalert --}}
     @include('sweetalert::alert')
+    @yield('scripts')
 </body>
 
 </html>

@@ -15,8 +15,8 @@ class isStudentMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->user()->role->name === 'student') {
-            return redirect()->route('login.index')->with('errorAlert', 'You are not authorized to access this page');
+        if (auth()->user()->role->name !== 'student') {
+            return redirect()->back()->with('errorAlert', 'You are not authorized to access this page');
         }
         return $next($request);
     }

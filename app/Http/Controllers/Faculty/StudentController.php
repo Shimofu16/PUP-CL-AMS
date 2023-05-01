@@ -89,6 +89,9 @@ class StudentController extends Controller
                 'course_id' => $request->course_id,
                 'section_id' => $request->section_id,
             ]);
+            $student->user->update([
+                'email' => $request->email,
+            ]);
             return redirect()->back()->with('successToast', 'Student updated successfully');
         } catch (\Throwable $th) {
             return redirect()->back()->with('errorAlert', $th->getMessage());

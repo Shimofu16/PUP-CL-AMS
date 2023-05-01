@@ -16,10 +16,15 @@ return new class extends Migration
             $table->unsignedBigInteger('teacher_class_id');
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('computer_id');
+            $table->unsignedBigInteger('course_id');
+            $table->foreign('course_id')->references('id')->on('courses');
             $table->foreign('teacher_class_id')->references('id')->on('teacher_classes');
             $table->foreign('student_id')->references('id')->on('students');
             $table->foreign('computer_id')->references('id')->on('computers');
             $table->string('status'); // present, absent, late
+            $table->dateTime('time_in');
+            $table->dateTime('time_out');
+            $table->string('description'); 
             $table->softDeletes();
             $table->timestamps();
         });

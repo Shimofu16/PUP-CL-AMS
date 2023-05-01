@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminDashboardController as DashboardController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AttendanceLogController;
 use App\Http\Controllers\Admin\ComputerController;
-use App\Http\Controllers\Admin\ComputerStatusLogController;
+use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\FacultyMemberController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\ScheduleController;
+use App\Http\Controllers\Admin\ScheduleRequestController;
+use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Faculty\CourseController  as FacultyCourseController;
@@ -31,7 +32,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(HomeController::class)->group(function () {
+Route::middleware('alert')->controller(HomeController::class)->group(function () {
     Route::get('/', 'home')->name('home.index');
     Route::get('/register', 'registrationForm')->name('register.index');
     Route::post('/register', 'register')->name('register.store');
@@ -39,8 +40,49 @@ Route::controller(HomeController::class)->group(function () {
     Route::post('/login', 'login')->name('login.store');
     Route::post('/logout', [HomeController::class, 'logout'])->name('logout.delete')->middleware('auth');
 });
-Route::middleware(['auth', 'Alert', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'alert', 'checkStatus', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.index');
+
+    Route::prefix('academics')->name('academic.')->group(function () {
+
+        /* COURSE */
+        Route::prefix('course')->name('course.')->controller(CourseController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/{id}', 'show')->name('show');
+            Route::post('/store', 'store')->name('store');
+            Route::put('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}/update', 'update')->name('update');
+            Route::delete('/{id}/destroy', 'destroy')->name('destroy');
+        });
+        /* SCHEDULE */
+        Route::prefix('schedule')->name('schedule.')->controller(ScheduleController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/{id}', 'show')->name('show');
+            Route::post('/store', 'store')->name('store');
+            Route::put('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}/update', 'update')->name('update');
+            Route::delete('/{id}/destroy', 'destroy')->name('destroy');
+        });
+
+        /* SECTION */
+        Route::prefix('section')->name('section.')->controller(SectionController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/{id}', 'show')->name('show');
+            Route::post('/store', 'store')->name('store');
+            Route::put('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}/update', 'update')->name('update');
+            Route::delete('/{id}/destroy', 'destroy')->name('destroy');
+        });
+        /* SUBJECT */
+        Route::prefix('subject')->name('subject.')->controller(SubjectController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/{id}', 'show')->name('show');
+            Route::post('/store', 'store')->name('store');
+            Route::put('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}/update', 'update')->name('update');
+            Route::delete('/{id}/destroy', 'destroy')->name('destroy');
+        });
+    });
 
     /* COMPUTER */
     Route::prefix('computer')->name('computer.')->controller(ComputerController::class)->group(function () {
@@ -56,6 +98,7 @@ Route::middleware(['auth', 'Alert', 'isAdmin'])->prefix('admin')->name('admin.')
         /* ATTENDANCE LOG */
         Route::prefix('attendance')->name('attendance.')->controller(AttendanceLogController::class)->group(function () {
             Route::get('/', 'index')->name('index');
+            Route::get('/charts', 'charts')->name('charts');
             Route::get('/{id}', 'show')->name('show');
             Route::post('/store', 'store')->name('store');
             Route::put('/{id}/edit', 'edit')->name('edit');
@@ -63,26 +106,19 @@ Route::middleware(['auth', 'Alert', 'isAdmin'])->prefix('admin')->name('admin.')
             Route::delete('/{id}/destroy', 'destroy')->name('destroy');
         });
 
-        /* COMPUTER STATUS LOG */
-        Route::prefix('computer')->name('computer.')->controller(ComputerStatusLogController::class)->group(function () {
+        /* SCHEDULE REQUEST  */
+        Route::prefix('schedule/request')->name('schedule.request.')->controller(ScheduleRequestController::class)->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/{id}', 'show')->name('show');
+            Route::get('/{status}', 'show')->name('show');
             Route::post('/store', 'store')->name('store');
             Route::put('/{id}/edit', 'edit')->name('edit');
             Route::put('/{id}/update', 'update')->name('update');
-            Route::delete('/{id}/destroy', 'destroy')->name('destroy');
+            Route::delete('/{id}/{status}/destroy', 'destroy')->name('destroy');
         });
     });
 
-    /* SCHEDULE */
-    Route::prefix('schedule')->name('schedule.')->controller(ScheduleController::class)->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/{id}', 'show')->name('show');
-        Route::post('/store', 'store')->name('store');
-        Route::put('/{id}/edit', 'edit')->name('edit');
-        Route::put('/{id}/update', 'update')->name('update');
-        Route::delete('/{id}/destroy', 'destroy')->name('destroy');
-    });
+
+
     /* SUBJECT */
     Route::prefix('subject')->name('subject.')->controller(SubjectController::class)->group(function () {
         Route::get('/', 'index')->name('index');
@@ -118,7 +154,7 @@ Route::middleware(['auth', 'Alert', 'isAdmin'])->prefix('admin')->name('admin.')
     });
 });
 
-Route::middleware(['auth', 'Alert', 'isFaculty'])->prefix('faculty')->name('faculty.')->group(function () {
+Route::middleware(['auth', 'alert', 'checkStatus', 'isFaculty'])->prefix('faculty')->name('faculty.')->group(function () {
     Route::get('/dashboard', [FacultyDashboardController::class, 'index'])->name('dashboard.index');
     Route::prefix('academics')->name('academic.')->group(function () {
 
@@ -170,7 +206,7 @@ Route::middleware(['auth', 'Alert', 'isFaculty'])->prefix('faculty')->name('facu
         Route::delete('/{id}/destroy', 'destroy')->name('destroy');
     });
 });
-Route::middleware(['auth', 'Alert', 'isStudent'])->prefix('student')->name('student.')->group(function () {
+Route::middleware(['auth', 'alert', 'checkStatus', 'isStudent'])->prefix('student')->name('student.')->group(function () {
     Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard.index');
 
     /* ATTENDANCE */

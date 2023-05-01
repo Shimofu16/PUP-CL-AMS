@@ -41,9 +41,12 @@ class HomeController extends Controller
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
 
             // Authentication was successful...
+
             Auth::user()->status = "online";
             Auth::user()->save();
+            /* save last_activity into session */
             $request->session()->regenerate();
+            $request->session()->put(Auth::id() . '_last_activity', now());
             if (Auth::user()->role->name == 'admin') {
                 return redirect()->intended(route('admin.dashboard.index'));
             }
@@ -61,10 +64,15 @@ class HomeController extends Controller
     }
     public function logout(Request $request)
     {
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        // remove last_activity from session
+        $request->session()->forget(Auth::id() . "_last_activity");
+        // set the user's status to offline
         Auth::user()->status = "offline";
         Auth::user()->save();
+        //regenerate   session
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        // logout the user
         Auth::logout();
 
         return redirect()->route('home.index');

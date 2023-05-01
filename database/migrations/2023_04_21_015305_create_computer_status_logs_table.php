@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('computer_id');
             $table->foreign('computer_id')->references('id')->on('computers');
-            $table->string('status'); // on, off, broken
+            $table->string('status'); // Available, Not Available, Broken
             $table->string('description');
             $table->timestamp('checked_at');
             $table->timestamps();

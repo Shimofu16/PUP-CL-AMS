@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\FacultyMember;
+use App\Models\Section;
+use App\Models\Subject;
 use App\Models\TeacherClass;
 use Illuminate\Http\Request;
 
@@ -14,7 +17,10 @@ class ScheduleController extends Controller
     public function index()
     {
         $schedules = TeacherClass::all();
-        return view('AMS.backend.admin-layouts.schedule.index',compact('schedules'));
+        $teachers = FacultyMember::with('department')->where('department_id', 2)->get();
+        $subjects = Subject::all();
+        $sections = Section::all();
+        return view('AMS.backend.admin-layouts.academics.schedule.index',compact('schedules','teachers','subjects','sections'));
     }
 
     /**
@@ -30,7 +36,19 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            TeacherClass::create([
+                'teacher_id' => $request->teacher_id,
+                'subject_id' => $request->subject_id,
+                'section_id' => $request->section_id,
+                'date' => $request->date,
+                'start_time' => $request->start_time,
+                'end_time' => $request->end_time,
+            ]);
+            return redirect()->back()->with('successToast', 'Schedule Added Successfully!');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('errorAlert', $th->getMessage());
+        }
     }
 
     /**
@@ -54,7 +72,20 @@ class ScheduleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $schedule = TeacherClass::find($id);
+            $schedule->update([
+                'teacher_id' => $request->teacher_id,
+                'subject_id' => $request->subject_id,
+                'section_id' => $request->section_id,
+                'date' => $request->date,
+                'start_time' => $request->start_time,
+                'end_time' => $request->end_time,
+            ]);
+            return redirect()->back()->with('successToast', 'Schedule Updated Successfully!');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('errorAlert', $th->getMessage());
+        }
     }
 
     /**
@@ -62,6 +93,11 @@ class ScheduleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            TeacherClass::find($id)->delete();
+            return redirect()->back()->with('successToast', 'Schedule Deleted Successfully!');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('errorAlert', $th->getMessage());
+        }
     }
 }

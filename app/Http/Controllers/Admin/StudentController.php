@@ -41,7 +41,7 @@ class StudentController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        $pageTitle = "Student - ". $user->getStudentFullName($user->student_id);
+        $pageTitle = "Student - ". $user->student->getFullName();
         return view('AMS.backend.admin-layouts.user.show', compact('user','pageTitle'));
     }
 

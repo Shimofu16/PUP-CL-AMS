@@ -8,14 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class AttendanceLog extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'teacher_class_id',
-        'student_id',
-        'computer_id',
-        'created_at',
-        'updated_at',
-        'deleted_at',
-    ];
+    // protected $fillable = [
+    //     'teacher_class_id',
+    //     'student_id',
+    //     'computer_id',
+    //     'created_at',
+    //     'updated_at',
+    //     'deleted_at',
+    // ];
     protected $guarded = [];
 
     public function teacherClass()
@@ -29,5 +29,9 @@ class AttendanceLog extends Model
     public function computer()
     {
         return $this->belongsTo(Computer::class, 'computer_id');
+    }
+    public function course()
+    {
+        return $this->belongsTo(Course::class, 'course_id');
     }
 }

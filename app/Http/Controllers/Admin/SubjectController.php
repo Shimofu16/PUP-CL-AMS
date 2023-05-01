@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 
 class SubjectController extends Controller
@@ -12,7 +13,8 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        //
+        $subjects = Subject::all();
+        return view('AMS.backend.admin-layouts.academics.subject.index', compact('subjects'));
     }
 
     /**
@@ -28,7 +30,17 @@ class SubjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            Subject::create([
+                'subject_code' => $request->subject_code,
+                'subject_name' => $request->subject_name,
+                'subject_description' => $request->subject_description,
+                'units' => $request->units,
+            ]);
+            return redirect()->back()->with('successToast', 'Subject Added Successfully!');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('errorAlert', $th->getMessage());
+        }
     }
 
     /**
@@ -52,7 +64,17 @@ class SubjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            Subject::where('id', $id)->update([
+                'subject_code' => $request->subject_code,
+                'subject_name' => $request->subject_name,
+                'subject_description' => $request->subject_description,
+                'units' => $request->units,
+            ]);
+            return redirect()->back()->with('successToast', 'Subject Updated Successfully!');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('errorAlert', $th->getMessage());
+        }
     }
 
     /**
@@ -60,6 +82,11 @@ class SubjectController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            Subject::where('id', $id)->delete();
+            return redirect()->back()->with('successToast', 'Subject Deleted Successfully!');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('errorAlert', $th->getMessage());
+        }
     }
 }

@@ -28,6 +28,10 @@ class FacultyMember extends Model
     {
         return $this->hasOne(User::class, 'faculty_member_id');
     }
+    public function schedules()
+    {
+        return $this->hasMany(TeacherClass::class, 'teacher_id');
+    }
     public function getFullName()
     {
         return Str::ucfirst($this->first_name) . ' ' . Str::ucfirst($this->last_name);
