@@ -5,16 +5,34 @@ namespace App\Http\Controllers\Faculty;
 use App\Http\Controllers\Controller;
 use App\Models\TeacherClass;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($filter = null)
     {
-        $schedules = TeacherClass::with('teacher')->where('teacher_id', auth()->user()->faculty_member_id)->get();
-        return view('AMS.backend.faculty-layouts.dashboard.index', compact('schedules'));
+        try {
+
+            $filter = ($filter === null) ? 'today' : $filter;
+            if ($filter === 'today') {
+                $schedules = Auth::user()->facultyMember->schedules->where('date', now())->sortBy('date');
+                return view('AMS.backend.faculty-layouts.dashboard.index', compact('schedules', 'filter'));
+            }
+            if ($filter === 'week') {
+                $schedules = Auth::user()->facultyMember->schedules->whereBetween('date', [now()->subDay(), now()->addDays(8)])->sortBy('date');
+                return view('AMS.backend.faculty-layouts.dashboard.index', compact('schedules', 'filter'));
+            }
+            if ($filter === 'month') {
+                $schedules = Auth::user()->facultyMember->schedules->whereBetween('date', [now()->startOfMonth()->subDay(), now()->endOfMonth()->addDay()])->sortBy('date');
+                return view('AMS.backend.faculty-layouts.dashboard.index', compact('schedules', 'filter'));
+            }
+            dd('Invalid filter.');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('errorAlert', $th->getMessage());
+        }
     }
 
     /**

@@ -42,4 +42,8 @@ class Student extends Model
     {
         return Str::ucfirst($this->first_name) . ' ' . Str::ucfirst($this->last_name);
     }
+     public function schoolYear()
+    {
+        return $this->belongsTo(SchoolYear::class, 'sy_id');
+    }
 }

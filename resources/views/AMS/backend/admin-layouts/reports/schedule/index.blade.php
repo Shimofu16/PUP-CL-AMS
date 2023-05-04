@@ -30,7 +30,8 @@
                                 @foreach ($requests as $request)
                                     <tr>
                                         <td>
-                                            {{ $request->teacherClass->teacher->getFullName() }}
+                                            {{ $request->teacherClass->teacher->getFullName() }} <br>
+                                            {{ $request->teacherClass->subject->subject_name }}
                                         </td>
 
                                         <td>

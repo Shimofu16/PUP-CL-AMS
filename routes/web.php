@@ -15,6 +15,7 @@ use App\Http\Controllers\Faculty\CourseController  as FacultyCourseController;
 use App\Http\Controllers\Faculty\DashboardController as FacultyDashboardController;
 use App\Http\Controllers\Faculty\SubjectController as FacultySubjectController;
 use App\Http\Controllers\Faculty\FacultyController as FacultyFacultyMemberController;
+use App\Http\Controllers\Faculty\ScheduleController as FacultyScheduleController;
 use App\Http\Controllers\Faculty\SectionController as FacultySectionController;
 use App\Http\Controllers\Faculty\StudentController as FacultyStudentController;
 use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
@@ -155,7 +156,7 @@ Route::middleware(['auth', 'alert', 'checkStatus', 'isAdmin'])->prefix('admin')-
 });
 
 Route::middleware(['auth', 'alert', 'checkStatus', 'isFaculty'])->prefix('faculty')->name('faculty.')->group(function () {
-    Route::get('/dashboard', [FacultyDashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/dashboard/{filter?}', [FacultyDashboardController::class, 'index'])->name('dashboard.index');
     Route::prefix('academics')->name('academic.')->group(function () {
 
         /* COURSE */
@@ -188,6 +189,15 @@ Route::middleware(['auth', 'alert', 'checkStatus', 'isFaculty'])->prefix('facult
     });
     /* FACULTY */
     Route::prefix('faculty')->name('faculty.')->controller(FacultyFacultyMemberController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/{id}', 'show')->name('show');
+        Route::post('/store', 'store')->name('store');
+        Route::put('/{id}/edit', 'edit')->name('edit');
+        Route::put('/{id}/update', 'update')->name('update');
+        Route::delete('/{id}/destroy', 'destroy')->name('destroy');
+    });
+    /* SCHEDULE */
+    Route::prefix('schedule')->name('schedule.')->controller(FacultyScheduleController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/{id}', 'show')->name('show');
         Route::post('/store', 'store')->name('store');

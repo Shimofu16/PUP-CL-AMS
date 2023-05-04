@@ -25,6 +25,7 @@
                                 <tr>
                                     <th scope="col">Teacher</th>
                                     <th scope="col">Student</th>
+                                    <th scope="col">Date</th>
                                     <th scope="col">time in and out</th>
                                     <th scope="col">Computer</th>
                                     <th scope="col">Status</th>
@@ -41,12 +42,16 @@
                                         </td>
                                         <td>
                                             {{ $attendance->student->getFullName() }} <br>
-                                            {{ $attendance->teacherClass->section->section_name }} - 
+                                            {{ $attendance->teacherClass->section->section_name }} -
                                             {{ $attendance->teacherClass->section->course->course_code }}
                                         </td>
                                         <td>
+                                            {{ date('M d, Y', strtotime($attendance->teacherClass->date)) }}
+                                        </td>
+                                        <td>
+
                                             {{-- format time in and time out using date --}}
-                                            {{ date('h:i A', strtotime($attendance->time_in)) }} - 
+                                            {{ date('h:i A', strtotime($attendance->time_in)) }} -
                                             {{ date('h:i A', strtotime($attendance->time_out)) }}
                                         </td>
                                         <td>

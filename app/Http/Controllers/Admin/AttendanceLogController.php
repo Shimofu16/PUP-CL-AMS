@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\AttendanceLog;
 use App\Models\Course;
+use App\Models\SchoolYear;
+use App\Models\Semester;
 use App\Models\Student;
+use App\Models\TeacherClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Termwind\Components\Dd;
 
 class AttendanceLogController extends Controller
 {
@@ -16,27 +20,49 @@ class AttendanceLogController extends Controller
      */
     public function index()
     {
-        /* order by course */
-        $attendance_logs = AttendanceLog::with(['teacherClass', 'student', 'computer', 'course'])->orderBy('course_id')->get();
+        $attendance_logs = AttendanceLog::with(['teacherClass', 'student', 'computer', 'course'])
+            ->get()
+            ->sortBy([
+                ['course.name', 'asc'],
+                ['student.last_name', 'asc'],
+                ['teacherClass.date', 'desc']
+            ], SORT_REGULAR, false)
+            ->values();
+
         return view('AMS.backend.admin-layouts.reports.attendance.index', compact('attendance_logs'));
     }
     public function charts()
     {
         // Get the total number of students and attendance logs for the last 7 days
-        $getTotalPerWeek = Course::withCount(['students', 'attendanceLogs' => function ($query) {
-            $query->whereHas('teacherClass', function ($q) {
-
-                $q->whereBetween('date', [now()->subDays(8), now()->addDay()]);
+        $getTotalPerWeek = Course::withCount(['students' => function ($query) {
+            $query->whereHas('attendanceLogs', function ($que) {
+                $que->whereHas('teacherClass', function ($q) {
+                    $q->whereBetween('date', [now()->subDays(8), now()->addDay()]);
+                });
             });
-        }])->get();
+        }])->having('students_count', '>', 0)->get();
         // Get the total number of students and attendance logs for today only
-        $getTotalToday  = Course::withCount(['students', 'attendanceLogs' => function ($query) {
-            $query->whereHas('teacherClass', function ($q) {
-                $q->whereDate('date', now());
+        $getTotalToday  = Course::withCount(['students' => function ($query) {
+            $query->whereHas('attendanceLogs', function ($que) {
+                $que->whereHas('teacherClass', function ($q) {
+                    $q->whereDate('date', now());
+                });
             });
-        }])->get();
-        $getAll = Course::withCount(['students', 'attendanceLogs'])->get();
-        return view('AMS.backend.admin-layouts.reports.attendance.show', compact('getTotalPerWeek', 'getTotalToday','getAll'));
+        }])->having('students_count', '>', 0)->get();
+        $currentYear = SchoolYear::where('is_active', 1)->first()->id;
+        $getTotalPerSemester = Semester::withCount([
+            'attendanceLogs' => function ($query) use ($currentYear) {
+                $query->where('sy_id', $currentYear);
+            }
+        ])->having('attendance_logs_count', '>', 0)->get();
+        $getTotalPerSchoolYear = SchoolYear::withCount([
+            'attendanceLogs' => function ($query) {
+                $query->whereHas('semester', function ($q) {
+                    $q->where('is_active', 1);
+                });
+            }
+        ])->having('attendance_logs_count', '>', 0)->get();
+        return view('AMS.backend.admin-layouts.reports.attendance.show', compact('getTotalPerWeek', 'getTotalToday', 'getTotalPerSchoolYear','getTotalPerSemester'));
     }
 
     /**

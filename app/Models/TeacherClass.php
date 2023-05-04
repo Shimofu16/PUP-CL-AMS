@@ -38,8 +38,15 @@ class TeacherClass extends Model
         return $this->hasMany(AttendanceLog::class, 'teacher_class_id');
     }
 
-    public function scheduleRequests()
+    public function scheduleRequest()
     {
-        return $this->hasMany(ScheduleRequest::class, 'teacher_class_id');
+        return $this->hasOne(ScheduleRequest::class, 'teacher_class_id', 'id')->withDefault([
+            'status' => 'No Request',
+        ]);
+    }
+
+    public function schoolYear()
+    {
+        return $this->belongsTo(SchoolYear::class, 'sy_id');
     }
 }

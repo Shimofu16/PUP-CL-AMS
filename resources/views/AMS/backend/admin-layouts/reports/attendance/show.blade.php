@@ -21,13 +21,56 @@
                             <div class="col-md-4">
                                 <h5 class="card-title text-center">Weekly Attendance</h5>
                                 <!-- Pie Chart -->
-                                <canvas id="weekly" class="h-60 w-60"></canvas>
+                                @if (count($getTotalPerWeek) == 0)
+                                    <div class="alert alert-danger text-center">
+                                        <strong>No data found!</strong>
+                                    </div>
+                                @else
+                                    <canvas id="weekly" class="h-60 w-60">
+                                    </canvas>
+                                @endif
 
                             </div>
                             <div class="col-md-4">
                                 <h5 class="card-title text-center">Daily Attendance</h5>
                                 <!-- Pie Chart -->
-                                <canvas id="daily" class="h-60 w-60"></canvas>
+                                @if (count($getTotalToday) == 0)
+                                    <div class="alert alert-danger text-center">
+                                        <strong>No data found!</strong>
+                                    </div>
+                                @else
+                                    <canvas id="daily" class="h-60 w-60">
+
+                                    </canvas>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h5 class="card-title text-center">Semester Attendance</h5>
+                                <!-- Pie Chart -->
+                                @if (count($getTotalPerSemester) == 0)
+                                    <div class="alert alert-danger text-center">
+                                        <strong>No data found!</strong>
+                                    </div>
+                                @else
+                                    <canvas id="semester" class="h-60 w-60">
+                                    </canvas>
+                                @endif
+
+                            </div>
+                            <div class="col-md-4">
+                                <h5 class="card-title text-center">School year Attendance</h5>
+                                <!-- Pie Chart -->
+                                @if (count($getTotalPerSchoolYear) == 0)
+                                    <div class="alert alert-danger text-center">
+                                        <strong>No data found!</strong>
+                                    </div>
+                                @else
+                                    <canvas id="sy" class="h-60 w-60">
+                                    </canvas>
+                                @endif
+
                             </div>
                         </div>
                         <!-- End Pie CHart -->
@@ -40,62 +83,48 @@
 @endsection
 @section('scripts')
     <script>
-        const WColors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
-            '#17becf', '#1b9e77', '#d95f02', '#7570b3', '#e7298a',
+        const colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
+            '#17becf', '#1b9e77', '#d95f02', '#7570b3', '#e7298a'
         ];
-        const wdataLength = {{ count($getTotalPerWeek) }};
-        const wcolors = WColors.slice(0, wdataLength);
-        document.addEventListener("DOMContentLoaded", () => {
-            new Chart(document.querySelector('#weekly'), {
+
+        function generateChartStudent(selector, label, data) {
+            const dataLength = data.length;
+            const backgroundColors = colors.slice(0, dataLength);
+            new Chart(document.querySelector(selector), {
                 type: 'pie',
                 data: {
-                    labels: [
-                        @foreach ($getTotalPerWeek as $course)
-                            '{{ $course->course_code }}',
-                        @endforeach
-                    ],
+                    labels: data.map(d => d.course_code),
                     datasets: [{
-                        label: 'Weekly Attendance Logs',
-                        data: [
-                            @foreach ($getTotalPerWeek as $total)
-                                '{{ $total->attendance_logs_count }}',
-                            @endforeach
-                        ],
-                        backgroundColor: wcolors,
+                        label: label,
+                        data: data.map(d => d.students_count),
+                        backgroundColor: backgroundColors,
                         hoverOffset: 4
                     }]
                 }
             });
-        });
-    </script>
-    <script>
-        // define color schemes
-        const DCcolors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22',
-            '#17becf', '#1b9e77', '#d95f02', '#7570b3', '#e7298a',
-        ];
-        const ddataLength = {{ count($getTotalToday) }};
-        const dcolors = DCcolors.slice(0, ddataLength);
-        document.addEventListener("DOMContentLoaded", () => {
-            new Chart(document.querySelector('#daily'), {
+        }
+        function generateAttendanceChart(selector, label, data) {
+            const dataLength = data.length;
+            const backgroundColors = colors.slice(0, dataLength);
+            new Chart(document.querySelector(selector), {
                 type: 'pie',
                 data: {
-                    labels: [
-                        @foreach ($getTotalToday as $course)
-                            '{{ $course->course_code }}',
-                        @endforeach
-                    ],
+                    labels: data.map(d => d.name ),
                     datasets: [{
-                        label: 'Daily Attendance Logs',
-                        data: [
-                            @foreach ($getTotalToday as $course)
-                                '{{ $course->attendance_logs_count }}',
-                            @endforeach
-                        ],
-                        backgroundColor: dcolors,
+                        label: label,
+                        data: data.map(d => d.attendance_logs_count ),
+                        backgroundColor: backgroundColors,
                         hoverOffset: 4
                     }]
                 }
             });
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            generateChartStudent('#weekly', 'Weekly Attendance Logs', {!! $getTotalPerWeek !!});
+            generateChartStudent('#daily', 'Daily Attendance Logs', {!! $getTotalToday !!});
+            generateAttendanceChart('#semester', 'Semester Attendance Logs', {!! $getTotalPerSemester !!});
+            generateAttendanceChart('#sy', 'School Year Attendance Logs', {!! $getTotalPerSchoolYear !!});
         });
     </script>
 @endsection

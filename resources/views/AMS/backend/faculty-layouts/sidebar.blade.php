@@ -13,7 +13,7 @@
                 </a>
             </li><!-- End Dashboard Nav -->
 
-            <li class="nav-item">
+            {{--  <li class="nav-item">
                 <a class="nav-link collapsed {{ Route::is('faculty.academic.*') ? 'active' : '' }}"
                     data-bs-target="#academics" data-bs-toggle="collapse" href="#">
                     <i class="ri-book-open-line"></i>
@@ -42,26 +42,27 @@
 
                 </ul>
 
-            </li>
+            </li> --}}
 
             <!-- End Forms Nav -->
 
             <li class="nav-item">
-                <a class="nav-link {{ Route::is('faculty.faculty.index') ? 'active' : '' }}"
-                    href="{{ route('faculty.faculty.index') }}">
-                    <i class="ri-user-2-line"></i>
-                    <span>Faculty</span>
+                <a class="nav-link {{ Route::is('faculty.schedule.index') ? 'active' : '' }}"
+                    href="{{ route('faculty.schedule.index') }}">
+                    <i class="ri-calendar-todo-line"></i>
+                    <span>Schedule</span>
                 </a>
-            </li><!-- End Tables Nav -->
-
             </li>
-            <li class="nav-item">
+            {{--  wire: --}}
+            <!-- End Tables Nav -->
+
+            {{-- <li class="nav-item">
                 <a class="nav-link {{ Route::is('faculty.student.index') ? 'active' : '' }}"
                     href="{{ route('faculty.student.index') }}">
                     <i class="ri-user-line"></i>
                     <span>Students</span>
                 </a>
-            </li>
+            </li> --}}
 
 
 

@@ -34,4 +34,12 @@ class AttendanceLog extends Model
     {
         return $this->belongsTo(Course::class, 'course_id');
     }
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class, 'semester_id');
+    }
+    public function schoolYear()
+    {
+        return $this->belongsTo(SchoolYear::class, 'sy_id');
+    }
 }

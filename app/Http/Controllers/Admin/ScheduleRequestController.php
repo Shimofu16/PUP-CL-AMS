@@ -52,9 +52,21 @@ class ScheduleRequestController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(string $id)
     {
-        //
+        try {
+            $schedule = ScheduleRequest::find($id);
+            $schedule->status = 'approved';
+            $schedule->save();
+            $schedule->teacherClass->update([
+                'date' => $schedule->date,
+                'start_time' => $schedule->start_time,
+                'end_time' => $schedule->end_time,
+            ]);
+            return redirect()->back()->with('successToast', 'Request approved successfully!');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('errorAlert', $th->getMessage());
+        }
     }
 
     /**

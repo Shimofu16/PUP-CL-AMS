@@ -22,9 +22,11 @@ return new class extends Migration
             $table->date('date_of_birth');
             $table->string('gender');
             $table->unsignedBigInteger('section_id');
-            $table->foreign('section_id')->references('id')->on('sections');
             $table->unsignedBigInteger('course_id');
+            $table->unsignedBigInteger('sy_id');
+            $table->foreign('section_id')->references('id')->on('sections');
             $table->foreign('course_id')->references('id')->on('courses');
+            $table->foreign('sy_id')->references('id')->on('school_years');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('teacher_id');
             $table->unsignedBigInteger('subject_id');
             $table->unsignedBigInteger('section_id');
+            $table->unsignedBigInteger('sy_id');
+            $table->unsignedBigInteger('semester_id');
             $table->string('description')->nullable();
             $table->date('date');
             $table->time('start_time');
@@ -23,6 +25,8 @@ return new class extends Migration
             $table->foreign('teacher_id')->references('id')->on('faculty_members');
             $table->foreign('subject_id')->references('id')->on('subjects');
             $table->foreign('section_id')->references('id')->on('sections');
+            $table->foreign('sy_id')->references('id')->on('school_years');
+            $table->foreign('semester_id')->references('id')->on('semesters');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\SchoolYear;
 use App\Models\Student;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -25,6 +26,7 @@ class StudentSeeder extends Seeder
                 'gender' => 'Male',
                 'section_id' => 1,
                 'course_id' => 1,
+                'sy_id' => SchoolYear::where('is_active', true)->first()->id,
             ],
             [
                 'student_no' => '2019-00002',
@@ -37,6 +39,7 @@ class StudentSeeder extends Seeder
                 'gender'=> 'Female',
                 'section_id' => 1,
                 'course_id' => 1,
+                'sy_id' => SchoolYear::where('is_active', true)->first()->id,
             ],
             [
                 'student_no' => '2019-00003',
@@ -49,6 +52,7 @@ class StudentSeeder extends Seeder
                 'gender' => 'Male',
                 'section_id' => 4,
                 'course_id' => 2,
+                'sy_id' => SchoolYear::where('is_active', true)->first()->id,
             ],
         ];
         foreach ($data as $student) {
