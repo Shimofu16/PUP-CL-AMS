@@ -76,7 +76,8 @@
                                                 </button>
                                                 <button class="btn btn-link text-danger" type="button"
                                                     data-bs-toggle="modal" data-bs-target="#delete{{ $user->id }}"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Logout User">
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Logout User"
+                                                    {{ $user->status == 'offline' ? 'disabled' : '' }}>
                                                     <i class="ri-shut-down-line text-danger" aria-hidden="true"></i>
                                                 </button>
                                                 @include('AMS.backend.admin-layouts.user.modal._edit')

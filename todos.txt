@@ -4,6 +4,7 @@
 *
 */
 /* FIXME`s
-* fix logout for users
 * fix student and admin dashboard
+* fix register page
+* fix logo in login
 */

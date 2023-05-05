@@ -82,8 +82,16 @@ class FacultyMemberController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(FacultyMember $facultyMember)
+    public function destroy($id)
     {
-        //
+        try {
+            $user = User::find($id);
+            $user->update([
+                'status' => "offline",
+            ]);
+            return back()->with('successToast', 'User successfully logout!');
+        } catch (\Throwable $th) {
+            return back()->with('errorAlert', $th->getMessage());
+        }
     }
 }
