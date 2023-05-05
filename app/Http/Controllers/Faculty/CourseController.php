@@ -38,7 +38,7 @@ class CourseController extends Controller
             ]);
             return redirect()->back()->with('successToast', 'Course successfully added!');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('errorAlert', $th->getMessage());
+            return redirect()->back()->with('error', $th->getMessage());
         }
     }
 
@@ -72,7 +72,7 @@ class CourseController extends Controller
             ]);
             return redirect()->back()->with('successToast', 'Course successfully updated!');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('errorAlert', $th->getMessage());
+            return redirect()->back()->with('error', $th->getMessage());
         }
     }
 
@@ -86,7 +86,7 @@ class CourseController extends Controller
             $course->delete();
             return redirect()->back()->with('successToast', 'Course successfully deleted!');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('errorAlert', $th->getMessage());
+            return redirect()->back()->with('error', $th->getMessage());
         }
     }
 }

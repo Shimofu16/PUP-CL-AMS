@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SchoolYear;
 use App\Models\Section;
+use App\Models\Student;
+use App\Models\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -15,13 +20,43 @@ class HomeController extends Controller
     }
     public function register(Request $request)
     {
-        dd($request->all());
+
         $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-            'password_confirmation' => 'required',
+            'student_no' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|unique:students,email',
+            'date_of_birth' => 'required|date',
+            'phone' => 'required',
+            'gender' => 'required',
+            'password' => 'required|confirmed',
+            'password_confirmation' => 'required|same:password',
+            'section_id' => 'required',
         ]);
+        try {
+            $id =  Student::create([
+                'student_no' => $request->student_no,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => Str::lower($request->email),
+                'date_of_birth' => $request->date_of_birth,
+                'phone' => $request->phone,
+                'gender' => $request->gender,
+                'address' => $request->address,
+                'section_id' => $request->section_id,
+                'course_id' => Section::find($request->section_id)->course->id,
+                'sy_id' => SchoolYear::where('is_active', true)->first()->id,
+            ])->id;
+            User::create([
+                'email' => Str::lower($request->email),
+                'password' => Hash::make($request->password),
+                'role_id' => 4,
+                'student_id' => $id,
+            ]);
+            return redirect()->back()->with('successToast', 'Registration Successful');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', $th->getMessage());
+        }
     }
     public function registrationForm()
     {

@@ -42,7 +42,7 @@ class FacultyController extends Controller
             ]);
             return redirect()->back()->with('successToast', 'Faculty member created successfully');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('errorAlert', $th->getMessage());
+            return redirect()->back()->with('error', $th->getMessage());
         }
     }
 
@@ -81,7 +81,7 @@ class FacultyController extends Controller
             ]);
             return redirect()->back()->with('successToast', 'Faculty member updated successfully');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('errorAlert', $th->getMessage());
+            return redirect()->back()->with('error', $th->getMessage());
         }
     }
 
@@ -97,7 +97,7 @@ class FacultyController extends Controller
             $faculty_member->delete();
             return redirect()->back()->with('successToast', 'Faculty member deleted successfully');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('errorAlert', $th->getMessage());
+            return redirect()->back()->with('error', $th->getMessage());
         }
     }
 }

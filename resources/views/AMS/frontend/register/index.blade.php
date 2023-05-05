@@ -1,11 +1,12 @@
 @extends('AMS.frontend.layouts.master')
 
-@section('page-title','Register')
+@section('page-title', 'Register')
 
 @section('contents')
     <form action="{{ route('register.store') }}" method="POST" class="text-start">
-        <div class="card-body py-1">
-            @csrf
+        @csrf
+        @method('POST')
+        <div class="card-body py-1" id="first-page">
             <div class="row mb-3">
                 <div class="col-12">
                     <label for="student_no" class="form-label fw-bold">Student Number:</label>
@@ -67,11 +68,143 @@
                 </div>
             </div>
         </div>
+        <div class="card-body py-1" id="second-page">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <label for="password" class="form-label fw-bold text-maroon">Password</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                    @error('password')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                    <div class="alert alert-danger mt-2" role="alert" id="alert-password">
+
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-12">
+                    <label for="password_confirmation" class="form-label fw-bold text-maroon">Confirm
+                        Password</label>
+                    <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+                    @error('password_confirmation')
+                        <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                    <div class="alert alert-danger mt-2" role="alert" id="alert-password_confirmation">
+
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-12">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="show">
+                        <label class="form-check-label  fw-bold text-maroon" for="show">Show Password</label>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="card-footer bg-transparent border-0 d-flex flex-column mb-3">
-            <button type="submit" class="btn btn-maroon mb-1">Register</button>
-            <a href="{{ route('home.index') }}" id="back" class="btn btn-outline-maroon text-maroon">
-                Back
+            <button type="submit" class="btn btn-maroon mb-1" id="register">Register</button>
+            <button type="button" class="btn btn-maroon mb-1" id="next">Next</button>
+            <a href="{{ route('home.index') }}" id="home" class="btn btn-outline-maroon text-maroon">
+                Home
             </a>
+            <button type="button" id="back" class="btn btn-outline-maroon text-maroon">
+                back
+            </button>
         </div>
     </form>
+@endsection
+@section('scripts')
+    <script src="{{ asset('assets/packages/jQuery-3.6.0/jquery-3.6.0.min.js') }}"></script>
+
+    {{-- generate a jquesry --}}
+    <script>
+        $(document).ready(function() {
+            /* show the first page and hide all the other pages */
+            $('#first-page').show();
+            $('#second-page').hide();
+            $('#next').show();
+            $('#home').show();
+            $('#back').hide();
+            $('#register').hide();
+            /* when the next button is clicked */
+            $('#next').click(function() {
+                /* validate the form first before show/hide forms */
+                if ($('#first_name').val() == '' || $('#last_name').val() == '' || $('#email').val() ==
+                    '' ||
+                    $('#phone').val() == '' || $('#address').val() == '' || $('#date_of_birth').val() ==
+                    '' ||
+                    $('#gender').val() == '' || $('#section_id').val() == '') {
+                    alert('Please fill up all fields');
+                } else {
+                    /* hide the first page and show the second page */
+                    $('#first-page').hide();
+                    $('#second-page').show();
+                    $('#back').show();
+                    $('#register').show();
+                    $('#home').hide();
+                    $('#next').hide();
+                }
+            });
+            /* when the back button is clicked */
+            $('#back').click(function() {
+                /* hide the second page and show the first page */
+                $('#first-page').show();
+                $('#second-page').hide();
+                $('#next').show();
+                $('#home').show();
+                $('#back').hide();
+                $('#register').hide();
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#alert-password').hide();
+            $('#alert-password_confirmation').hide();
+            $('#show').click(function() {
+                if ($(this).is(':checked')) {
+                    $('#password').attr('type', 'text');
+                    $('#password_confirmation').attr('type', 'text');
+                    console.log('checked')
+                } else {
+                    $('#password').attr('type', 'password');
+                    $('#password_confirmation').attr('type', 'password');
+                    console.log('uncheked')
+                }
+            });
+            /* check also if the password is 8 characters */
+            $('#password').keyup(function() {
+                if ($('#password').val()
+                    .length >= 8) {
+                    $('#password').css('border', '1px solid green');
+                    $('#alert-password').hide();
+                    $('#submit').prop('disabled', false);
+                } else {
+                    $('#password').css('border', '1px solid red');
+                    $('#alert-password').show();
+                    $('#alert-password').text('Password must be 8 characters');
+                    $('#submit').prop('disabled', true);
+                }
+            });
+            /* check if the password and confirm password are the same */
+            $('#password_confirmation').keyup(function() {
+                if ($('#password').val() == $('#password_confirmation').val()) {
+                    $('#password_confirmation').css('border', '1px solid green');
+                    $('#alert-password_confirmation').hide();
+                    if ($('#password').val()
+                        .length >= 8) {
+                        $('#submit').prop('disabled', false);
+                    }
+                } else {
+                    $('#password_confirmation').css('border', '1px solid red');
+                    $('#alert-password_confirmation').show();
+                    $('#alert-password_confirmation').text(
+                        'Password and Confirm Password must be the same');
+                    $('#submit').prop('disabled', true);
+                }
+            });
+        });
+    </script>
 @endsection

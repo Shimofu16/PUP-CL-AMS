@@ -37,7 +37,7 @@ class CheckUserStatusMiddleware
                 // logout the user
                 Auth::logout();
                 // Redirect to the login page
-                return redirect()->route('login.index')->with('errorAlert', 'Your account is inactive due to inactivity. Please login again.');
+                return redirect()->route('login.index')->with('error', 'Your account is inactive due to inactivity. Please login again.');
             }
             // The user's last activity was less than 10 minutes ago
             // Update last activity to the current time
@@ -45,10 +45,10 @@ class CheckUserStatusMiddleware
             return $next($request);
         }
         if (auth()->user()->status == "inactive") {
-            return redirect()->route('login.index')->with('errorAlert', 'Your account is inactive. Please contact the administrator.');
+            return redirect()->route('login.index')->with('error', 'Your account is inactive. Please contact the administrator.');
         }
         if (auth()->user()->status == "offline") {
-            return redirect()->route('login.index')->with('errorAlert', 'Your account is offline due to inactive or force logout.');
+            return redirect()->route('login.index')->with('error', 'Your account is offline due to inactive or force logout.');
         }
         $request->session()->forget(Auth::id() . "_last_activity");
         return redirect()->route('login.index');

@@ -46,7 +46,7 @@ class ScheduleController extends Controller
             $subject = $schedule->subject->subject_name;
             return view('AMS.backend.faculty-layouts.schedule.show', compact('schedule', 'section', 'subject'));
         } catch (\Throwable $th) {
-            return redirect()->back()->with('errorAlert', $th->getMessage());
+            return redirect()->back()->with('error', $th->getMessage());
         }
     }
 
@@ -94,7 +94,7 @@ class ScheduleController extends Controller
 
             return redirect()->back()->with('successToast', 'Schedule updated successfully.');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('errorAlert', $th->getMessage());
+            return redirect()->back()->with('error', $th->getMessage());
         }
     }
 

@@ -42,7 +42,7 @@ class SectionController extends Controller
             ]);
             return redirect()->back()->with('successToast', 'Section created successfully');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('errorAlert', $th->getMessage());
+            return redirect()->back()->with('error', $th->getMessage());
         }
     }
 
@@ -74,7 +74,7 @@ class SectionController extends Controller
             ]);
             return redirect()->back()->with('successToast', 'Section updated successfully');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('errorAlert', $th->getMessage());
+            return redirect()->back()->with('error', $th->getMessage());
         }
     }
 
@@ -87,7 +87,7 @@ class SectionController extends Controller
             Section::where('id', $id)->delete();
             return redirect()->back()->with('successToast', 'Section deleted successfully');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('errorAlert', $th->getMessage());
+            return redirect()->back()->with('error', $th->getMessage());
         }
     }
 }

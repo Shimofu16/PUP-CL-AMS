@@ -69,7 +69,7 @@ class StudentController extends Controller
             ]);
             return redirect()->back()->with('successToast', 'Student updated successfully!');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('errorAlert', $th->getMessage());
+            return redirect()->back()->with('error', $th->getMessage());
         }
     }
 
