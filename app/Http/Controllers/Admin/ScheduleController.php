@@ -47,7 +47,7 @@ class ScheduleController extends Controller
             ]);
             return redirect()->back()->with('successToast', 'Schedule Added Successfully!');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', $th->getMessage());
+            return redirect()->back()->with('errorAlert', $th->getMessage());
         }
     }
 
@@ -84,7 +84,7 @@ class ScheduleController extends Controller
             ]);
             return redirect()->back()->with('successToast', 'Schedule Updated Successfully!');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', $th->getMessage());
+            return redirect()->back()->with('errorAlert', $th->getMessage());
         }
     }
 
@@ -97,7 +97,7 @@ class ScheduleController extends Controller
             TeacherClass::find($id)->delete();
             return redirect()->back()->with('successToast', 'Schedule Deleted Successfully!');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', $th->getMessage());
+            return redirect()->back()->with('errorAlert', $th->getMessage());
         }
     }
 }

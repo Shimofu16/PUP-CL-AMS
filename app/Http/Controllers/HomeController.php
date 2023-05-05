@@ -55,7 +55,7 @@ class HomeController extends Controller
             ]);
             return redirect()->back()->with('successToast', 'Registration Successful');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', $th->getMessage());
+            return redirect()->back()->with('errorAlert', $th->getMessage());
         }
     }
     public function registrationForm()

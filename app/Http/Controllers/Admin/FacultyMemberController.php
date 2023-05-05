@@ -68,7 +68,7 @@ class FacultyMemberController extends Controller
             ]);
             return back()->with('successToast', 'Faculty member updated successfully!');
         } catch (\Throwable $th) {
-            return back()->with('error', $th->getMessage());
+            return back()->with('errorAlert', $th->getMessage());
         }
     }
 
@@ -91,7 +91,7 @@ class FacultyMemberController extends Controller
             ]);
             return back()->with('successToast', 'User successfully logout!');
         } catch (\Throwable $th) {
-            return back()->with('error', $th->getMessage());
+            return back()->with('errorAlert', $th->getMessage());
         }
     }
 }

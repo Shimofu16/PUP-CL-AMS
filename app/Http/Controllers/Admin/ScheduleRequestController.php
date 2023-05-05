@@ -67,7 +67,7 @@ class ScheduleRequestController extends Controller
             }
             return redirect()->back()->with('successToast', 'Request approved successfully!');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', $th->getMessage());
+            return redirect()->back()->with('errorAlert', $th->getMessage());
         }
     }
 

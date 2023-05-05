@@ -31,7 +31,7 @@ class DashboardController extends Controller
             }
             dd('Invalid filter.');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', $th->getMessage());
+            return redirect()->back()->with('errorAlert', $th->getMessage());
         }
     }
 

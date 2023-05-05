@@ -50,7 +50,7 @@ class ComputerController extends Controller
             ]);
             return back()->with('successToast', 'The computer has been added');
         } catch (\Throwable $th) {
-            return back()->with('error', $th->getMessage());
+            return back()->with('errorAlert', $th->getMessage());
         }
     }
 
@@ -88,7 +88,7 @@ class ComputerController extends Controller
             return back()->with('successToast', 'The computer has been updated');
             // return back()->withToastSuccess('The computer has been updated');
         } catch (\Throwable $th) {
-            return back()->with('error', $th->getMessage());
+            return back()->with('errorAlert', $th->getMessage());
         }
     }
 
@@ -103,7 +103,7 @@ class ComputerController extends Controller
             $computer->delete();
             return back()->with('successToast', 'The computer has been deleted');
         } catch (\Throwable $th) {
-            return back()->with('error', $th->getMessage());
+            return back()->with('errorAlert', $th->getMessage());
         }
         return back();
     }

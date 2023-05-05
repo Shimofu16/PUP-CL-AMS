@@ -39,7 +39,7 @@ class SubjectController extends Controller
             ]);
             return redirect()->back()->with('successToast', 'Subject Added Successfully!');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', $th->getMessage());
+            return redirect()->back()->with('errorAlert', $th->getMessage());
         }
     }
 
@@ -73,7 +73,7 @@ class SubjectController extends Controller
             ]);
             return redirect()->back()->with('successToast', 'Subject Updated Successfully!');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', $th->getMessage());
+            return redirect()->back()->with('errorAlert', $th->getMessage());
         }
     }
 
@@ -86,7 +86,7 @@ class SubjectController extends Controller
             Subject::where('id', $id)->delete();
             return redirect()->back()->with('successToast', 'Subject Deleted Successfully!');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', $th->getMessage());
+            return redirect()->back()->with('errorAlert', $th->getMessage());
         }
     }
 }

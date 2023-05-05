@@ -50,7 +50,7 @@ class StudentController extends Controller
             ]);
             return redirect()->back()->with('successToast', 'Student created successfully');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', $th->getMessage());
+            return redirect()->back()->with('errorAlert', $th->getMessage());
         }
     }
 
@@ -94,7 +94,7 @@ class StudentController extends Controller
             ]);
             return redirect()->back()->with('successToast', 'Student updated successfully');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', $th->getMessage());
+            return redirect()->back()->with('errorAlert', $th->getMessage());
         }
     }
 
@@ -107,7 +107,7 @@ class StudentController extends Controller
             Student::find($id)->delete();
             return redirect()->back()->with('successToast', 'Student deleted successfully');
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', $th->getMessage());
+            return redirect()->back()->with('errorAlert', $th->getMessage());
         }
     }
 }
