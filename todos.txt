@@ -1,0 +1,9 @@
+/*TODO`s
+* add adding faculty
+* add student attendance
+*
+*/
+/* FIXME`s
+* fix logout for users
+* fix student and admin dashboard
+*/

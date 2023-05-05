@@ -12,17 +12,17 @@
             </div>
             <div class="modal-footer">
                 <form
-                    action="{{ route('admin.report.schedule.request.destroy', ['id' => $request->id, 'status' => 'rejected']) }}"
+                    action="{{ route('admin.report.schedule.request.update', ['id' => $request->id, 'status' => 'rejected']) }}"
                     method="POST">
                     @csrf
-                    @method('DELETE')
+                    @method('PUT')
                     <button type="submit" class="btn btn-secondary">Reject</button>
                 </form>
                 <form
-                    action="{{ route('admin.report.schedule.request.destroy', ['id' => $request->id, 'status' => 'approved']) }}"
+                    action="{{ route('admin.report.schedule.request.update', ['id' => $request->id, 'status' => 'approved']) }}"
                     method="POST">
                     @csrf
-                    @method('DELETE')
+                    @method('PUT')
                     <button type="submit" class="btn btn-info text-white">Yes</button>
                 </form>
             </div>

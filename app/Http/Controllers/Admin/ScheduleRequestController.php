@@ -52,17 +52,19 @@ class ScheduleRequestController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(string $id)
+    public function update(string $id, string $status)
     {
         try {
             $schedule = ScheduleRequest::find($id);
-            $schedule->status = 'approved';
+            $schedule->status = $status;
             $schedule->save();
-            $schedule->teacherClass->update([
-                'date' => $schedule->date,
-                'start_time' => $schedule->start_time,
-                'end_time' => $schedule->end_time,
-            ]);
+            if ($status == 'approved') {
+                $schedule->teacherClass->update([
+                    'date' => $schedule->date,
+                    'start_time' => $schedule->start_time,
+                    'end_time' => $schedule->end_time,
+                ]);
+            }
             return redirect()->back()->with('successToast', 'Request approved successfully!');
         } catch (\Throwable $th) {
             return redirect()->back()->with('errorAlert', $th->getMessage());
@@ -74,13 +76,6 @@ class ScheduleRequestController extends Controller
      */
     public function destroy($id, string $status)
     {
-        try {
-            $request = ScheduleRequest::find($id);
-            $request->status = $status;
-            $request->save();
-            return redirect()->back()->with('successToast', 'Request ' . $status . ' successfully!');
-        } catch (\Throwable $th) {
-            return redirect()->back()->with('errorAlert', $th->getMessage());
-        }
+
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Faculty;
 
 use App\Http\Controllers\Controller;
 use App\Models\ScheduleRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,8 +15,8 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $schedules = Auth::user()->facultyMember->schedules->sortBy('date', SORT_REGULAR, true);
-        return view('AMS.backend.faculty-layouts.schedule.index', compact('schedules'));
+        $teacherClasses = Auth::user()->facultyMember->teacherClasses->sortBy('date', SORT_REGULAR, true);
+        return view('AMS.backend.faculty-layouts.schedule.index', compact('teacherClasses'));
     }
 
     /**
@@ -40,7 +41,7 @@ class ScheduleController extends Controller
     public function show(string $id)
     {
         try {
-            $schedule = Auth::user()->facultyMember->schedules()->findOrFail($id);
+            $schedule = Auth::user()->facultyMember->teacherClasses()->findOrFail($id);
             $section = $schedule->section->section_name;
             $subject = $schedule->subject->subject_name;
             return view('AMS.backend.faculty-layouts.schedule.show', compact('schedule', 'section', 'subject'));
@@ -63,11 +64,33 @@ class ScheduleController extends Controller
     public function update(Request $request, string $id)
     {
         try {
-            dd($request->all());
-            $schedule = Auth::user()->facultyMember->schedules()->findOrFail($id);
-            $latestScheduleRequest = $schedule->scheduleRequests()->latest()->first();
+            $request->validate([
+                'date' => 'required|date',
+                'start_time' => 'required|',
+                'end_time' => 'required|after:start_time',
+                'reason' => 'required|string',
+            ]);
+            $date = Carbon::createFromFormat('Y-m-d', $request->date,);
+            $start_time = Carbon::parse($request->start_time);
+            $end_time = Carbon::parse($request->end_time);
 
-            dd($latestScheduleRequest);
+            $start_datetime = $date->setTime($start_time->hour, $start_time->minute, $start_time->second);
+            $end_datetime = $date->setTime($end_time->hour, $end_time->minute, $end_time->second);
+
+            $request->merge([
+                'start_time' => $start_datetime,
+                'end_time' => $end_datetime,
+            ]);
+
+
+            $schedule = Auth::user()->facultyMember->teacherClasses()->findOrFail($id);
+            ScheduleRequest::create([
+                'teacher_class_id' => $schedule->id,
+                'date' => $request->date,
+                'start_time' => $request->start_time,
+                'end_time' => $request->end_time,
+                'reason' => $request->reason,
+            ]);
 
             return redirect()->back()->with('successToast', 'Schedule updated successfully.');
         } catch (\Throwable $th) {

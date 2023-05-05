@@ -18,15 +18,15 @@ class DashboardController extends Controller
 
             $filter = ($filter === null) ? 'today' : $filter;
             if ($filter === 'today') {
-                $schedules = Auth::user()->facultyMember->schedules->where('date', now())->sortBy('date');
+                $schedules = Auth::user()->facultyMember->teacherClasses->where('date', now())->sortBy('date');
                 return view('AMS.backend.faculty-layouts.dashboard.index', compact('schedules', 'filter'));
             }
             if ($filter === 'week') {
-                $schedules = Auth::user()->facultyMember->schedules->whereBetween('date', [now()->subDay(), now()->addDays(8)])->sortBy('date');
+                $schedules = Auth::user()->facultyMember->teacherClasses->whereBetween('date', [now()->subDay(), now()->addDays(8)])->sortBy('date');
                 return view('AMS.backend.faculty-layouts.dashboard.index', compact('schedules', 'filter'));
             }
             if ($filter === 'month') {
-                $schedules = Auth::user()->facultyMember->schedules->whereBetween('date', [now()->startOfMonth()->subDay(), now()->endOfMonth()->addDay()])->sortBy('date');
+                $schedules = Auth::user()->facultyMember->teacherClasses->whereBetween('date', [now()->startOfMonth()->subDay(), now()->endOfMonth()->addDay()])->sortBy('date');
                 return view('AMS.backend.faculty-layouts.dashboard.index', compact('schedules', 'filter'));
             }
             dd('Invalid filter.');

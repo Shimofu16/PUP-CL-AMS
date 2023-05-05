@@ -113,7 +113,7 @@ Route::middleware(['auth', 'alert', 'checkStatus', 'isAdmin'])->prefix('admin')-
             Route::get('/{status}', 'show')->name('show');
             Route::post('/store', 'store')->name('store');
             Route::put('/{id}/edit', 'edit')->name('edit');
-            Route::put('/{id}/update', 'update')->name('update');
+            Route::put('/{id}/{status}/update', 'update')->name('update');
             Route::delete('/{id}/{status}/destroy', 'destroy')->name('destroy');
         });
     });

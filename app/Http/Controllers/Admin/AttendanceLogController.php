@@ -7,11 +7,7 @@ use App\Models\AttendanceLog;
 use App\Models\Course;
 use App\Models\SchoolYear;
 use App\Models\Semester;
-use App\Models\Student;
-use App\Models\TeacherClass;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Termwind\Components\Dd;
 
 class AttendanceLogController extends Controller
 {
@@ -21,7 +17,9 @@ class AttendanceLogController extends Controller
     public function index()
     {
         $attendance_logs = AttendanceLog::with(['teacherClass', 'student', 'computer', 'course'])
-            ->get()
+        ->where('sy_id', SchoolYear::where('is_active', true)->first()->id)
+        ->where('semester_id', SchoolYear::where('is_active', true)->first()->semester_id)
+        ->get()
             ->sortBy([
                 ['course.name', 'asc'],
                 ['student.last_name', 'asc'],

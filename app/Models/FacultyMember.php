@@ -28,7 +28,7 @@ class FacultyMember extends Model
     {
         return $this->hasOne(User::class, 'faculty_member_id');
     }
-    public function schedules()
+    public function teacherClasses()
     {
         return $this->hasMany(TeacherClass::class, 'teacher_id');
     }

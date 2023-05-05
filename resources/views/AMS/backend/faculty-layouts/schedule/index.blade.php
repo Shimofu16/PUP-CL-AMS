@@ -22,15 +22,14 @@
                                     <th scope="col">Subject</th>
                                     <th scope="col">Section</th>
                                     <th scope="col">Date</th>
-                                    <th scope="col">Status</th>
                                     <th scope="col" class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($schedules as $schedule)
+                                @foreach ($teacherClasses as $schedule)
                                     @php
                                         $status = $schedule
-                                            ->scheduleRequest->status
+                                            ->scheduleRequest->latest()->first()->status
                                     @endphp
                                     <tr>
                                         <td>
@@ -50,27 +49,15 @@
                                             {{ date('h:i:a', strtotime($schedule->end_time)) }}
                                         </td>
 
-                                        <td>
-                                            @if ($status == 'pending')
-                                                <span class="badge bg-warning">Pending</span>
-                                            @elseif($status == 'approved')
-                                                <span class="badge bg-success">Approved</span>
-                                            @elseif($status == 'declined')
-                                                <span class="badge bg-danger">Declined</span>
-                                            @else
-                                                <span class="badge bg-info">No Request</span>
-                                            @endif
-                                        </td>
 
                                         <td>
                                             <div class="d-flex justify-content-center px-2 py-1">
                                                 @php
-                                                    $scheduledDate = \Carbon\Carbon::parse($schedule->date);
                                                     $isPast = strtotime($schedule->date) < strtotime(date('Y-m-d')) ? true : false;
                                                 @endphp
 
                                                 <button
-                                                    class="btn btn-link text-primary px-3 mb-0 {{ $status === 'pending' || $status === 'approved' ||$isPast? 'disabled': '' }}"
+                                                    class="btn btn-link text-primary px-3 mb-0 {{ $isPast? 'disabled': '' }}"
                                                     type="button" data-bs-toggle="modal"
                                                     data-bs-target="#edit{{ $schedule->id }}">
                                                     <i class="ri-edit-line text-primary me-2" aria-hidden="true"></i>
