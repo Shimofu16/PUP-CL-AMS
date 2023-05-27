@@ -65,7 +65,7 @@ class ScheduleRequestController extends Controller
                     'end_time' => $schedule->end_time,
                 ]);
             }
-            return redirect()->back()->with('successToast', 'Request approved successfully!');
+            return redirect()->back()->with('successToast', 'Request ' . $status . ' successfully!');
         } catch (\Throwable $th) {
             return redirect()->back()->with('errorAlert', $th->getMessage());
         }
@@ -76,6 +76,5 @@ class ScheduleRequestController extends Controller
      */
     public function destroy($id, string $status)
     {
-
     }
 }

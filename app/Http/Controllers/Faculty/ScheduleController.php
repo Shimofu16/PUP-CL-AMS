@@ -63,13 +63,13 @@ class ScheduleController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'date' => 'required|date',
+            'start_time' => 'required|',
+            'end_time' => 'required|after:start_time',
+            'reason' => 'required|string',
+        ]);
         try {
-            $request->validate([
-                'date' => 'required|date',
-                'start_time' => 'required|',
-                'end_time' => 'required|after:start_time',
-                'reason' => 'required|string',
-            ]);
             $date = Carbon::createFromFormat('Y-m-d', $request->date,);
             $start_time = Carbon::parse($request->start_time);
             $end_time = Carbon::parse($request->end_time);
