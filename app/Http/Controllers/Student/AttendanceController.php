@@ -12,6 +12,7 @@ class AttendanceController extends Controller
      */
     public function index()
     {
+        
         return view('AMS.backend.student-layouts.attendance.index');
     }
 

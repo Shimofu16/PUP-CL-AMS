@@ -18,7 +18,7 @@
                             </li>
 
                             <li><a class="dropdown-item"
-                                    href="{{ route('faculty.dashboard.index',['']) }}">Today</a></li>
+                                    href="{{ route('faculty.dashboard.index',['filter' => 'today']) }}">Today</a></li>
                             <li><a class="dropdown-item"
                                     href="{{ route('faculty.dashboard.index', ['filter' => 'week']) }}">This Week</a></li>
                             <li><a class="dropdown-item"

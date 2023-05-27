@@ -74,7 +74,15 @@ class HomeController extends Controller
             'password' => ['required'],
         ]);
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
-
+            //check if the student has schedule today
+            if (Auth::user()->role->name == 'student') {
+                $student = Student::find(Auth::user()->student_id);
+                // check if the scheduled date is equal to the same date now.
+                if ($student->section->schedules()->where('date', now()->format('Y-m-d'))->count() == 0) {
+                    Auth::logout();
+                    return redirect()->back()->with('errorAlert', 'You have no schedule today');
+                }
+            }
             // Authentication was successful...
 
             Auth::user()->status = "online";

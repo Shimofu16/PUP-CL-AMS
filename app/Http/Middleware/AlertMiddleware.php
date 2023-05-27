@@ -24,7 +24,7 @@ class AlertMiddleware
                 ->timerProgressBar();
         }
         if ($request->session()->has('errorAlert')) {
-            Alert::error('SYSTEM MESSAGE', $request->session()->get('error'))
+            Alert::error('SYSTEM MESSAGE', $request->session()->get('errorAlert'))
                 ->autoClose(5000)
                 ->animation('animate__fadeIn', 'animate__fadeOut')
                 ->timerProgressBar();

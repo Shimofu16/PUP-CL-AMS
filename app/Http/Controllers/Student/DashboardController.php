@@ -10,9 +10,11 @@ class DashboardController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($filter = null)
     {
-        return view('AMS.backend.student-layouts.dashboard.index');
+        $filter = $filter ? $filter : 'today';
+        $schedules = auth()->user()->student->getScheduleBy($filter);
+        return view('AMS.backend.student-layouts.dashboard.index', compact('schedules', 'filter'));
     }
 
     /**

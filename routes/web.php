@@ -217,12 +217,13 @@ Route::middleware(['auth', 'alert', 'checkStatus', 'isFaculty'])->prefix('facult
     });
 });
 Route::middleware(['auth', 'alert', 'checkStatus', 'isStudent'])->prefix('student')->name('student.')->group(function () {
-    Route::get('/dashboard', [StudentDashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/dashboard/{filter?}', [StudentDashboardController::class, 'index'])->name('dashboard.index');
 
     /* ATTENDANCE */
     Route::prefix('attendance')->name('attendance.')->controller(StudentAttendanceController::class)->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('/{id}', 'show')->name('show');
+        Route::get('/create', 'create')->name('create');
         Route::post('/store', 'store')->name('store');
         Route::put('/{id}/edit', 'edit')->name('edit');
         Route::put('/{id}/update', 'update')->name('update');

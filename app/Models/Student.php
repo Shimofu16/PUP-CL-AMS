@@ -42,7 +42,34 @@ class Student extends Model
     {
         return Str::ucfirst($this->first_name) . ' ' . Str::ucfirst($this->last_name);
     }
-     public function schoolYear()
+    public function getScheduleBy($type)
+    {
+        switch ($type) {
+            case 'week':
+                /* get schedule for a week */
+                $schedule = $this->section->schedules()->whereBetween('date', [now()->startOfWeek()->subDay(), now()->endOfWeek()->addDay()])->get();
+                break;
+            case 'month':
+                /* get schedule for a month */
+                $schedule = $this->section->schedules()->whereBetween('date', [now()->startOfMonth()->subDay(), now()->endOfMonth()->addDay()])->get();
+                break;
+            default:
+                $schedule = $this->section->schedules()->where('date', now())->first();
+                break;
+        }
+        if ($schedule) {
+            return $schedule;
+        }
+        return collect();
+    }
+    public function checkIfStudentHasSchedule()
+    {
+        if ($this->section->schedules()->where('date', now()->format('Y-m-d'))->count() == 0) {
+            return false;
+        }
+        return true;
+    }
+    public function schoolYear()
     {
         return $this->belongsTo(SchoolYear::class, 'sy_id');
     }
