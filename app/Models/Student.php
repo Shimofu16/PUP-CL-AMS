@@ -45,6 +45,10 @@ class Student extends Model
     public function getScheduleBy($type)
     {
         switch ($type) {
+            case 'today':
+                /* get schedule for a today */
+                $schedule = $this->section->schedules()->where('date', now()->format('Y-m-d'))->get();
+                break;
             case 'week':
                 /* get schedule for a week */
                 $schedule = $this->section->schedules()->whereBetween('date', [now()->startOfWeek()->subDay(), now()->endOfWeek()->addDay()])->get();
@@ -52,9 +56,6 @@ class Student extends Model
             case 'month':
                 /* get schedule for a month */
                 $schedule = $this->section->schedules()->whereBetween('date', [now()->startOfMonth()->subDay(), now()->endOfMonth()->addDay()])->get();
-                break;
-            default:
-                $schedule = $this->section->schedules()->where('date', now())->first();
                 break;
         }
         if ($schedule) {
