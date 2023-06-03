@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Models\AttendanceLog;
+use App\Models\Computer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
@@ -12,8 +15,9 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        
-        return view('AMS.backend.student-layouts.attendance.index');
+        $schedules = Auth::user()->student->getScheduleBy('today');
+        $computers = Computer::all();
+        return view('AMS.backend.student-layouts.attendance.index', compact('schedules','computers'));
     }
 
     /**
@@ -37,7 +41,7 @@ class AttendanceController extends Controller
      */
     public function show($choice)
     {
-        return view('AMS.backend.student-layouts.attendance.show',compact('choice'));
+        return view('AMS.backend.student-layouts.attendance.show', compact('choice'));
     }
 
     /**
@@ -53,7 +57,23 @@ class AttendanceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $request->validate([
+                'computer_id' =>'required',
+                'status' => 'required',
+                'description' => 'required'
+            ]);
+            AttendanceLog::create([
+                'teacher_class_id' => $id,
+                'student_id' => Auth::user()->student->id,
+                'computer_id' => $request->computer_id,
+                'status' => $request->status,
+                'description' => $request->description,
+            ]);
+            return redirect()->back()->with('successToast', 'Attendance successfully logged!');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('errorAlert', $th->getMessage());
+        }
     }
 
     /**

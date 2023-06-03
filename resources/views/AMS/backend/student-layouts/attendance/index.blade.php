@@ -5,20 +5,57 @@
 @endsection
 
 @section('contents')
-<section class="section">
-    <div class="row justify-content-center align-content-center overflow-hidden" style="height: 100vh; width: 100%" >
-        <div class="col-6">
+    <section class="section">
+        <div class="col-12">
             {{-- generate a card with button of "take attendance" in the middle --}}
             <div class="card">
-                <div class="card-header">
-                    <h4 class="text-center">Todo :)</h4>
+                <div class="card-header d-flex justify-content-between border-bottom-0">
+                    <h3 class="text-maroon">@yield('page-title')</h3>
                 </div>
-                <div class="card-body d-flex justify-content-center align-items-center">
-                    <button type="button" class="btn btn-primary">Take Attendance</button>
+                <div class="card-body">
+
+                    <!-- Table with stripped rows -->
+                    <table class="table" id="courses-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Subject</th>
+                                <th scope="col">Teacher</th>
+                                <th scope="col">Date & Time</th>
+                                <th scope="col" class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($schedules as $schedule)
+                                <tr>
+
+                                    <td>
+                                        {{ $schedule->subject->subject_name }}
+                                    </td>
+                                    <td>
+                                        {{ $schedule->teacher->getFullName() }}
+                                    </td>
+                                    <td>
+                                        {{ date('F d, Y', strtotime($schedule->date)) }} at {{ date('h:i:a', strtotime($schedule->start_time)) }}
+                                        -
+                                        {{ date('h:i:a', strtotime($schedule->end_time)) }}
+                                    </td>
+                                    <td>
+                                        <div class="d-flex justify-content-center px-2 py-1">
+                                            <button class="btn btn-link text-primary mb-0" type="button"
+                                                data-bs-toggle="modal" data-bs-target="#edit{{ $schedule->id }}">
+                                                <i class="ri-edit-line text-primary me-2" aria-hidden="true""></i>
+                                            </button>
+                                            @include('AMS.backend.student-layouts.attendance.modal._take_attendance')
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 @endsection
-

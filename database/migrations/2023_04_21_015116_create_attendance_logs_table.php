@@ -24,8 +24,8 @@ return new class extends Migration
             $table->foreign('sy_id')->references('id')->on('school_years');
             $table->foreign('semester_id')->references('id')->on('semesters');
             $table->string('status'); // present, absent, late
-            $table->dateTime('time_in');
-            $table->dateTime('time_out');
+            /* $table->dateTime('time_in');
+            $table->dateTime('time_out'); */
             $table->string('description');
             $table->softDeletes();
             $table->timestamps();
