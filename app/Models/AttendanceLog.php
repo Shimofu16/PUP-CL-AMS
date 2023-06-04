@@ -28,7 +28,9 @@ class AttendanceLog extends Model
     }
     public function computer()
     {
-        return $this->belongsTo(Computer::class, 'computer_id');
+        return $this->belongsTo(Computer::class, 'computer_id','id')->withDefault([
+            'status' => 'Not Working'
+        ]);
     }
     public function course()
     {

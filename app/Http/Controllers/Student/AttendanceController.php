@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Models\AttendanceLog;
 use App\Models\Computer;
+use App\Models\SchoolYear;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -63,10 +64,13 @@ class AttendanceController extends Controller
                 'status' => 'required',
                 'description' => 'required'
             ]);
+            $sy= SchoolYear::where('is_active', 1)->first();
             AttendanceLog::create([
                 'teacher_class_id' => $id,
                 'student_id' => Auth::user()->student->id,
                 'computer_id' => $request->computer_id,
+                'sy_id' => $sy->id,
+                'semester_id' => $sy->semester_id,
                 'status' => $request->status,
                 'description' => $request->description,
             ]);

@@ -21,6 +21,8 @@ class ComputerStatusLog extends Model
 
     public function computer()
     {
-        return $this->belongsTo(Computer::class, 'computer_id');
+        return $this->belongsTo(Computer::class, 'computer_id')->withDefault([
+            'status' => 'Not Working'
+        ]);
     }
 }
