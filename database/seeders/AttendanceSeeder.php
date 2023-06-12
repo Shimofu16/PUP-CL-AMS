@@ -23,7 +23,6 @@ class AttendanceSeeder extends Seeder
                 'status' => 'Working',
                 'sy_id' => SchoolYear::where('is_active', true)->first()->id,
                 'semester_id' => 1,
-                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, quis aliquam nisl nisl vitae nisl. Sed vitae nisl eget nisl aliquet aliquet. Sed vitae nisl eget nisl aliquet aliquet.',
             ],
             [
                 'teacher_class_id' => 1,
@@ -32,7 +31,6 @@ class AttendanceSeeder extends Seeder
                 'status' => 'Working',
                 'sy_id' => SchoolYear::where('is_active', true)->first()->id,
                 'semester_id' => 1,
-                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, quis aliquam nisl nisl vitae nisl. Sed vitae nisl eget nisl aliquet aliquet. Sed vitae nisl eget nisl aliquet aliquet.',
             ],
             [
                 'teacher_class_id' => 2,
@@ -41,7 +39,6 @@ class AttendanceSeeder extends Seeder
                 'status' => 'Working',
                 'sy_id' => SchoolYear::where('is_active', true)->first()->id,
                 'semester_id' => 1,
-                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, quis aliquam nisl nisl vitae nisl. Sed vitae nisl eget nisl aliquet aliquet. Sed vitae nisl eget nisl aliquet aliquet.',
             ],
             [
                 'teacher_class_id' => 2,
@@ -50,7 +47,6 @@ class AttendanceSeeder extends Seeder
                 'status' => 'Working',
                 'sy_id' => SchoolYear::where('is_active', true)->first()->id,
                 'semester_id' => 1,
-                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, quis aliquam nisl nisl vitae nisl. Sed vitae nisl eget nisl aliquet aliquet. Sed vitae nisl eget nisl aliquet aliquet.',
             ],
         ];
         foreach ($data as $attendance) {

@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('computer_status_logs', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('computer_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('computer_id')->references('id')->on('computers');
             $table->string('status'); // Available, Not Available, Broken
             $table->string('description');

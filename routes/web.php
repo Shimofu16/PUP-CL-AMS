@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AttendanceLogController;
 use App\Http\Controllers\Admin\ComputerController;
+use App\Http\Controllers\Admin\ComputerStatusLogController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\FacultyMemberController;
 use App\Http\Controllers\HomeController;
@@ -11,6 +12,8 @@ use App\Http\Controllers\Admin\ScheduleRequestController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\SubjectController;
+use App\Http\Controllers\Admin\UserLogController;
+use App\Http\Controllers\Faculty\ComputerStatusLogController as FacultyComputerStatusLogController;
 use App\Http\Controllers\Faculty\CourseController  as FacultyCourseController;
 use App\Http\Controllers\Faculty\DashboardController as FacultyDashboardController;
 use App\Http\Controllers\Faculty\SubjectController as FacultySubjectController;
@@ -39,7 +42,7 @@ Route::middleware('alert')->controller(HomeController::class)->group(function ()
     Route::post('/register/student', 'register')->name('register.store');
     Route::get('/login', 'loginForm')->name('login.index');
     Route::post('/login', 'login')->name('login.store');
-    Route::post('/logout', [HomeController::class, 'logout'])->name('logout.delete')->middleware('auth');
+    Route::post('/logout',  'logout')->name('logout.delete')->middleware('auth');
 });
 Route::middleware(['auth', 'alert', 'checkStatus', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard.index');
@@ -106,6 +109,16 @@ Route::middleware(['auth', 'alert', 'checkStatus', 'isAdmin'])->prefix('admin')-
             Route::put('/{id}/update', 'update')->name('update');
             Route::delete('/{id}/destroy', 'destroy')->name('destroy');
         });
+        /* COMPUTER LOG */
+        Route::prefix('computer')->name('computer.')->controller(ComputerStatusLogController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/charts', 'charts')->name('charts');
+            Route::get('/{id}', 'show')->name('show');
+            Route::post('/store', 'store')->name('store');
+            Route::put('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}/update', 'update')->name('update');
+            Route::delete('/{id}/destroy', 'destroy')->name('destroy');
+        });
 
         /* SCHEDULE REQUEST  */
         Route::prefix('schedule/request')->name('schedule.request.')->controller(ScheduleRequestController::class)->group(function () {
@@ -142,10 +155,18 @@ Route::middleware(['auth', 'alert', 'checkStatus', 'isAdmin'])->prefix('admin')-
             Route::put('/{id}/update', 'update')->name('update');
             Route::delete('/{id}/destroy', 'destroy')->name('destroy');
         });
+        Route::prefix('log')->name('log.')->controller(UserLogController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/{id}', 'show')->name('show');
+            Route::post('/store', 'store')->name('store');
+            Route::put('/{id}/edit', 'edit')->name('edit');
+            Route::put('/{id}/update', 'update')->name('update');
+            Route::delete('/{id}/destroy', 'destroy')->name('destroy');
+        });
 
         /* STUDENT */
         Route::prefix('student')->name('student.')->controller(StudentController::class)->group(function () {
-            Route::get('/', 'index')->name('index');
+            Route::get('/{section_id?}', 'index')->name('index');
             Route::get('/{id}', 'show')->name('show');
             Route::post('/store', 'store')->name('store');
             Route::put('/{id}/edit', 'edit')->name('edit');
@@ -177,6 +198,7 @@ Route::middleware(['auth', 'alert', 'checkStatus', 'isFaculty'])->prefix('facult
             Route::put('/{id}/update', 'update')->name('update');
             Route::delete('/{id}/destroy', 'destroy')->name('destroy');
         });
+
         /* SUBJECT */
         Route::prefix('subject')->name('subject.')->controller(FacultySubjectController::class)->group(function () {
             Route::get('/', 'index')->name('index');
@@ -186,6 +208,15 @@ Route::middleware(['auth', 'alert', 'checkStatus', 'isFaculty'])->prefix('facult
             Route::put('/{id}/update', 'update')->name('update');
             Route::delete('/{id}/destroy', 'destroy')->name('destroy');
         });
+    });
+      /* Computer status log */
+      Route::prefix('computer')->name('computer.')->controller(FacultyComputerStatusLogController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::get('/{id}', 'show')->name('show');
+        Route::post('/store', 'store')->name('store');
+        Route::put('/{id}/edit', 'edit')->name('edit');
+        Route::put('/{id}/update', 'update')->name('update');
+        Route::delete('/{id}/destroy', 'destroy')->name('destroy');
     });
     /* FACULTY */
     Route::prefix('faculty')->name('faculty.')->controller(FacultyFacultyMemberController::class)->group(function () {

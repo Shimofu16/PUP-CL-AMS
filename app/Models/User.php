@@ -58,4 +58,21 @@ class User extends Authenticatable
     {
         return $this->belongsTo(FacultyMember::class, 'faculty_member_id');
     }
+    public function computerStatusLogs()
+    {
+        return $this->hasMany(ComputerStatusLog::class, 'user_id');
+    }
+    public function logs(){
+        return $this->hasMany(Log::class, 'user_id');
+    }
+    public function getLogsWithinAWeek(){
+        return $this->logs()->where('created_at', '>=', now()->subDays(7))->get();
+    }
+    public function getName(){
+        if($this->role->name == 'student'){
+            return $this->student->first_name.' '.$this->student->last_name;
+        }else{
+            return $this->facultyMember->first_name.' '.$this->facultyMember->last_name;
+        }
+    }
 }

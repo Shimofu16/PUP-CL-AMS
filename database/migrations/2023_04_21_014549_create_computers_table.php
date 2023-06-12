@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('memory');
             $table->string('storage');
             $table->string('graphics');
-
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

@@ -7,6 +7,7 @@ use App\Models\AttendanceLog;
 use App\Models\Course;
 use App\Models\SchoolYear;
 use App\Models\Semester;
+use App\Models\TeacherClass;
 use Illuminate\Http\Request;
 
 class AttendanceLogController extends Controller
@@ -16,7 +17,7 @@ class AttendanceLogController extends Controller
      */
     public function index()
     {
-        $attendance_logs = AttendanceLog::with(['teacherClass', 'student', 'computer', 'course'])
+        /* $attendance_logs = AttendanceLog::with(['teacherClass', 'student', 'computer', 'course'])
         ->where('sy_id', SchoolYear::where('is_active', true)->first()->id)
         ->where('semester_id', SchoolYear::where('is_active', true)->first()->semester_id)
         ->get()
@@ -25,9 +26,15 @@ class AttendanceLogController extends Controller
                 ['student.last_name', 'asc'],
                 ['teacherClass.date', 'desc']
             ], SORT_REGULAR, false)
-            ->values();
+            ->values(); */
+        /* get all teacher classes with attendance logs in it. also one data for each teacher*/
 
-        return view('AMS.backend.admin-layouts.reports.attendance.index', compact('attendance_logs'));
+        $schedules = TeacherClass::with(['attendanceLogs' => function ($query) {
+            $query->where('sy_id', SchoolYear::where('is_active', true)->first()->id)
+                ->where('semester_id', SchoolYear::where('is_active', true)->first()->semester_id);
+        }])->get();
+
+        return view('AMS.backend.admin-layouts.reports.attendance.index', compact('schedules'));
     }
     public function charts()
     {
@@ -60,7 +67,7 @@ class AttendanceLogController extends Controller
                 });
             }
         ])->having('attendance_logs_count', '>', 0)->get();
-        return view('AMS.backend.admin-layouts.reports.attendance.show', compact('getTotalPerWeek', 'getTotalToday', 'getTotalPerSchoolYear','getTotalPerSemester'));
+        return view('AMS.backend.admin-layouts.reports.attendance.charts', compact('getTotalPerWeek', 'getTotalToday', 'getTotalPerSchoolYear','getTotalPerSemester'));
     }
 
     /**
@@ -82,9 +89,14 @@ class AttendanceLogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(AttendanceLog $attendanceLog)
+    public function show($id)
     {
-        //
+        try {
+            $schedule = TeacherClass::with('attendanceLogs')->findOrFail($id);
+            return view('AMS.backend.admin-layouts.reports.attendance.show', compact('schedule'));
+        } catch (\Throwable $th) {
+            return back()->with('errorAlert', $th->getMessage());
+        }
     }
 
     /**

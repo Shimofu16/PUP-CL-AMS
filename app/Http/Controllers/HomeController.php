@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Log;
 use App\Models\SchoolYear;
 use App\Models\Section;
 use App\Models\Student;
@@ -87,6 +88,12 @@ class HomeController extends Controller
 
             Auth::user()->status = "online";
             Auth::user()->save();
+
+            Log::create([
+                'user_id' => Auth::id(),
+                'action' => 'login',
+                'time_in' => now(),
+            ]);
             /* save last_activity into session */
             $request->session()->regenerate();
             $request->session()->put(Auth::id() . '_last_activity', now());
@@ -112,6 +119,15 @@ class HomeController extends Controller
         // set the user's status to offline
         Auth::user()->status = "offline";
         Auth::user()->save();
+        // create a log
+        $log = Log::where('user_id', Auth::id())
+            ->whereNull('time_out')
+            ->latest()
+            ->first();
+
+        $log->update([
+            'time_out' => now(),
+        ]);
         //regenerate   session
         $request->session()->invalidate();
         $request->session()->regenerateToken();

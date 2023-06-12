@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\ComputerStatusLog;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class ComputerStatusLogController extends Controller
+class UserLogController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $reports = ComputerStatusLog::all();
-        return view('AMS.backend.admin-layouts.reports.computer.index',  compact('reports'));
+        
     }
 
     /**
@@ -36,15 +35,17 @@ class ComputerStatusLogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(ComputerStatusLog $computerStatusLog)
+    public function show( $id)
     {
-        //
+        $user = User::find($id);
+        $pageTitle = $user->getName().' Logs';
+        return view('AMS.backend.admin-layouts.user.logs', compact('user','pageTitle'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ComputerStatusLog $computerStatusLog)
+    public function edit(string $id)
     {
         //
     }
@@ -52,7 +53,7 @@ class ComputerStatusLogController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ComputerStatusLog $computerStatusLog)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -60,7 +61,7 @@ class ComputerStatusLogController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ComputerStatusLog $computerStatusLog)
+    public function destroy(string $id)
     {
         //
     }

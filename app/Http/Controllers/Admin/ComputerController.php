@@ -38,6 +38,7 @@ class ComputerController extends Controller
             'processor' => 'required',
             'memory' => 'required',
             'storage' => 'required',
+            'status'=> 'required'
         ]);
         try {
             Computer::create([
@@ -47,6 +48,8 @@ class ComputerController extends Controller
                 'processor' => $request->processor,
                 'memory' => $request->memory,
                 'storage' => $request->storage,
+                'status' => $request->status,
+
             ]);
             return back()->with('successToast', 'The computer has been added');
         } catch (\Throwable $th) {
@@ -84,6 +87,7 @@ class ComputerController extends Controller
                 'processor' => $request->processor,
                 'memory' => $request->memory,
                 'storage' => $request->storage,
+                'status' => $request->status,
             ]);
             return back()->with('successToast', 'The computer has been updated');
             // return back()->withToastSuccess('The computer has been updated');

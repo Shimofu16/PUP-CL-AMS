@@ -26,7 +26,6 @@ return new class extends Migration
             $table->string('status'); // present, absent, late
             /* $table->dateTime('time_in');
             $table->dateTime('time_out'); */
-            $table->string('description');
             $table->softDeletes();
             $table->timestamps();
         });

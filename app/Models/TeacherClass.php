@@ -53,4 +53,8 @@ class TeacherClass extends Model
     {
         return $this->attendanceLogs()->where('student_id', auth()->user()->student->id)->whereDate('created_at', date('Y-m-d'))->first() ? true: false;
     }
+    public function getTeacherSections()
+    {
+        return TeacherClass::with('section')->where('teacher_id', $this->teacher_id)->get();
+    }
 }

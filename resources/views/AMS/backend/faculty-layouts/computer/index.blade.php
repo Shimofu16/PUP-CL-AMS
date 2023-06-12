@@ -1,4 +1,4 @@
-@extends('AMS.backend.admin-layouts.sidebar')
+@extends('AMS.backend.faculty-layouts.sidebar')
 
 @section('page-title')
     Computers
@@ -12,9 +12,6 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between border-bottom-0">
                         <h3 class="text-maroon">@yield('page-title')</h3>
-                        <button class="btn btn-outline-maroon" data-bs-toggle="modal" data-bs-target="#add">Add
-                            Computer</button>
-                        @include('AMS.backend.admin-layouts.computer.modal._add')
                     </div>
                     <div class="card-body">
 
@@ -26,7 +23,6 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Specification</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Active</th>
                                     <th scope="col" class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -58,29 +54,17 @@
                                                 <span class="badge bg-warning">No data</span>
                                             @endif
                                         </td>
-                                        <td>
-                                            @if ($computer->isActive())
-                                                <span class="badge bg-success">Active</span>
-                                            @else
-                                                <span class="badge bg-warning">Inactive</span>
-                                            @endif
-                                        </td>
 
 
                                         <td>
                                             <div class="d-flex justify-content-center">
                                                 <button class="btn btn-link text-primary" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#edit{{ $computer->id }}"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
-                                                    <i class="ri-edit-line text-primary" aria-hidden="true"></i>
+                                                    data-bs-toggle="modal" data-bs-target="#add{{ $computer->id }}"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="add report">
+                                                    <i class="ri-add-line text-primary" aria-hidden="true"></i>
+                                                    Add Report
                                                 </button>
-                                                <button class="btn btn-link text-danger" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#delete{{ $computer->id }}"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                                                    <i class="ri-delete-bin-line text-danger" aria-hidden="true""></i>
-                                                </button>
-                                                @include('AMS.backend.admin-layouts.computer.modal._edit')
-                                                @include('AMS.backend.admin-layouts.computer.modal._delete')
+                                                @include('AMS.backend.faculty-layouts.computer.modal._add')
                                             </div>
                                         </td>
                                     </tr>

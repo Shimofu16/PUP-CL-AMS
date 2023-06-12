@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header bg-primary">
                 <h5 class="modal-title text-white">Edit Computer</h5>
-                
+
             </div>
             <form action="{{ route('admin.computer.update', ['id' => $computer->id]) }}" method="POST">
                 <div class="modal-body">
@@ -20,8 +20,8 @@
                     <div class="row mb-3">
                         <div class="col-md-12">
                             <label for="name" class="form-label fw-bold text-black">Name</label>
-                            <input type="text" class="form-control" name="computer_name" id="name" placeholder="Name"
-                                value="{{ $computer->computer_name }}">
+                            <input type="text" class="form-control" name="computer_name" id="name"
+                                placeholder="Name" value="{{ $computer->computer_name }}">
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -50,6 +50,22 @@
                             <label for="name" class="form-label fw-bold text-black">Storage</label>
                             <input type="text" class="form-control" name="storage" id="storage"
                                 placeholder="Storage" value="{{ $computer->storage }}">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="name" class="form-label fw-bold text-black">Status</label>
+                            <select class="form-select @error('status') is-invalid @enderror" name="status"
+                                id="status">
+                                <option value="">Select Status</option>
+                                <option value="Working" {{ $computer->status == 'Working' ? 'selected' : '' }}>Working
+                                </option>
+                                <option value="Not Working" {{ $computer->status == 'Not Working' ? 'selected' : '' }}>
+                                    Not Working</option>
+                            </select>
+                            @error('status')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                 </div>

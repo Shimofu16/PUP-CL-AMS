@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Log;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +32,14 @@ class CheckUserStatusMiddleware
                 // set the user's status to offline
                 Auth::user()->status = "offline";
                 Auth::user()->save();
+                $log = Log::where('user_id', Auth::id())
+                    ->whereNull('time_out')
+                    ->latest()
+                    ->first();
+
+                $log->update([
+                    'time_out' => now(),
+                ]);
                 //regenerate   session
                 $request->session()->invalidate();
                 $request->session()->regenerateToken();

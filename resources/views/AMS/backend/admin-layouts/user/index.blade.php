@@ -11,10 +11,38 @@
 
                 <div class="card">
                     <div class="card-header d-flex justify-content-between border-bottom-0">
-                        <h3 class="text-maroon">@yield('page-title')</h3>
-                        <button class="btn btn-outline-maroon" data-bs-toggle="modal" data-bs-target="#add">Add
-                            @yield('page-title')</button>
-                        @include('AMS.backend.admin-layouts.user.modal._add')
+                        <h3 class="text-maroon">@yield('page-title')
+                            @if (Route::is('admin.user.student.index'))
+                                {{ $section_name != null ? '- ' . $section_name : '' }}
+                            @endif
+                        </h3>
+                        <div class="d-flex align-items-center">
+                            <button class="btn btn-outline-maroon me-1" data-bs-toggle="modal" data-bs-target="#add">Add
+                                Account</button>
+                            @include('AMS.backend.admin-layouts.user.modal._add')
+                            @if (Route::is('admin.user.student.index'))
+                                <div class="dropdown">
+                                    <button class="btn btn-outline-maroon dropdown-toggle" type="button"
+                                        id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Section
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        @foreach ($sections as $section)
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('admin.user.student.index', ['section_id' => $section->id]) }}">{{ $section->section_name }}</a>
+                                            </li>
+                                        @endforeach
+                                        <li>
+                                            <hr class="dropdown-divider">
+                                            <a href="{{ route('admin.user.student.index') }}" class="dropdown-item">Reset
+                                                Filter</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            @endif
+                        </div>
+
                     </div>
                     <div class="card-body">
 
@@ -25,6 +53,7 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Email</th>
                                     <th scope="col">Status</th>
+                                    <th scope="col">Logs</th>
                                     <th scope="col" class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -51,6 +80,15 @@
                                             @if ($user->status == 'offline')
                                                 <span class="badge bg-danger">{{ $user->status }}</span>
                                             @endif
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-link text-info" type="button" data-bs-toggle="modal"
+                                            data-bs-target="#logs{{ $user->id }}"
+                                            data-bs-toggle="tooltip" data-bs-placement="top" title="View logs."
+                                            >
+                                                    <i class="ri-eye-line text-info" aria-hidden="true"></i>
+                                            </button>
+                                                @include('AMS.backend.admin-layouts.user.modal._logs')
                                         </td>
                                         <td>
                                             <div class="d-flex justify-content-center">

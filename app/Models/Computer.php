@@ -54,9 +54,18 @@ class Computer extends Model
         $attendance = $latestAttendanceLog ?? $lastAttendanceLog;
 
         // Determine the overall status based on computer and attendance status
-        $status = $computer->status ?? $attendance->status ?? 'no data';
+        $status = $this->status ?? $computer->status ?? $attendance->status ?? 'no data';
 
         // Return true if the status is "Working", false if "Not Working", or "no data" if none is available
         return $status == 'Working' ? true : ($status == 'Not Working' ? false : 'no data');
+    }
+    public function isActive(){
+        /* check if there is a student using this computer */
+        /* get attendance logs today */
+        $latestAttendanceLog = $this->attendanceLogs()->whereDate('created_at', today())->orderBy('id', 'desc')->first();
+        if($latestAttendanceLog){
+            return true;
+        }
+        return false;
     }
 }

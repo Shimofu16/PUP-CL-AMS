@@ -14,7 +14,13 @@
             </li><!-- End Dashboard Nav -->
 
 
-            <!-- End Forms Nav -->
+            <li class="nav-item">
+                <a class="nav-link {{ Route::is('faculty.computer.index') ? 'active' : '' }}"
+                    href="{{ route('faculty.computer.index') }}">
+                    <i class="ri-computer-line"></i><span>Computers</span>
+                </a>
+
+            </li>
 
             <li class="nav-item">
                 <a class="nav-link {{ Route::is('faculty.schedule.index') ? 'active' : '' }}"

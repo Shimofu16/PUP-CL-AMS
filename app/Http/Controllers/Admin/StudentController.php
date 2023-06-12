@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Section;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,11 +13,19 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($section_id = null)
     {
         $users = User::where('student_id', '!=', null)->get();
-        $pageTitle = "Student";
-        return view('AMS.backend.admin-layouts.user.index', compact('users','pageTitle'));
+        $sections = Section::all();
+        $section_name = null;
+        $pageTitle = "Student`s Accounts";
+        if ($section_id != null) {
+            $section_name = Section::find($section_id)->section_name;
+            $users = User::with('student')->whereHas('student', function ($query) use ($section_id) {
+                $query->where('section_id', '=', $section_id);
+            })->get();
+        }
+        return view('AMS.backend.admin-layouts.user.index', compact('users', 'sections', 'pageTitle', 'section_name'));
     }
 
     /**
@@ -41,8 +50,8 @@ class StudentController extends Controller
     public function show($id)
     {
         $user = User::find($id);
-        $pageTitle = "Student - ". $user->student->getFullName();
-        return view('AMS.backend.admin-layouts.user.show', compact('user','pageTitle'));
+        $pageTitle = "Student - " . $user->student->getFullName();
+        return view('AMS.backend.admin-layouts.user.show', compact('user', 'pageTitle'));
     }
 
     /**
