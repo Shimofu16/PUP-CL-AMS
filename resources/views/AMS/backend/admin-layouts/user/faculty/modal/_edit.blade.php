@@ -13,7 +13,7 @@
             </div>
 
             @if (Route::is('admin.user.account.faculty.index'))
-                <form action="{{ route('admin.user.account.faculty.update', ['id' => $user->id]) }}" method="POST">
+                <form action="{{ route('admin.user.account.faculty.resetPassword', ['id' => $user->id]) }}" method="POST">
                     <div class="modal-body">
                         @csrf
                         @method('PUT')
@@ -71,8 +71,8 @@
                         </div>
                         <div class="row mb-3">
                             <div class="col-12">
-                                <label for="department" class="form-label fw-bold text-black">Department</label>
-                                <select class="form-select" id="department" name="department">
+                                <label for="department_id" class="form-label fw-bold text-black">Department</label>
+                                <select class="form-select" id="department_id" name="department_id">
                                     <option selected disabled>Select Department</option>
                                     @foreach ($departments as $department)
                                         <option

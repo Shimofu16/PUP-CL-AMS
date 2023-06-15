@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Department;
 use App\Models\FacultyMember;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Termwind\Components\Dd;
 
 class FacultyMemberController extends Controller
 {
@@ -20,7 +22,8 @@ class FacultyMemberController extends Controller
         $pageTitle = "Faculty";
         $departments = Department::all();
         $facultyMembers = FacultyMember::whereDoesntHave('user')->get();
-        return view('AMS.backend.admin-layouts.user.faculty.index', compact('users', 'departments', 'facultyMembers', 'pageTitle'));
+        $roles = Role::all();
+        return view('AMS.backend.admin-layouts.user.faculty.index', compact('users', 'departments', 'facultyMembers', 'roles', 'pageTitle'));
     }
 
     /**
@@ -36,7 +39,53 @@ class FacultyMemberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /* get the previues route name */
+        $previousRouteName = app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
+
+        if ($previousRouteName == "admin.user.account.faculty.store") {
+            try {
+                $rules = [
+                    'faculty_member_id' => 'required|integer',
+                    'password' => 'required|string|min:8',
+                    'password_confirmation' => 'required|string|min:8|same:password',
+                ];
+                $request->validate($rules);
+                $user = User::create([
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                    'role_id' => $request->role_id,
+                    'status' => "offline",
+                    'created_at' => now(),
+                ]);
+                return back()->with('successToast', 'Faculty member created successfully!');
+            } catch (\Throwable $th) {
+                return back()->with('errorAlert', $th->getMessage());
+            }
+        }
+        if ($previousRouteName == "admin.user.information.faculty.index") {
+            try {
+                $rules = [
+                    'first_name' => 'required|string|max:255',
+                    'last_name' => 'required|string|max:255',
+                    'email' => 'required|string|email|max:255|unique:users,email',
+                    'phone' => 'required|string|max:11',
+                    'department_id' => 'required|integer',
+                ];
+                $request->validate($rules);
+                FacultyMember::create([
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'department_id' => $request->department_id,
+                    'created_at' => now()
+                ]);
+                return back()->with('successToast', 'Faculty member created successfully!');
+            } catch (\Throwable $th) {
+                return back()->with('errorAlert', $th->getMessage());
+            }
+        }
+        return back()->with('errorAlert', 'Something went wrong!');
     }
 
     /**
@@ -55,9 +104,27 @@ class FacultyMemberController extends Controller
      */
     public function edit(Request $request, $id)
     {
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
+    {
         try {
-            $user = FacultyMember::find($id);
-            $user->update([
+            $rules = [
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users,email',
+                'phone' => 'required|string|max:11',
+                'department_id' => 'required|integer',
+            ];
+            $user = User::find($id);
+            if ($user->email == $request->email) {
+                $rules['email'] = 'required|string|email|max:255';
+            }
+            $request->validate($rules);
+            $user->facultyMember->update([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'email' => $request->email,
@@ -65,7 +132,7 @@ class FacultyMemberController extends Controller
                 'department_id' => $request->department_id,
                 'updated_at' => now()
             ]);
-            $user->user->update([
+            $user->update([
                 'email' => $request->email,
                 'updated_at' => now()
             ]);
@@ -73,13 +140,6 @@ class FacultyMemberController extends Controller
         } catch (\Throwable $th) {
             return back()->with('errorAlert', $th->getMessage());
         }
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, FacultyMember $facultyMember)
-    {
     }
 
     /**

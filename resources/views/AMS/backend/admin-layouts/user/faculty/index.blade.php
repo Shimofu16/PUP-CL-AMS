@@ -23,10 +23,13 @@
                                 @if (Route::is('admin.user.account.faculty.index'))
                                     Account
                                 @else
-                                    Information
-                                @endif</button>
-                            <a href="{{ route('admin.user.account.faculty.resetAllPassword') }}"
-                                class="btn btn-outline-maroon">Reset All Password</a>
+                                    Faculty Member
+                                @endif
+                            </button>
+                            @if (Route::is('admin.user.account.faculty.index'))
+                                <a href="{{ route('admin.user.account.faculty.resetAllPassword') }}"
+                                    class="btn btn-outline-maroon">Reset All Password</a>
+                            @endif
                             @include('AMS.backend.admin-layouts.user.faculty.modal._add')
                         </div>
 
