@@ -33,6 +33,7 @@ class HomeController extends Controller
             'password' => 'required|confirmed',
             'password_confirmation' => 'required|same:password',
             'section_id' => 'required',
+            'section_id' => 'required',
         ]);
         try {
             $id =  Student::create([

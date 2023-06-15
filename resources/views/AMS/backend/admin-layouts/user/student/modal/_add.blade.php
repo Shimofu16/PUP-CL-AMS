@@ -5,71 +5,81 @@
                 <h5 class="modal-title text-white">Add {{ $pageTitle }}</h5>
 
             </div>
-            @if (Route::is('admin.user.faculty.index'))
-                @php
-                    $route = route('admin.user.faculty.store');
-                @endphp
-            @endif
-            @if (Route::is('admin.user.student.index'))
-                @php
-                    $route = route('admin.user.student.store');
-                @endphp
-            @endif
-            <form action="{{ $route }}" method="POST">
-                <div class="modal-body">
-                    @csrf
-                    @method('PUT')
-                    <div class="row mb-3">
-                        <label class="form-label fw-bold text-black">Select</label>
-                        <div class="col-12">
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected="">Open this select menu</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
+            @if (Route::is('admin.user.account.student.index'))
+            @else
+                <form action="{{ route('admin.user.information.student.store') }}" method="POST">
+                    <div class="modal-body">
+                        @csrf
+                        @method('PUT')
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <label for="student_no" class="form-label fw-bold">Student Number:</label>
+                                <input type="text" class="form-control" id="student_no" name="student_no" required>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-12">
-                            <label for="password" class="form-label fw-bold text-black">Password</label>
-                            <input type="password" class="form-control" id="password" name="password">
-                            @error('password')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                            <div class="alert alert-danger mt-2" role="alert" id="alert-password">
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <label for="first_name" class="form-label fw-bold">First Name:</label>
+                                <input type="text" class="form-control" id="first_name" name="first_name" required>
+                            </div>
+                            <div class="col-6">
+                                <label for="last_name" class="form-label fw-bold">Last Name:</label>
+                                <input type="text" class="form-control" id="last_name" name="last_name" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <label for="email" class="form-label fw-bold">Email:</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="col-6">
+                                <label for="phone" class="form-label fw-bold">Phone:</label>
+                                <input type="text" class="form-control" id="phone" name="phone" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <label for="address" class="form-label fw-bold">Address:</label>
+                                <input type="text" class="form-control" id="address" name="address" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <label for="date_of_birth" class="form-label fw-bold">Date of Birth:</label>
+                                <input type="date" class="form-control" id="date_of_birth" name="date_of_birth"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-5">
+                                <label for="gender" class="form-label fw-bold">Gender:</label>
+                                <select class="form-control" id="gender" name="gender" required>
+                                    <option value="">Select Gender</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
 
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <label for="section_id" class="form-label fw-bold">Section:</label>
+                                <select class="form-control" id="section_id" name="section_id" required>
+                                    <option value="">Select Section</option>
+                                    @foreach ($sections as $section)
+                                        <option value="{{ $section->id }}">{{ $section->section_name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <div class="col-12">
-                            <label for="password_confirmation" class="form-label fw-bold text-black">Confirm
-                                Password</label>
-                            <input type="password" class="form-control" id="password_confirmation"
-                                name="password_confirmation">
-                            @error('password_confirmation')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                            <div class="alert alert-danger mt-2" role="alert" id="alert-password_confirmation">
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-12">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="show">
-                                <label class="form-check-label  fw-bold text-black" for="show">Show Password</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" id="submit" class="btn btn-maroon">Add</button>
-                </div>
-            </form>
         </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" id="submit" class="btn btn-maroon">Add</button>
+        </div>
+        </form>
+        @endif
     </div>
+</div>
 </div>

@@ -12,15 +12,15 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between border-bottom-0">
                         <h3 class="text-maroon">@yield('page-title')
-                            @if (Route::is('admin.user.student.index'))
+                            @if (Route::is('admin.user.information.student.index'))
                                 {{ $section_name != null ? '- ' . $section_name : '' }}
                             @endif
                         </h3>
                         <div class="d-flex align-items-center">
                             <button class="btn btn-outline-maroon me-1" data-bs-toggle="modal" data-bs-target="#add">Add
                                 Account</button>
-                            @include('AMS.backend.admin-layouts.user.modal._add')
-                            @if (Route::is('admin.user.student.index'))
+                            @include('AMS.backend.admin-layouts.user.student.modal._add')
+                            @if (Route::is('admin.user.information.student.index'))
                                 <div class="dropdown">
                                     <button class="btn btn-outline-maroon dropdown-toggle" type="button"
                                         id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
@@ -30,12 +30,13 @@
                                         @foreach ($sections as $section)
                                             <li>
                                                 <a class="dropdown-item"
-                                                    href="{{ route('admin.user.student.index', ['section_id' => $section->id]) }}">{{ $section->section_name }}</a>
+                                                    href="{{ route('admin.user.information.student.index', ['section_id' => $section->id]) }}">{{ $section->section_name }}</a>
                                             </li>
                                         @endforeach
                                         <li>
                                             <hr class="dropdown-divider">
-                                            <a href="{{ route('admin.user.student.index') }}" class="dropdown-item">Reset
+                                            <a href="{{ route('admin.user.information.student.index') }}"
+                                                class="dropdown-item">Reset
                                                 Filter</a>
                                         </li>
                                     </ul>
@@ -47,6 +48,68 @@
                     <div class="card-body">
 
                         <!-- Table with stripped rows -->
+                        @if (Route::is('admin.user.account.student.index'))
+                            <table class="table" id="users-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Logs</th>
+                                        <th scope="col" class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($users as $user)
+                                        <tr>
+                                            <td>
+                                                {{ $user->student->getFullName() }}
+                                            </td>
+
+                                            <td>
+                                                {{ $user->email }}
+                                            </td>
+
+                                            <td>
+                                                @if ($user->status == 'online')
+                                                    <span class="badge bg-success">{{ $user->status }}</span>
+                                                @endif
+                                                @if ($user->status == 'offline')
+                                                    <span class="badge bg-danger">{{ $user->status }}</span>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-link text-info" type="button" data-bs-toggle="modal"
+                                                    data-bs-target="#logs{{ $user->id }}" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top" title="View logs.">
+                                                    <i class="ri-eye-line text-info" aria-hidden="true"></i>
+                                                </button>
+                                                @include('AMS.backend.admin-layouts.user.student.modal._logs')
+                                            </td>
+                                            <td>
+                                                <div class="d-flex justify-content-center">
+                                                    <button class="btn btn-link text-primary" type="button"
+                                                        data-bs-toggle="modal" data-bs-target="#edit{{ $user->id }}"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="Change password">
+                                                        <i class="ri-pencil-line text-primary" aria-hidden="true"></i>
+                                                    </button>
+                                                    <button class="btn btn-link text-danger" type="button"
+                                                        data-bs-toggle="modal" data-bs-target="#delete{{ $user->id }}"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Logout User"
+                                                        {{ $user->status == 'offline' ? 'disabled' : '' }}>
+                                                        <i class="ri-shut-down-line text-danger" aria-hidden="true"></i>
+                                                    </button>
+                                                    @include('AMS.backend.admin-layouts.user.student.modal._edit')
+                                                    @include('AMS.backend.admin-layouts.user.student.modal._delete')
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+
+                            </table>
+                        @else
                         <table class="table" id="users-table">
                             <thead>
                                 <tr>
@@ -58,75 +121,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $user)
+                                @foreach ($students as $student)
                                     <tr>
                                         <td>
-                                            @if (Route::is('admin.user.faculty.index'))
-                                                {{ $user->facultyMember->getFullName() }}
-                                            @endif
-                                            @if (Route::is('admin.user.student.index'))
-                                                {{ $user->student->getFullName() }}
-                                            @endif
-                                        </td>
-
-                                        <td>
-                                            {{ $user->email }}
-                                        </td>
-
-                                        <td>
-                                            @if ($user->status == 'online')
-                                                <span class="badge bg-success">{{ $user->status }}</span>
-                                            @endif
-                                            @if ($user->status == 'offline')
-                                                <span class="badge bg-danger">{{ $user->status }}</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-link text-info" type="button" data-bs-toggle="modal"
-                                            data-bs-target="#logs{{ $user->id }}"
-                                            data-bs-toggle="tooltip" data-bs-placement="top" title="View logs."
-                                            >
-                                                    <i class="ri-eye-line text-info" aria-hidden="true"></i>
-                                            </button>
-                                                @include('AMS.backend.admin-layouts.user.modal._logs')
-                                        </td>
-                                        <td>
-                                            <div class="d-flex justify-content-center">
-                                                @if (Route::is('admin.user.faculty.index'))
-                                                    @php
-                                                        $route = route('admin.user.faculty.show', $user->id);
-                                                    @endphp
-                                                @endif
-                                                @if (Route::is('admin.user.student.index'))
-                                                    @php
-                                                        $route = route('admin.user.student.show', $user->id);
-                                                    @endphp
-                                                @endif
-                                                <a href="{{ $route }}" class="btn btn-link text-info"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="View Info.">
-                                                    <i class="ri-eye-line text-info" aria-hidden="true"></i>
-                                                </a>
-                                                <button class="btn btn-link text-primary" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#edit{{ $user->id }}"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                    title="Change password">
-                                                    <i class="ri-pencil-line text-primary" aria-hidden="true"></i>
-                                                </button>
-                                                <button class="btn btn-link text-danger" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#delete{{ $user->id }}"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top" title="Logout User"
-                                                    {{ $user->status == 'offline' ? 'disabled' : '' }}>
-                                                    <i class="ri-shut-down-line text-danger" aria-hidden="true"></i>
-                                                </button>
-                                                @include('AMS.backend.admin-layouts.user.modal._edit')
-                                                @include('AMS.backend.admin-layouts.user.modal._delete')
+                                            <div class="d-flex flex-column ">
+                                                <span>{{ $student->getFullName() }}</span>
+                                                <small>{{ $student->email }}</small>
                                             </div>
                                         </td>
+                                        
+
+
                                     </tr>
                                 @endforeach
                             </tbody>
 
                         </table>
+                        @endif
                         <!-- End Table with stripped rows -->
 
                     </div>

@@ -19,7 +19,7 @@
                         <div class="row mb-3">
                             <label class="form-label fw-bold text-black">Faculty Member</label>
                             <div class="col-12">
-                                <select class="form-select" aria-label="Default select example">
+                                <select class="form-select" aria-label="Default select example" name="faculty_member_id">
                                     <option selected="">Select Faculty</option>
                                     @foreach ($facultyMembers as $facultyMember)
                                         <option value="{{ $facultyMember->id }}">
@@ -32,7 +32,7 @@
                         <div class="row mb-3">
                             <label class="form-label fw-bold text-black">Role</label>
                             <div class="col-12">
-                                <select class="form-select" aria-label="Default select example">
+                                <select class="form-select" aria-label="Default select example" name="role_id">
                                     <option selected="">Select Role</option>
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->id }}">
@@ -49,9 +49,7 @@
                                 @error('password')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
-                                <div class="alert alert-danger mt-2" role="alert" id="alert-password">
 
-                                </div>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -63,9 +61,7 @@
                                 @error('password_confirmation')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
-                                <div class="alert alert-danger mt-2" role="alert" id="alert-password_confirmation">
 
-                                </div>
                             </div>
                         </div>
                     </div>

@@ -18,12 +18,25 @@ class FacultyMemberController extends Controller
      */
     public function index()
     {
-        $users = User::where('faculty_member_id', '!=', null)->get();
-        $pageTitle = "Faculty";
-        $departments = Department::all();
-        $facultyMembers = FacultyMember::whereDoesntHave('user')->get();
-        $roles = Role::all();
-        return view('AMS.backend.admin-layouts.user.faculty.index', compact('users', 'departments', 'facultyMembers', 'roles', 'pageTitle'));
+        /* get the current route name */
+        $currentRouteName = app('router')->getRoutes()->match(app('request')->create(url()->current()))->getName();
+
+        if ($currentRouteName == "admin.user.account.faculty.index") {
+            $users = User::where('faculty_member_id', '!=', null)->get();
+            $pageTitle = "Faculty";
+            $departments = Department::all();
+            $facultyMembers = FacultyMember::whereDoesntHave('user')->get();
+            $roles = Role::all();
+            return view('AMS.backend.admin-layouts.user.faculty.index', compact('users', 'departments', 'facultyMembers', 'roles', 'pageTitle'));
+        }
+        if ($currentRouteName == "admin.user.information.faculty.index") {
+            $facultyMems = FacultyMember::all();
+            $pageTitle = "Faculty";
+            $departments = Department::all();
+            $facultyMembers = FacultyMember::whereDoesntHave('user')->get();
+            $roles = Role::all();
+            return view('AMS.backend.admin-layouts.user.faculty.index', compact('facultyMems', 'departments', 'facultyMembers', 'roles', 'pageTitle'));
+        }
     }
 
     /**
@@ -41,8 +54,7 @@ class FacultyMemberController extends Controller
     {
         /* get the previues route name */
         $previousRouteName = app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName();
-
-        if ($previousRouteName == "admin.user.account.faculty.store") {
+        if ($previousRouteName == "admin.user.account.faculty.index") {
             try {
                 $rules = [
                     'faculty_member_id' => 'required|integer',
@@ -50,11 +62,12 @@ class FacultyMemberController extends Controller
                     'password_confirmation' => 'required|string|min:8|same:password',
                 ];
                 $request->validate($rules);
+                $faculty = FacultyMember::find($request->faculty_member_id);
                 $user = User::create([
-                    'email' => $request->email,
+                    'email' => $faculty->email,
                     'password' => Hash::make($request->password),
                     'role_id' => $request->role_id,
-                    'status' => "offline",
+                    'faculty_member_id' => $request->faculty_member_id,
                     'created_at' => now(),
                 ]);
                 return back()->with('successToast', 'Faculty member created successfully!');

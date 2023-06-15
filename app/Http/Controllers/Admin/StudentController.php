@@ -25,7 +25,7 @@ class StudentController extends Controller
                 $query->where('section_id', '=', $section_id);
             })->get();
         }
-        return view('AMS.backend.admin-layouts.user.index', compact('users', 'sections', 'pageTitle', 'section_name'));
+        return view('AMS.backend.admin-layouts.user.student.index', compact('users', 'sections', 'pageTitle', 'section_name'));
     }
 
     /**

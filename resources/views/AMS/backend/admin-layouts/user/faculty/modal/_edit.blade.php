@@ -1,4 +1,12 @@
-<div class="modal fade" id="edit{{ $user->id }}" tabindex="-1">
+
+@php
+    if (Route::is('admin.user.account.faculty.index')) {
+        $id = $user->id;
+    } else {
+        $id = $facultyMem->id;
+    }
+@endphp
+<div class="modal fade" id="edit{{ $id }}" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-primary">
@@ -25,7 +33,7 @@
                     </div>
                 </form>
             @else
-                <form action="{{ route('admin.user.information.faculty.update', ['id' => $user->id]) }}" method="POST">
+                <form action="{{ route('admin.user.information.faculty.update', ['id' => $facultyMem->id]) }}" method="POST">
                     <div class="modal-body">
                         @csrf
                         @method('PUT')
@@ -33,7 +41,7 @@
                             <div class="col-12">
                                 <label for="first_name" class="form-label fw-bold text-black">First Name</label>
                                 <input type="text" class="form-control" id="first_name" name="first_name"
-                                    value="{{ $user->facultyMember->first_name }}">
+                                    value="{{ $facultyMem->first_name }}">
                                 @error('first_name')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -43,7 +51,7 @@
                             <div class="col-12">
                                 <label for="last_name" class="form-label fw-bold text-black">Last Name</label>
                                 <input type="text" class="form-control" id="last_name" name="last_name"
-                                    value="{{ $user->facultyMember->last_name }}">
+                                    value="{{ $facultyMem->last_name }}">
                                 @error('last_name')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -53,7 +61,7 @@
                             <div class="col-12">
                                 <label for="email" class="form-label fw-bold text-black">Email</label>
                                 <input type="email" class="form-control" id="email" name="email"
-                                    value="{{ $user->facultyMember->email }}">
+                                    value="{{ $facultyMem->email }}">
                                 @error('email')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -63,7 +71,7 @@
                             <div class="col-12">
                                 <label for="phone" class="form-label fw-bold text-black">Phone</label>
                                 <input type="text" class="form-control" id="phone" name="phone"
-                                    value="{{ $user->facultyMember->phone }}">
+                                    value="{{ $facultyMem->phone }}">
                                 @error('phone')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -76,7 +84,7 @@
                                     <option selected disabled>Select Department</option>
                                     @foreach ($departments as $department)
                                         <option
-                                            value="{{ $department->id }}"@if ($department->id == $user->facultyMember->department_id) selected @endif>
+                                            value="{{ $department->id }}"@if ($department->id == $facultyMem->department_id) selected @endif>
                                             {{ $department->department_name }}</option>
                                     @endforeach
                                 </select>

@@ -54,7 +54,7 @@
                                         @foreach ($users as $user)
                                             <tr>
                                                 <td>
-                                                    {{ $user->facultyMember->getFullName() }}
+                                                    {{ $user->getName() }}
 
                                                 </td>
 
@@ -81,11 +81,6 @@
                                                 <td>
                                                     <div class="d-flex justify-content-center">
 
-                                                        <a href="{{ route('admin.user.account.faculty.show', $user->id) }}"
-                                                            class="btn btn-link text-info" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" title="View Info.">
-                                                            <i class="ri-eye-line text-info" aria-hidden="true"></i>
-                                                        </a>
                                                         <button class="btn btn-link text-primary" type="button"
                                                             data-bs-toggle="modal" data-bs-target="#edit{{ $user->id }}"
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
@@ -119,20 +114,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $user)
+                                    @foreach ($facultyMems as $facultyMem)
                                         <tr>
                                             <td>
                                                 <div class="d-flex flex-column ">
-                                                    <span>{{ $user->facultyMember->getFullName() }}</span>
-                                                    <small>{{ $user->facultyMember->email }}</small>
+                                                    <span>{{ $facultyMem->getFullName() }}</span>
+                                                    <small>{{ $facultyMem->email }}</small>
                                                 </div>
                                             </td>
 
                                             <td>
-                                                {{ $user->facultyMember->phone }}
+                                                {{ $facultyMem->phone }}
                                             </td>
                                             <td>
-                                                {{ $user->facultyMember->department->department_name }}
+                                                {{ $facultyMem->department->department_name }}
                                             </td>
 
 
@@ -140,7 +135,7 @@
                                             <td>
                                                 <div class="d-flex justify-content-center">
                                                     <button class="btn btn-link text-primary" type="button"
-                                                        data-bs-toggle="modal" data-bs-target="#edit{{ $user->id }}"
+                                                        data-bs-toggle="modal" data-bs-target="#edit{{ $facultyMem->id }}"
                                                         data-bs-toggle="tooltip" data-bs-placement="top"
                                                         title="Change password">
                                                         <i class="ri-pencil-line text-primary" aria-hidden="true"></i>
