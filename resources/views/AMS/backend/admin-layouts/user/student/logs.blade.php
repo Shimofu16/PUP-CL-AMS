@@ -14,21 +14,24 @@
                         <h3 class="text-maroon">@yield('page-title')
                         </h3>
                         <div class="d-flex align-items-center">
-
-
-                                <a href="{{ URL::previous() }}" class="btn btn-outline-maroon ">
+                            @if (Route::is('admin.user.faculty.index'))
+                                <a href="{{ route('admin.user.faculty.index') }}" class="btn btn-outline-maroon ">
                                     <i class="ri-arrow-go-back-line"></i>
                                     <span>Back</span>
                                 </a>
-
-
+                            @else
+                                <a href="{{ route('admin.user.student.index') }}" class="btn btn-outline-maroon ">
+                                    <i class="ri-arrow-go-back-line"></i>
+                                    <span>Back</span>
+                                </a>
+                            @endif
                         </div>
 
                     </div>
                     <div class="card-body">
 
                         <!-- Table with stripped rows -->
-                        <table class="table" id="logs-table">
+                        <table class="table" id="users-table">
                             <thead>
                                 <tr>
                                     <th scope="col">Date</th>
@@ -65,7 +68,7 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('#logs-table').DataTable({
+            $('#users-table').DataTable({
                 "ordering": false
             });
         });

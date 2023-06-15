@@ -15,12 +15,10 @@
                         </h3>
                         <div class="d-flex align-items-center">
 
-
-                                <a href="{{ URL::previous() }}" class="btn btn-outline-maroon ">
+                                <a href="{{ route('admin.user.account.faculty.index') }}" class="btn btn-outline-maroon ">
                                     <i class="ri-arrow-go-back-line"></i>
                                     <span>Back</span>
                                 </a>
-
 
                         </div>
 

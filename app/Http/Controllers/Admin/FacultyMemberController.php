@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\FacultyMember;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class FacultyMemberController extends Controller
 {
@@ -17,7 +18,9 @@ class FacultyMemberController extends Controller
     {
         $users = User::where('faculty_member_id', '!=', null)->get();
         $pageTitle = "Faculty";
-        return view('AMS.backend.admin-layouts.user.index', compact('users', 'pageTitle'));
+        $departments = Department::all();
+        $facultyMembers = FacultyMember::whereDoesntHave('user')->get();
+        return view('AMS.backend.admin-layouts.user.faculty.index', compact('users', 'departments', 'facultyMembers', 'pageTitle'));
     }
 
     /**
@@ -90,6 +93,32 @@ class FacultyMemberController extends Controller
                 'status' => "offline",
             ]);
             return back()->with('successToast', 'User successfully logout!');
+        } catch (\Throwable $th) {
+            return back()->with('errorAlert', $th->getMessage());
+        }
+    }
+    public function resetPassword($id)
+    {
+        try {
+            $user = User::find($id);
+            $user->update([
+                'password' => Hash::make('PUPCPassword'),
+            ]);
+            return back()->with('successToast', 'User password successfully reset!');
+        } catch (\Throwable $th) {
+            return back()->with('errorAlert', $th->getMessage());
+        }
+    }
+    public function resetAllPassword()
+    {
+        try {
+            $users = User::where('faculty_member_id', '!=', null)->get();
+            foreach ($users as $user) {
+                $user->update([
+                    'password' => Hash::make('PUPCPassword'),
+                ]);
+            }
+            return back()->with('successToast', 'All user password successfully reset!');
         } catch (\Throwable $th) {
             return back()->with('errorAlert', $th->getMessage());
         }

@@ -13,7 +13,7 @@ class UserLogController extends Controller
      */
     public function index()
     {
-        
+
     }
 
     /**
