@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\FacultyMember;
+use App\Models\SchoolYear;
 use App\Models\Section;
+use App\Models\Semester;
 use App\Models\Subject;
 use App\Models\TeacherClass;
 use Illuminate\Http\Request;
@@ -20,7 +22,8 @@ class ScheduleController extends Controller
         $teachers = FacultyMember::with('department')->where('department_id', 2)->get();
         $subjects = Subject::all();
         $sections = Section::all();
-        return view('AMS.backend.admin-layouts.academics.schedule.index',compact('schedules','teachers','subjects','sections'));
+        $semesters = Semester::all();
+        return view('AMS.backend.admin-layouts.academics.schedule.index', compact('schedules', 'teachers', 'subjects', 'sections','semesters'));
     }
 
     /**
@@ -44,9 +47,12 @@ class ScheduleController extends Controller
                 'date' => $request->date,
                 'start_time' => $request->start_time,
                 'end_time' => $request->end_time,
+                'sy_id' => SchoolYear::where('is_active', 1)->first()->id,
+                'semester_id' => $request->semester_id,
             ]);
             return redirect()->back()->with('successToast', 'Schedule Added Successfully!');
         } catch (\Throwable $th) {
+            dd($th->getMessage());
             return redirect()->back()->with('errorAlert', $th->getMessage());
         }
     }
@@ -81,6 +87,8 @@ class ScheduleController extends Controller
                 'date' => $request->date,
                 'start_time' => $request->start_time,
                 'end_time' => $request->end_time,
+                'sy_id' => SchoolYear::where('is_active', 1)->first()->id,
+                'semester_id' => $request->semester_id,
             ]);
             return redirect()->back()->with('successToast', 'Schedule Updated Successfully!');
         } catch (\Throwable $th) {

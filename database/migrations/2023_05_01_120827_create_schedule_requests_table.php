@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('teacher_class_id')->constrained('teacher_classes');
             $table->string('date');
-            $table->dateTime('start_time');
-            $table->dateTime('end_time');
+            $table->time('start_time');
+            $table->time('end_time');
             $table->string('status')->default('pending');
             $table->string('reason')->nullable();
             $table->string('remarks')->nullable();

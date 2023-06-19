@@ -7,6 +7,7 @@ use App\Models\Section;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
@@ -15,17 +16,29 @@ class StudentController extends Controller
      */
     public function index($section_id = null)
     {
-        $users = User::where('student_id', '!=', null)->get();
+        /* get the current route name */
+        $currentRouteName = app('router')->getRoutes()->match(app('request')->create(url()->current()))->getName();
+        $students = Student::all();
         $sections = Section::all();
         $section_name = null;
-        $pageTitle = "Student`s Accounts";
+        $pageTitle = "Student`s Informations";
+        if ($currentRouteName == 'admin.user.account.student.index') {
+            $pageTitle = "Student`s Accounts";
+            $students = User::with('student')->where('student_id', '!=', null)->get();
+        }
+
         if ($section_id != null) {
             $section_name = Section::find($section_id)->section_name;
-            $users = User::with('student')->whereHas('student', function ($query) use ($section_id) {
-                $query->where('section_id', '=', $section_id);
-            })->get();
+            $students = Student::with('section')->where('section_id', $section_id)->get();
+            if ($currentRouteName == 'admin.user.account.student.index') {
+                $students = User::with('student')->whereHas('student', function ($query) use ($section_id) {
+                    $query->where('section_id', '=', $section_id);
+                })->get();
+            }
         }
-        return view('AMS.backend.admin-layouts.user.student.index', compact('users', 'sections', 'pageTitle', 'section_name'));
+
+
+        return view('AMS.backend.admin-layouts.user.student.index', compact('students', 'sections', 'pageTitle', 'section_name'));
     }
 
     /**
@@ -59,9 +72,16 @@ class StudentController extends Controller
      */
     public function edit(Request $request, $id)
     {
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
+    {
         try {
-            $user = Student::find($id);
-            $user->update([
+            $student = Student::find($id);
+            $student->update([
                 'student_no' => $request->student_no,
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
@@ -70,9 +90,10 @@ class StudentController extends Controller
                 'address' => $request->address,
                 'date_of_birth' => $request->date_of_birth,
                 'gender' => $request->gender,
+                'section_id' => $request->section_id,
                 'updated_at' => now()
             ]);
-            $user->user->update([
+            $student->user->update([
                 'email' => $request->email,
                 'updated_at' => now()
             ]);
@@ -83,18 +104,36 @@ class StudentController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Student $student)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
     public function destroy(Student $student)
     {
         //
+    }
+    public function resetPassword($id)
+    {
+        try {
+            $user = User::find($id);
+            $user->update([
+                'password' => Hash::make('PUPCPassword'),
+            ]);
+            return back()->with('successToast', 'User password successfully reset!');
+        } catch (\Throwable $th) {
+            return back()->with('errorAlert', $th->getMessage());
+        }
+    }
+    public function resetAllPassword()
+    {
+        try {
+            $users = User::where('student_id', '!=', null)->get();
+            foreach ($users as $user) {
+                $user->update([
+                    'password' => Hash::make('PUPCPassword'),
+                ]);
+            }
+            return back()->with('successToast', 'All user password successfully reset!');
+        } catch (\Throwable $th) {
+            return back()->with('errorAlert', $th->getMessage());
+        }
     }
 }

@@ -25,6 +25,7 @@
                                     <th scope="col">Subject</th>
                                     <th scope="col">Section</th>
                                     <th scope="col">Date</th>
+                                    <th scope="col">Semester</th>
                                     <th scope="col" class="text-center">Action</th>
                                 </tr>
                             </thead>
@@ -48,7 +49,9 @@
                                             At {{ date('h:i:a', strtotime($schedule->start_time)) }} - {{ date('h:i:a', strtotime($schedule->end_time)) }}
                                         </td>
 
-
+                                        <td>
+                                            {{ $schedule->semester->name }}
+                                        </td>
                                         <td>
                                             <div class="d-flex justify-content-center px-2 py-1">
                                                 <button class="btn btn-link text-primary px-3 mb-0" type="button"

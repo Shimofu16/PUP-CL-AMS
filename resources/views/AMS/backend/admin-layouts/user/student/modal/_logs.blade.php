@@ -40,7 +40,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <a href="{{ route('admin.user.log.show', ['id' => $user->id]) }}" class="btn btn-maroon">View All</a>
+                <a href="{{ route('admin.user.account.log.show', ['id' => $user->id]) }}" class="btn btn-maroon">View All</a>
             </div>
         </div>
     </div>

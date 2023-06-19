@@ -38,6 +38,8 @@ class TeacherClass extends Model
         return $this->hasMany(AttendanceLog::class, 'teacher_class_id');
     }
 
+
+
     public function scheduleRequest()
     {
         return $this->hasOne(ScheduleRequest::class, 'teacher_class_id', 'id')->withDefault([
@@ -49,9 +51,13 @@ class TeacherClass extends Model
     {
         return $this->belongsTo(SchoolYear::class, 'sy_id');
     }
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class, 'semester_id');
+    }
     public function checkIfStudentHasAlreadyAttendance()
     {
-        return $this->attendanceLogs()->where('student_id', auth()->user()->student->id)->whereDate('created_at', date('Y-m-d'))->first() ? true: false;
+        return $this->attendanceLogs()->where('student_id', auth()->user()->student->id)->whereDate('created_at', date('Y-m-d'))->first() ? true : false;
     }
     public function getTeacherSections()
     {

@@ -195,6 +195,8 @@ Route::middleware(['auth', 'alert', 'checkStatus', 'isAdmin'])->prefix('admin')-
                 Route::post('/store', 'store')->name('store');
                 Route::put('/{id}/edit', 'edit')->name('edit');
                 Route::put('/{id}/update', 'update')->name('update');
+                Route::put('/{id}/reset/password', 'resetPassword')->name('resetPassword');
+                Route::get('/reset/all/password', 'resetAllPassword')->name('resetAllPassword');
                 Route::delete('/{id}/destroy', 'destroy')->name('destroy');
             });
         });

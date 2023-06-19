@@ -20,8 +20,8 @@ return new class extends Migration
             $table->unsignedBigInteger('semester_id');
             $table->string('description')->nullable();
             $table->date('date');
-            $table->dateTime('start_time');
-            $table->dateTime('end_time');
+            $table->time('start_time');
+            $table->time('end_time');
             $table->foreign('teacher_id')->references('id')->on('faculty_members');
             $table->foreign('subject_id')->references('id')->on('subjects');
             $table->foreign('section_id')->references('id')->on('sections');

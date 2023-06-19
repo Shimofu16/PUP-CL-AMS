@@ -9,7 +9,7 @@
                 <p>Are you sure you want to logout this user?</p>
             </div>
             <div class="modal-footer">
-                <form action="{{ route('admin.user.faculty.destroy', ['id' => $user->id]) }}" method="POST">
+                <form action="#" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>

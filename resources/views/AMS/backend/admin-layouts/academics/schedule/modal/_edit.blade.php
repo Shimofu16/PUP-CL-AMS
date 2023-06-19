@@ -47,13 +47,11 @@
                         <div class="col-12">
                             <select class="form-select" aria-label="Default select example" id="section_id"
                                 name="section_id">
-                                <option selected value="{{ $schedule->section_id }}">
-                                    {{ $schedule->section->section_name }}</option>
+                                <option value=""> Select Section</option>
                                 @foreach ($sections as $section)
-                                    @if ($section->id != $schedule->section_id)
-                                        <option value="{{ $section->id }}">
-                                            {{ $section->section_name }}</option>
-                                    @endif
+                                    <option value="{{ $section->id }}"
+                                        @if ($section->id === $schedule->section_id) selected @endif>
+                                        {{ $section->section_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -67,12 +65,24 @@
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+                        <div class="col-6">
+                            <label for="semester_id" class="form-label fw-bold text-black">Semester</label>
+                            <select class="form-control" id="semester_id" name="semester_id" required>
+                                <option value="">Select</option>
+                                @foreach ($semesters as $semester)
+                                    <option value="{{ $semester->id }}"
+                                        @if ($semester->id === $schedule->semester_id) selected @endif>{{ $semester->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="start_time" class="form-label fw-bold text-black">Start</label>
                             <input type="time" class="form-control @error('start_time') is-invalid @enderror"
-                                value="{{ $schedule->start_time }}" name="start_time" id="start_time" placeholder="Start">
+                                value="{{ $schedule->start_time }}" name="start_time" id="start_time"
+                                placeholder="Start">
                             @error('start_time')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -80,7 +90,8 @@
                         <div class="col-md-6">
                             <label for="end_time" class="form-label fw-bold text-black">End</label>
                             <input type="time" class="form-control @error('end_time') is-invalid @enderror"
-                                value="{{ $schedule->end_time }}" name="end_time" id="end_time" placeholder="end_time">
+                                value="{{ $schedule->end_time }}" name="end_time" id="end_time"
+                                placeholder="end_time">
                             @error('end_time')
                                 <div class="text-danger">{{ $message }}</div>
                             @enderror
