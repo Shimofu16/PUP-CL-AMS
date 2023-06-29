@@ -23,7 +23,13 @@ class isStudentMiddleware
         // check if the scheduled date is equal to the same date now.
         $student = Student::find(Auth::user()->student_id);
         // check if the scheduled date is equal to the same date now.
-        if ($student->section->schedules()->where('date', now()->format('Y-m-d'))->count() == 0) {
+        $hasScheduleCounter = 0;
+        foreach ($student->section->schedules as $schedule) {
+            if ($schedule->checkIfStudentHasScheduleToday()) {
+                $hasScheduleCounter++;
+            }
+        }
+        if ($hasScheduleCounter === 0) {
             // remove last_activity from session
             $request->session()->forget(Auth::id() . "_last_activity");
             // set the user's status to offline
@@ -37,6 +43,7 @@ class isStudentMiddleware
 
             return redirect()->route('home.index')->with('errorAlert', 'You have no schedule today');
         }
+
 
         return $next($request);
     }

@@ -27,10 +27,6 @@
                             </thead>
                             <tbody>
                                 @foreach ($teacherClasses as $schedule)
-                                    @php
-                                        $status = $schedule
-                                            ->scheduleRequest->latest()->first()->status
-                                    @endphp
                                     <tr>
                                         <td>
                                             {{ $schedule->subject->subject_name }}
@@ -43,16 +39,18 @@
                                         </td>
 
                                         <td>
-                                            {{ date('F d, Y', strtotime($schedule->date)) }}
-                                            <br>
-                                            At {{ date('h:i:a', strtotime($schedule->start_time)) }} -
-                                            {{ date('h:i:a', strtotime($schedule->end_time)) }}
+                                            {{-- button with eye icon --}}
+                                            <button class="btn btn-sm btn-link text-info" type="button" data-bs-toggle="modal"
+                                            data-bs-target="#view{{ $schedule->id }}">
+                                                <i class="ri-eye-line"></i>
+                                            </button>
+                                            @include('AMS.backend.faculty-layouts.schedule.modal._view')
                                         </td>
 
 
                                         <td>
                                             <div class="d-flex justify-content-center px-2 py-1">
-                                                @php
+                                                {{-- @php
                                                     $isPast = strtotime($schedule->date) < strtotime(date('Y-m-d')) ? true : false;
                                                 @endphp
 
@@ -62,9 +60,9 @@
                                                     data-bs-target="#edit{{ $schedule->id }}">
                                                     <i class="ri-edit-line text-primary me-2" aria-hidden="true"></i>
                                                     Reschedule
-                                                </button>
+                                                </button> --}}
 
-                                                @include('AMS.backend.faculty-layouts.schedule.modal._edit')
+
                                             </div>
                                         </td>
                                     </tr>

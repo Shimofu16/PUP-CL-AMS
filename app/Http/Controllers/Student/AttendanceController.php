@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Student;
 
-use App\Http\Controllers\Controller;
-use App\Models\AttendanceLog;
+use Carbon\Carbon;
 use App\Models\Computer;
 use App\Models\SchoolYear;
+use App\Models\ScheduleDate;
+use App\Models\TeacherClass;
 use Illuminate\Http\Request;
+use App\Models\AttendanceLog;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
@@ -18,7 +21,7 @@ class AttendanceController extends Controller
     {
         $schedules = Auth::user()->student->getScheduleBy('today');
         $computers = Computer::all();
-        return view('AMS.backend.student-layouts.attendance.index', compact('schedules','computers'));
+        return view('AMS.backend.student-layouts.attendance.index', compact('schedules', 'computers'));
     }
 
     /**
@@ -60,19 +63,34 @@ class AttendanceController extends Controller
     {
         try {
             $request->validate([
-                'computer_id' =>'required',
-                'status' => 'required',
-                'description' => 'required'
+                'computer_id' => 'required',
             ]);
-            $sy= SchoolYear::where('is_active', 1)->first();
+            $sy = SchoolYear::where('is_active', 1)->first();
+
+            $remark = '';
+            $schedule = TeacherClass::find($id);
+            $now = Carbon::now();
+            $date = ScheduleDate::where('teacher_class_id', $id)->where('date', $now->toDateString())->first();
+            $timeStart = Carbon::parse($schedule->time_start);
+            $timeEnd = Carbon::parse($schedule->time_end);
+
+            /*  if ($now->lt($timeStart)) {
+                $remark = 'Early';
+            } elseif ($now->gt($timeEnd)) {
+                $remark = 'Late';
+            } else {
+                $remark = 'Present';
+            } */
+
             AttendanceLog::create([
                 'teacher_class_id' => $id,
                 'student_id' => Auth::user()->student->id,
                 'computer_id' => $request->computer_id,
                 'sy_id' => $sy->id,
                 'semester_id' => $sy->semester_id,
-                'status' => $request->status,
-                'description' => $request->description,
+                'remarks' => 'Present',
+                'time_in' => now(),
+
             ]);
             return redirect()->back()->with('successToast', 'Attendance successfully logged!');
         } catch (\Throwable $th) {
@@ -85,6 +103,17 @@ class AttendanceController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $log = AttendanceLog::with('teacherClass')
+                ->where('teacher_class_id', $id)
+                ->where('student_id', Auth::user()->student_id)
+                ->where('time_out', null)
+                ->whereDate('created_at', now())
+                ->firstOrFail();
+            $log->update(['time_out' => now()]);
+            return redirect()->back()->with('successToast', 'Attendance successfully logged!');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('errorAlert', $th->getMessage());
+        }
     }
 }

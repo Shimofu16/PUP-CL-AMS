@@ -24,10 +24,12 @@ class TeacherClass extends Model
     {
         return $this->belongsTo(FacultyMember::class, 'teacher_id');
     }
+
     public function subject()
     {
         return $this->belongsTo(Subject::class, 'subject_id');
     }
+
     public function section()
     {
         return $this->belongsTo(Section::class, 'section_id');
@@ -38,7 +40,42 @@ class TeacherClass extends Model
         return $this->hasMany(AttendanceLog::class, 'teacher_class_id');
     }
 
+    public function schoolYear()
+    {
+        return $this->belongsTo(SchoolYear::class, 'sy_id');
+    }
 
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class, 'semester_id');
+    }
+
+    public function scheduleDates()
+    {
+        return $this->hasMany(ScheduleDate::class, 'teacher_class_id');
+    }
+
+    public function checkIfStudentAlreadyHasAttendance()
+    {
+        return $this->attendanceLogs()
+            ->where('student_id', auth()->user()->student->id)
+            ->where('time_out', '!=', null)
+            ->whereDate('created_at', now())
+            ->first() ? true : false;
+    }
+    public function checkifStudentHasTimeIn()
+    {
+        return $this->attendanceLogs()
+            ->where('student_id', auth()->user()->student->id)
+            ->where('time_in', '!=', null)
+            ->where('time_out', '=', null)
+            ->whereDate('created_at', now())
+            ->first() ? true : false;
+    }
+    public function getTeacherSections()
+    {
+        return TeacherClass::with('section')->where('teacher_id', $this->teacher_id)->get();
+    }
 
     public function scheduleRequest()
     {
@@ -46,21 +83,21 @@ class TeacherClass extends Model
             'status' => 'No Request',
         ]);
     }
-
-    public function schoolYear()
+    public function getLogsByDate($date)
     {
-        return $this->belongsTo(SchoolYear::class, 'sy_id');
+        return $this->attendanceLogs()->whereDate('created_at', $date)->get();
     }
-    public function semester()
+    public function getScheduledDates()
     {
-        return $this->belongsTo(Semester::class, 'semester_id');
+        return $this->scheduleDates()->get();
     }
-    public function checkIfStudentHasAlreadyAttendance()
+    public function checkIfStudentHasScheduleToday()
     {
-        return $this->attendanceLogs()->where('student_id', auth()->user()->student->id)->whereDate('created_at', date('Y-m-d'))->first() ? true : false;
-    }
-    public function getTeacherSections()
-    {
-        return TeacherClass::with('section')->where('teacher_id', $this->teacher_id)->get();
+        try {
+            return $this->scheduleDates()->whereDate('date', now()->format('Y-m-d'))->first() ? true : false;
+        } catch (\Throwable $th) {
+            dd($th->getMessage());
+            return false;
+        }
     }
 }

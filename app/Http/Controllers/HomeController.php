@@ -75,18 +75,26 @@ class HomeController extends Controller
             'email' => ['required', 'email'],
             'password' => ['required'],
         ]);
+
         if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
-            //check if the student has schedule today
-            if (Auth::user()->role->name == 'student') {
+            // Check if the user is a student and has a schedule today
+            if (Auth::user()->role->name === 'student') {
                 $student = Student::find(Auth::user()->student_id);
-                // check if the scheduled date is equal to the same date now.
-                if ($student->section->schedules()->where('date', now()->format('Y-m-d'))->count() == 0) {
+                $hasScheduleCounter = 0;
+                // dd($student->section->schedules);
+                foreach ($student->section->schedules as $schedule) {
+                    if ($schedule->checkIfStudentHasScheduleToday()) {
+                        $hasScheduleCounter++;
+                    }
+
+                }
+                if ($hasScheduleCounter === 0) {
                     Auth::logout();
                     return redirect()->back()->with('errorAlert', 'You have no schedule today');
                 }
             }
-            // Authentication was successful...
 
+            // Authentication was successful...
             Auth::user()->status = "online";
             Auth::user()->save();
 
@@ -95,17 +103,23 @@ class HomeController extends Controller
                 'action' => 'login',
                 'time_in' => now(),
             ]);
-            /* save last_activity into session */
+
+            // Save last_activity into session
             $request->session()->regenerate();
             $request->session()->put(Auth::id() . '_last_activity', now());
-            if (Auth::user()->role->name == 'admin') {
-                return redirect()->intended(route('admin.dashboard.index'));
+
+            // Redirect users based on their roles
+            if (Auth::user()->force_change_password) {
+                return redirect()->intended(route(Auth::user()->role->name.'.change-password.index'));
             }
-            if (Auth::user()->role->name == 'faculty') {
-                return redirect()->intended(route('faculty.dashboard.index'));
-            }
-            if (Auth::user()->role->name == 'student') {
-                return redirect()->intended(route('student.dashboard.index'));
+            switch (Auth::user()->role->name) {
+                case 'admin':
+
+                    return redirect()->intended(route('admin.dashboard.index'));
+                case 'faculty':
+                    return redirect()->intended(route('faculty.dashboard.index'));
+                case 'student':
+                    return redirect()->intended(route('student.dashboard.index'));
             }
         }
 

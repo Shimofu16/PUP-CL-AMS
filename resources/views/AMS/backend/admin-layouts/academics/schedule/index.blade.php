@@ -12,7 +12,8 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between border-bottom-0">
                         <h3 class="text-maroon">@yield('page-title')</h3>
-                        <button class="btn btn-outline-maroon" data-bs-toggle="modal" data-bs-target="#add">Add Schedule</button>
+                        <button class="btn btn-outline-maroon" data-bs-toggle="modal" data-bs-target="#add">Add
+                            Schedule</button>
                         @include('AMS.backend.admin-layouts.academics.schedule.modal._add')
                     </div>
                     <div class="card-body">
@@ -44,9 +45,11 @@
                                         </td>
 
                                         <td>
-                                            {{ date('F d, Y',strtotime($schedule->date)) }}
-                                            <br>
-                                            At {{ date('h:i:a', strtotime($schedule->start_time)) }} - {{ date('h:i:a', strtotime($schedule->end_time)) }}
+                                            <a class="btn btn-link text-info px-3 mb-0"
+                                                href="{{ route('admin.academic.schedule.show', ['id' => $schedule->id]) }}">
+                                                <i class="ri-eye-line text-info me-2" aria-hidden="true"></i>
+                                            </a>
+
                                         </td>
 
                                         <td>
@@ -54,10 +57,10 @@
                                         </td>
                                         <td>
                                             <div class="d-flex justify-content-center px-2 py-1">
-                                                <button class="btn btn-link text-primary px-3 mb-0" type="button"
+                                                {{--  <button class="btn btn-link text-primary px-3 mb-0" type="button"
                                                     data-bs-toggle="modal" data-bs-target="#edit{{ $schedule->id }}">
                                                     <i class="ri-edit-line text-primary me-2" aria-hidden="true""></i>
-                                                </button>
+                                                </button> --}}
                                                 <button class="btn btn-link text-danger px-3 mb-0" type="button"
                                                     data-bs-toggle="modal" data-bs-target="#delete{{ $schedule->id }}">
                                                     <i class="ri-delete-bin-6-line text-danger me-2" aria-hidden="true"></i>
@@ -80,6 +83,7 @@
         </div>
     </section>
 @endsection
+
 @section('scripts')
     <script>
         $(document).ready(function() {

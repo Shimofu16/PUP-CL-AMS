@@ -1,7 +1,7 @@
 @extends('AMS.backend.student-layouts.sidebar')
 
 @section('page-title')
-    Attendance
+    Attendance - For {{ date('F d, Y', strtotime(now())) }}
 @endsection
 
 @section('contents')
@@ -20,7 +20,7 @@
                             <tr>
                                 <th scope="col">Subject</th>
                                 <th scope="col">Teacher</th>
-                                <th scope="col">Date & Time</th>
+                                <th scope="col">Time</th>
                                 <th scope="col" class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -35,7 +35,7 @@
                                         {{ $schedule->teacher->getFullName() }}
                                     </td>
                                     <td>
-                                        {{ date('F d, Y', strtotime($schedule->date)) }} at {{ date('h:i:a', strtotime($schedule->start_time)) }}
+                                        {{ date('h:i:a', strtotime($schedule->start_time)) }}
                                         -
                                         {{ date('h:i:a', strtotime($schedule->end_time)) }}
                                     </td>

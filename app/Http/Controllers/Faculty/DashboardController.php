@@ -17,18 +17,27 @@ class DashboardController extends Controller
         try {
 
             $filter = ($filter === null) ? 'today' : $filter;
-            if ($filter === 'today') {
-                $schedules = Auth::user()->facultyMember->teacherClasses->where('date', now())->sortBy('date');
-                return view('AMS.backend.faculty-layouts.dashboard.index', compact('schedules', 'filter'));
-            }
-            if ($filter === 'week') {
-                $schedules = Auth::user()->facultyMember->teacherClasses->whereBetween('date', [now()->subDay(), now()->addDays(8)])->sortBy('date');
-                return view('AMS.backend.faculty-layouts.dashboard.index', compact('schedules', 'filter'));
-            }
-            if ($filter === 'month') {
-                $schedules = Auth::user()->facultyMember->teacherClasses->whereBetween('date', [now()->startOfMonth()->subDay(), now()->endOfMonth()->addDay()])->sortBy('date');
-                return view('AMS.backend.faculty-layouts.dashboard.index', compact('schedules', 'filter'));
-            }
+
+            $schedules = Auth::user()->facultyMember->teacherClasses()->whereHas('scheduleDates', function ($query) use ($filter) {
+                switch ($filter) {
+                    case 'today':
+                        $query->whereDate('schedule_dates.date', now()->format('Y-m-d'));
+                        break;
+                    case 'week':
+                        $query->whereBetween('schedule_dates.date', [
+                            now()->startOfWeek()->subDay(),
+                            now()->endOfWeek()->addDay(),
+                        ]);
+                        break;
+                    case 'month':
+                        $query->whereBetween('schedule_dates.date', [
+                            now()->startOfMonth()->subDay(),
+                            now()->endOfMonth()->addDay(),
+                        ]);
+                        break;
+                }
+            })->get();
+            return view('AMS.backend.faculty-layouts.dashboard.index', compact('schedules', 'filter'));
             dd('Invalid filter.');
         } catch (\Throwable $th) {
             return redirect()->back()->with('errorAlert', $th->getMessage());

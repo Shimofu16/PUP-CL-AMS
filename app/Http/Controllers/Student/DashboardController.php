@@ -4,17 +4,18 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index($filter = null)
+    public function index()
     {
-        $filter = $filter ? $filter : 'today';
-        $schedules = auth()->user()->student->getScheduleBy($filter);
-        return view('AMS.backend.student-layouts.dashboard.index', compact('schedules', 'filter'));
+        $schedules = Auth::user()->student->section->schedules()->get();
+
+        return view('AMS.backend.student-layouts.dashboard.index', compact('schedules'));
     }
 
     /**

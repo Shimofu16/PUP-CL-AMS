@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\AttendanceLog;
 use App\Models\Course;
+use App\Models\ScheduleDate;
 use App\Models\SchoolYear;
 use App\Models\Semester;
 use App\Models\TeacherClass;
@@ -89,11 +90,17 @@ class AttendanceLogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($id, $date_id = null)
     {
         try {
             $schedule = TeacherClass::with('attendanceLogs')->findOrFail($id);
-            return view('AMS.backend.admin-layouts.reports.attendance.show', compact('schedule'));
+             $section = $schedule->section->section_name;
+            $subject = $schedule->subject->subject_name;
+            $ScheduleDate = null;
+            if ($date_id) {
+                $ScheduleDate = ScheduleDate::find($date_id); 
+            }
+            return view('AMS.backend.admin-layouts.reports.attendance.show', compact('schedule','section', 'subject','ScheduleDate'));
         } catch (\Throwable $th) {
             return back()->with('errorAlert', $th->getMessage());
         }

@@ -28,7 +28,7 @@
                             </button>
                             @if (Route::is('admin.user.account.faculty.index'))
                                 <a href="{{ route('admin.user.account.faculty.resetAllPassword') }}"
-                                    class="btn btn-outline-maroon">Reset All Password</a>
+                                    class="btn btn-outline-maroon">Force Change Password All User</a>
                             @endif
                             @include('AMS.backend.admin-layouts.user.faculty.modal._add')
                         </div>

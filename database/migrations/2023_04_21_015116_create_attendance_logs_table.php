@@ -23,9 +23,9 @@ return new class extends Migration
             $table->foreign('computer_id')->references('id')->on('computers');
             $table->foreign('sy_id')->references('id')->on('school_years');
             $table->foreign('semester_id')->references('id')->on('semesters');
-            $table->string('status'); // present, absent, late
-            /* $table->dateTime('time_in');
-            $table->dateTime('time_out'); */
+            $table->string('remarks'); // present, absent, late
+            $table->dateTime('time_in');
+            $table->dateTime('time_out')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

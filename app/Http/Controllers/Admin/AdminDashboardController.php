@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-
+use App\Models\AttendanceLog;
+use App\Models\Computer;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminDashboardController extends Controller
@@ -13,7 +15,10 @@ class AdminDashboardController extends Controller
      */
     public function index()
     {
-        return view('AMS.backend.admin-layouts.dashboard.index');
+        $workingComputers = Computer::where('status', 'Working')->count();
+        $activeUsers = User::where('status', 'online')->count();
+        $recentLogs = AttendanceLog::orderBy('created_at', 'desc')->take(5)->get(); 
+        return view('AMS.backend.admin-layouts.dashboard.index', compact('workingComputers','activeUsers', 'recentLogs'));
     }
 
     /**

@@ -17,9 +17,9 @@ class StudentSeeder extends Seeder
         $data = [
             [
                 'student_no' => '2019-00001',
-                'first_name' => 'Johny',
+                'first_name' => 'John',
                 'last_name' => 'Doe',
-                'email' => 'johnydoe@gmail.com',
+                'email' => 'johnstd@gmail.com',
                 'address' => '1234 Street, City, Country',
                 'phone' => '09123456789',
                 'date_of_birth' => '2000-08-16',

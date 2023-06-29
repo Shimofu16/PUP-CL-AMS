@@ -36,11 +36,16 @@
                                             {{ $schedule->teacher->getFullName() }}
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin.report.attendance.show',['id' => $schedule->id]) }}">{{ $schedule->section->section_name}}</a>
+                                            <a
+                                                href="{{ route('admin.report.attendance.show', ['id' => $schedule->id]) }}">{{ $schedule->section->section_name }}</a>
                                         </td>
                                         <td>
-                                            {{ date('M d, Y', strtotime($schedule->date)) }} at
-                                            {{ date('h:i A', strtotime($schedule->start_time)) }} - {{ date('h:i A', strtotime($schedule->end_time)) }}
+                                            {{-- button with eye icon --}}
+                                            <button class="btn btn-sm btn-link text-info" type="button"
+                                                data-bs-toggle="modal" data-bs-target="#view{{ $schedule->id }}">
+                                                <i class="ri-eye-line"></i>
+                                            </button>
+                                            @include('AMS.backend.faculty-layouts.schedule.modal._view')
                                         </td>
                                         <td>
                                             {{ $schedule->subject->subject_name }}

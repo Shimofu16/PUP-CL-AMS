@@ -23,7 +23,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {{ Route::is('faculty.schedule.index') ? 'active' : '' }}"
+                <a class="nav-link {{ Route::is('faculty.schedule.*') ? 'active' : '' }}"
                     href="{{ route('faculty.schedule.index') }}">
                     <i class="ri-calendar-todo-line"></i>
                     <span>Schedule</span>

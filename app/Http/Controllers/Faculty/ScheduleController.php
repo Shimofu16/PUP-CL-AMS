@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Faculty;
 
 use App\Http\Controllers\Controller;
+use App\Models\ScheduleDate;
 use App\Models\ScheduleRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -38,13 +39,17 @@ class ScheduleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, $date_id =null)
     {
         try {
             $schedule = Auth::user()->facultyMember->teacherClasses()->findOrFail($id);
             $section = $schedule->section->section_name;
             $subject = $schedule->subject->subject_name;
-            return view('AMS.backend.faculty-layouts.schedule.show', compact('schedule', 'section', 'subject'));
+            $ScheduleDate = null;
+            if ($date_id) {
+                $ScheduleDate = ScheduleDate::find($date_id); 
+            }
+            return view('AMS.backend.faculty-layouts.schedule.show', compact('schedule', 'section', 'subject','ScheduleDate'));
         } catch (\Throwable $th) {
             return redirect()->back()->with('errorAlert', $th->getMessage());
         }

@@ -44,20 +44,30 @@ class Student extends Model
     }
     public function getScheduleBy($type)
     {
-        switch ($type) {
-            case 'today':
-                /* get schedule for a today */
-                $schedule = $this->section->schedules()->where('date', now()->format('Y-m-d'))->get();
-                break;
-            case 'week':
-                /* get schedule for a week */
-                $schedule = $this->section->schedules()->whereBetween('date', [now()->startOfWeek()->subDay(), now()->endOfWeek()->addDay()])->get();
-                break;
-            case 'month':
-                /* get schedule for a month */
-                $schedule = $this->section->schedules()->whereBetween('date', [now()->startOfMonth()->subDay(), now()->endOfMonth()->addDay()])->get();
-                break;
-        }
+        $query = $this->section->schedules()->whereHas('scheduleDates', function ($query) use ($type) {
+            switch ($type) {
+                case 'today':
+                    $query->whereDate('schedule_dates.date', now()->format('Y-m-d'));
+                    break;
+                case 'week':
+                    $query->whereBetween('schedule_dates.date', [
+                        now()->startOfWeek()->subDay(),
+                        now()->endOfWeek()->addDay(),
+                    ]);
+                    break;
+                case 'month':
+                    $query->whereBetween('schedule_dates.date', [
+                        now()->startOfMonth()->subDay(),
+                        now()->endOfMonth()->addDay(),
+                    ]);
+                    break;
+            }
+        });
+        
+        $schedule = $query->get();
+        
+        
+
         if ($schedule) {
             return $schedule;
         }

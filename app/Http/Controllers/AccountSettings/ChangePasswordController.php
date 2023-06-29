@@ -61,7 +61,9 @@ class ChangePasswordController extends Controller
             ]);
 
             $user = auth()->user();
-
+            if ($user->force_change_password) {
+                $user->force_change_password = false;
+            }
             if (!Hash::check($request->current_password, $user->password)) {
                 return redirect()->back()->with('error', 'Current password does not match!');
             }

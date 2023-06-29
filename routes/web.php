@@ -105,7 +105,7 @@ Route::middleware(['auth', 'alert', 'checkStatus', 'isAdmin'])->prefix('admin')-
         Route::prefix('attendance')->name('attendance.')->controller(AttendanceLogController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/charts', 'charts')->name('charts');
-            Route::get('/{id}', 'show')->name('show');
+            Route::get('/{id?}/{date_id?}', 'show')->name('show');
             Route::post('/store', 'store')->name('store');
             Route::put('/{id}/edit', 'edit')->name('edit');
             Route::put('/{id}/update', 'update')->name('update');
@@ -262,7 +262,7 @@ Route::middleware(['auth', 'alert', 'checkStatus', 'isFaculty'])->prefix('facult
     /* SCHEDULE */
     Route::prefix('schedule')->name('schedule.')->controller(FacultyScheduleController::class)->group(function () {
         Route::get('/', 'index')->name('index');
-        Route::get('/{id}', 'show')->name('show');
+        Route::get('/{id?}/{date_id?}', 'show')->name('show');
         Route::post('/store', 'store')->name('store');
         Route::put('/{id}/edit', 'edit')->name('edit');
         Route::put('/{id}/update', 'update')->name('update');

@@ -188,7 +188,7 @@ class FacultyMemberController extends Controller
             $users = User::where('faculty_member_id', '!=', null)->get();
             foreach ($users as $user) {
                 $user->update([
-                    'password' => Hash::make('PUPCPassword'),
+                    'force_change_password' => true,
                 ]);
             }
             return back()->with('successToast', 'All user password successfully reset!');
