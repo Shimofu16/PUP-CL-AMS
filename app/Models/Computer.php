@@ -62,7 +62,10 @@ class Computer extends Model
     public function isActive(){
         /* check if there is a student using this computer */
         /* get attendance logs today */
-        $latestAttendanceLog = $this->attendanceLogs()->whereDate('created_at', today())->orderBy('id', 'desc')->first();
+        $latestAttendanceLog = $this->attendanceLogs()
+        ->whereDate('created_at', today())
+        ->where('time_out', '=', null)
+        ->first();
         if($latestAttendanceLog){
             return true;
         }

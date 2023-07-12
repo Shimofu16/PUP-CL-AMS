@@ -16,27 +16,7 @@ class DashboardController extends Controller
     {
         try {
 
-            $filter = ($filter === null) ? 'today' : $filter;
-
-            $schedules = Auth::user()->facultyMember->teacherClasses()->whereHas('scheduleDates', function ($query) use ($filter) {
-                switch ($filter) {
-                    case 'today':
-                        $query->whereDate('schedule_dates.date', now()->format('Y-m-d'));
-                        break;
-                    case 'week':
-                        $query->whereBetween('schedule_dates.date', [
-                            now()->startOfWeek()->subDay(),
-                            now()->endOfWeek()->addDay(),
-                        ]);
-                        break;
-                    case 'month':
-                        $query->whereBetween('schedule_dates.date', [
-                            now()->startOfMonth()->subDay(),
-                            now()->endOfMonth()->addDay(),
-                        ]);
-                        break;
-                }
-            })->get();
+            $schedules = Auth::user()->facultyMember->teacherClasses()->get();
             return view('AMS.backend.faculty-layouts.dashboard.index', compact('schedules', 'filter'));
             dd('Invalid filter.');
         } catch (\Throwable $th) {

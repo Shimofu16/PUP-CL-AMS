@@ -39,70 +39,70 @@ class ScheduleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, $teacher_class_id)
     {
         try {
-            $teacher_class_id =  TeacherClass::create([
-                'teacher_id' => $request->teacher_id,
-                'subject_id' => $request->subject_id,
-                'section_id' => $request->section_id,
-                'day' => $request->day,
-                'start_date' => $request->start_date,
-                'end_date' => $request->end_date,
-                'start_time' => $request->start_time,
-                'end_time' => $request->end_time,
-                'sy_id' => SchoolYear::where('is_active', 1)->first()->id,
-                'semester_id' => $request->semester_id,
-            ])->id;
+            $validatedData = $request->validate([
+                'start_time' => 'required',
+                'end_time' => 'required',
+                'date' => 'required',
+            ]);
+            $key = 'successToast';
+            $message = 'Schedule successfully added!';
+            $sy = SchoolYear::where('is_active', 1)->first();
+            $scheduleDates = ScheduleDate::with('schedule')
+            ->whereHas('schedule', function ($query) use ($sy) {
+                $query->where('sy_id', $sy->id)
+                    ->where('semester_id', $sy->semester_id);
+            })
+            ->whereDate('date', $request->date)
+            ->where(function ($query) use ($validatedData) {
+                $query->where('start_time', '<=', $validatedData['start_time'])
+                    ->where('end_time', '>=', $validatedData['start_time'])
+                    ->orWhere('start_time', '<=', $validatedData['end_time'])
+                    ->where('end_time', '>=', $validatedData['end_time'])
+                    ->orWhere('start_time', '>=', $validatedData['start_time'])
+                    ->where('end_time', '<=', $validatedData['end_time']);
+            })
+            ->get();
 
-            $dates = $this->getDates($request->start_date, $request->end_date, $request->day);
-            foreach ($dates as $date) {
+            if ($scheduleDates) {
+                $message = 'There is a conflict on Time for date ' . date('F d, Y', strtotime($request->date));
+                $key = 'errorAlert';
+            } else {
                 ScheduleDate::create([
                     'teacher_class_id' => $teacher_class_id,
-                    'date' => $date,
+                    'date' =>  $request->date,
+                    'start_time' => $validatedData['start_time'],
+                    'end_time' => $validatedData['end_time'],
                 ]);
             }
-            return redirect()->back()->with('successToast', 'Schedule Added Successfully!');
+            return redirect()->back()->with($key, $message);
         } catch (\Throwable $th) {
             dd($th->getMessage());
             return redirect()->back()->with('errorAlert', $th->getMessage());
         }
     }
-    private function getDates($start_date, $end_date, $day)
-    {
-        $dates = [];
-        $start_date = new \DateTime($start_date);
-        $end_date = new \DateTime($end_date);
-        $interval = \DateInterval::createFromDateString('1 day');
-        $period = new \DatePeriod($start_date, $interval, $end_date);
-        foreach ($period as $dt) {
-            if ($dt->format("l") === $day) {
-                $dates[] = $dt->format("Y-m-d");
-            }
-        }
-        return $dates;
-    }
+
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        try {
-            $schedule = TeacherClass::find($id);
-            $dates = ScheduleDate::where('teacher_class_id', $id)->get();
-            return view('AMS.backend.admin-layouts.academics.schedule.show', compact('schedule', 'dates'));
-        } catch (\Throwable $th) {
-            return redirect()->back()->with('errorAlert', $th->getMessage());
-        }
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        try {
+            $schedule = TeacherClass::find($id);
+            return view('AMS.backend.admin-layouts.academics.schedule.edit', compact('schedule'));
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('errorAlert', $th->getMessage());
+        }
     }
 
     /**
@@ -111,11 +111,12 @@ class ScheduleController extends Controller
     public function update(Request $request, string $id)
     {
         try {
-            $schedule = TeacherClass::find($id);
-            $date_id = $request->date_id;
-            $date = ScheduleDate::find($date_id);
-            $date->date = $request->new_date;
-            $date->save();
+            $date = ScheduleDate::find($id);
+            $date->update([
+                'start_time' => $request->start_time,
+                'end_time' => $request->end_time,
+                'date' => $request->date,
+            ]);
             return redirect()->back()->with('successToast', 'Schedule Updated Successfully!');
         } catch (\Throwable $th) {
             return redirect()->back()->with('errorAlert', $th->getMessage());
@@ -128,7 +129,8 @@ class ScheduleController extends Controller
     public function destroy(string $id)
     {
         try {
-            TeacherClass::find($id)->delete();
+            $date = ScheduleDate::find($id);
+            $date->delete();
             return redirect()->back()->with('successToast', 'Schedule Deleted Successfully!');
         } catch (\Throwable $th) {
             return redirect()->back()->with('errorAlert', $th->getMessage());

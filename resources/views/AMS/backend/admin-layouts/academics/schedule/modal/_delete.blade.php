@@ -1,4 +1,4 @@
-<div class="modal fade" id="delete{{ $schedule->id }}" tabindex="-1">
+<div class="modal fade" id="delete{{ $date->id }}" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header bg-danger">
@@ -9,7 +9,7 @@
                 Do you want to delete this data?
             </div>
             <div class="modal-footer">
-                <form action="{{ route('admin.academic.schedule.destroy', ['id' => $schedule->id]) }}" method="POST">
+                <form action="{{ route('admin.academic.schedule.destroy', ['id' => $date->id]) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

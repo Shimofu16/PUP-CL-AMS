@@ -55,6 +55,15 @@ class TeacherClass extends Model
         return $this->hasMany(ScheduleDate::class, 'teacher_class_id');
     }
 
+    public function checkIfTeacherUsingComLab($teacher_class_id)
+    {
+        return $this->attendanceLogs()
+            ->where('teacher_class_id', $teacher_class_id )
+            ->where('faculty_member_id', '!=' ,null )
+            ->where('time_out', '=', null)
+            ->whereDate('created_at', now())
+            ->first() ? true : false;
+    }
     public function checkIfStudentAlreadyHasAttendance()
     {
         return $this->attendanceLogs()
@@ -85,7 +94,11 @@ class TeacherClass extends Model
     }
     public function getLogsByDate($date)
     {
-        return $this->attendanceLogs()->whereDate('created_at', $date)->get();
+        return $this->attendanceLogs()->where('student_id','!=',null)->whereDate('created_at', $date)->get();
+    }
+    public function getTime()
+    {
+        return $this->scheduleDates()->whereDate('date', now())->first();
     }
     public function getScheduledDates()
     {

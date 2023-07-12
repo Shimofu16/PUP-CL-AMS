@@ -64,8 +64,8 @@ Route::middleware(['auth', 'alert', 'checkStatus', 'isAdmin'])->prefix('admin')-
         Route::prefix('schedule')->name('schedule.')->controller(ScheduleController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/{id}', 'show')->name('show');
-            Route::post('/store', 'store')->name('store');
-            Route::put('/{id}/edit', 'edit')->name('edit');
+            Route::post('/store/{id}', 'store')->name('store');
+            Route::get('/{id}/edit', 'edit')->name('edit');
             Route::put('/{id}/update', 'update')->name('update');
             Route::delete('/{id}/destroy', 'destroy')->name('destroy');
         });
@@ -265,7 +265,7 @@ Route::middleware(['auth', 'alert', 'checkStatus', 'isFaculty'])->prefix('facult
         Route::get('/{id?}/{date_id?}', 'show')->name('show');
         Route::post('/store', 'store')->name('store');
         Route::put('/{id}/edit', 'edit')->name('edit');
-        Route::put('/{id}/update', 'update')->name('update');
+        Route::put('/{type}/{id}/update', 'update')->name('update');
         Route::delete('/{id}/destroy', 'destroy')->name('destroy');
     });
 

@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('teacher_class_id');
             $table->date('date');
+            $table->boolean('isAddedOrRescheduled')->default(0);
+            $table->time('start_time');
+            $table->time('end_time');
             $table->foreign('teacher_class_id')->references('id')->on('teacher_classes')->onDelete('cascade');
             $table->timestamps();
         });

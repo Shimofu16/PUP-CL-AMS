@@ -14,7 +14,8 @@
                         <h3 class="text-maroon">@yield('page-title')</h3>
                         <button class="btn btn-outline-maroon" data-bs-toggle="modal" data-bs-target="#add">Add
                             Schedule</button>
-                        @include('AMS.backend.admin-layouts.academics.schedule.modal._add')
+                    @include('AMS.backend.admin-layouts.academics.schedule.modal._add')
+
                     </div>
                     <div class="card-body">
 
@@ -25,9 +26,8 @@
                                     <th scope="col">Teacher</th>
                                     <th scope="col">Subject</th>
                                     <th scope="col">Section</th>
-                                    <th scope="col">Date</th>
+                                    <th scope="col">Dates</th>
                                     <th scope="col">Semester</th>
-                                    <th scope="col" class="text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,7 +46,7 @@
 
                                         <td>
                                             <a class="btn btn-link text-info px-3 mb-0"
-                                                href="{{ route('admin.academic.schedule.show', ['id' => $schedule->id]) }}">
+                                            href="{{ route('admin.academic.schedule.edit',['id' => $schedule->id]) }}">
                                                 <i class="ri-eye-line text-info me-2" aria-hidden="true"></i>
                                             </a>
 
@@ -54,22 +54,6 @@
 
                                         <td>
                                             {{ $schedule->semester->name }}
-                                        </td>
-                                        <td>
-                                            <div class="d-flex justify-content-center px-2 py-1">
-                                                {{--  <button class="btn btn-link text-primary px-3 mb-0" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#edit{{ $schedule->id }}">
-                                                    <i class="ri-edit-line text-primary me-2" aria-hidden="true""></i>
-                                                </button> --}}
-                                                <button class="btn btn-link text-danger px-3 mb-0" type="button"
-                                                    data-bs-toggle="modal" data-bs-target="#delete{{ $schedule->id }}">
-                                                    <i class="ri-delete-bin-6-line text-danger me-2" aria-hidden="true"></i>
-                                                </button>
-                                                @include('AMS.backend.admin-layouts.academics.schedule.modal._delete')
-
-                                                @include('AMS.backend.admin-layouts.academics.schedule.modal._edit')
-
-                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

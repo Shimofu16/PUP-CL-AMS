@@ -2,7 +2,9 @@
 
 @section('page-title')
     {{ $section }} - {{ $subject }} @if ($ScheduleDate)
-        {{ date('F d, Y', strtotime($ScheduleDate->date)) }}
+        ({{ date('F d, Y', strtotime($ScheduleDate->date)) }})
+    @else
+        (No Schedule for today)
     @endif
 @endsection
 
@@ -16,10 +18,34 @@
                         <h3 class="text-maroon">@yield('page-title')</h3>
                         {{-- back button --}}
                         <div class="d-flex">
-                            <a href="{{ route('faculty.schedule.index') }}" class="btn btn-outline-maroon me-1">
+                            <a href="{{ route('faculty.schedule.index') }}" class="btn btn-maroon me-1">
                                 <i class="ri-arrow-go-back-line"></i>
                                 Back
                             </a>
+                            @if (Auth::user()->facultyMember->checkIfTeacherAlreadyTimeIn())
+                                <form
+                                    action="{{ route('faculty.schedule.update', ['type' => 'out', 'id' => $ScheduleDate->id]) }}"
+                                    method="post">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit" class="btn btn-maroon me-1">
+                                        Time out
+                                    </button>
+                                </form>
+                            @else
+                                @if ($ScheduleDate)
+                                    <form
+                                        action="{{ route('faculty.schedule.update', ['type' => 'in', 'id' => $ScheduleDate->id]) }}"
+                                        method="post">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="btn btn-maroon me-1">
+                                            Time in
+                                        </button>
+                                    </form>
+                                @else
+                                @endif
+                            @endif
                             <div class="dropdown">
                                 <button class="btn btn-outline-maroon dropdown-toggle" type="button"
                                     id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -27,7 +53,7 @@
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     @foreach ($schedule->scheduleDates as $schedule_date)
-                                        <li><a class="dropdown-item"
+                                        <li><a class="dropdown-item {{ $ScheduleDate && $ScheduleDate->id == $schedule_date->id ? 'active' : '' }}"
                                                 href="{{ route('faculty.schedule.show', ['id' => $schedule->id, 'date_id' => $schedule_date->id]) }}">{{ date('F d, Y', strtotime($schedule_date->date)) }}</a>
                                         </li>
                                     @endforeach
@@ -59,7 +85,12 @@
                             </thead>
                             <tbody>
                                 @php
-                                    $logs = $ScheduleDate ? $schedule->getLogsByDate($ScheduleDate->date) : $schedule->attendanceLogs;
+                                    $logs = $ScheduleDate
+                                        ? $schedule->getLogsByDate($ScheduleDate->date)
+                                        : $schedule
+                                            ->attendanceLogs()
+                                            ->where('student_id', '!=', null)
+                                            ->get();
                                 @endphp
                                 @foreach ($logs as $log)
                                     <tr>

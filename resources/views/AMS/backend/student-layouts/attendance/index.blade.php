@@ -35,9 +35,12 @@
                                         {{ $schedule->teacher->getFullName() }}
                                     </td>
                                     <td>
-                                        {{ date('h:i:a', strtotime($schedule->start_time)) }}
+                                        @php
+                                            $time = $schedule->getTime();
+                                        @endphp
+                                        {{ date('h:i:a', strtotime($time->start_time)) }}
                                         -
-                                        {{ date('h:i:a', strtotime($schedule->end_time)) }}
+                                        {{ date('h:i:a', strtotime($time->end_time)) }}
                                     </td>
                                     <td>
                                         <div class="d-flex justify-content-center px-2 py-1">

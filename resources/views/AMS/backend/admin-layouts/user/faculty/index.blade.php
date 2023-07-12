@@ -66,7 +66,7 @@
                                                     <span class="badge bg-success">{{ $user->status }}</span>
                                                 @endif
                                                 @if ($user->status == 'offline')
-                                                    <span class="badge bg-danger">{{ $user->status }}</span>
+                                                    <span class="badge bg-danger">Last active {{ $user->updated_at->diffForHumans(); }}</span>
                                                 @endif
                                             </td>
                                             <td>

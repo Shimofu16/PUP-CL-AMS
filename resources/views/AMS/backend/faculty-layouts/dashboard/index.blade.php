@@ -7,7 +7,7 @@
 @section('contents')
     <section class="section">
         <div class="row">
-            <div class="col-6">
+            <div class="col-12">
                 <div class="card">
 
                     <div class="card-header">
@@ -98,11 +98,17 @@
                 events: [
                     @foreach ($schedules as $schedule)
                         @foreach ($schedule->scheduleDates as $schedule_date)
+                        @php
+                        $color = $schedule->color;
+                            if ($schedule->checkIfTeacherUsingComLab($schedule_date->id)) {
+                                $color = "#444";
+                            }
+                        @endphp
                             {
                                 title: '{{ $schedule->subject->subject_name }}',
                                 start: '{{ $schedule_date->date }}',
                                 end: '{{ $schedule_date->date }}',
-                                color: '#378006',
+                                color: '{{  $color }}', // Assign a unique color for each subject
                                 textColor: 'white'
                             },
                         @endforeach

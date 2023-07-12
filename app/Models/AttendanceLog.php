@@ -26,6 +26,10 @@ class AttendanceLog extends Model
     {
         return $this->belongsTo(Student::class, 'student_id');
     }
+    public function teacher()
+    {
+        return $this->belongsTo(FacultyMember::class, 'faculty_member_id');
+    }
     public function computer()
     {
         return $this->belongsTo(Computer::class, 'computer_id','id')->withDefault([
