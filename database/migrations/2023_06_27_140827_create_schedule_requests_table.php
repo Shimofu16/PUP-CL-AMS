@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('schedule_requests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('teacher_class_id')->constrained('teacher_classes');
+            $table->unsignedBigInteger('date_id');
+            $table->foreign('date_id')->references('id')->on('dates')->onDelete('cascade');
             $table->string('date');
             $table->time('start_time');
             $table->time('end_time');

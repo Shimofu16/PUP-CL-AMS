@@ -2,8 +2,10 @@
 
 @section('page-title')
     {{ $section }} - {{ $subject }} @if ($ScheduleDate)
-        {{ date('F d, Y', strtotime($ScheduleDate->date)) }}
-    @endif
+    ({{ date('F d, Y', strtotime($ScheduleDate->date)) }})
+@else
+    (No Schedule for today)
+@endif
 @endsection
 
 @section('contents')
@@ -27,7 +29,7 @@
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                     @foreach ($schedule->scheduleDates as $schedule_date)
-                                        <li><a class="dropdown-item"
+                                        <li><a class="dropdown-item {{ $ScheduleDate && $ScheduleDate->id == $schedule_date->id ? 'active' : '' }}"
                                                 href="{{ route('admin.report.attendance.show', ['id' => $schedule->id, 'date_id' => $schedule_date->id]) }}">{{ date('F d, Y', strtotime($schedule_date->date)) }}</a>
                                         </li>
                                     @endforeach
@@ -36,7 +38,6 @@
                                             class="dropdown-item">
                                             <div class="d-flex align-items-center">
                                                 <span class="me-1">Reset filter</span> <i class="ri-refresh-line"></i>
-
                                             </div>
                                         </a>
                                     </li>
@@ -59,7 +60,7 @@
                             </thead>
                             <tbody>
                                 @php
-                                    $logs = $ScheduleDate ? $schedule->getLogsByDate($ScheduleDate->date) : $schedule->attendanceLogs;
+                                    $logs = $ScheduleDate ? $schedule->getLogsByDate($ScheduleDate->date) : $schedule->attendanceLogs()->where('student_id','!=',null)->get();
                                 @endphp
                                 @foreach ($logs as $log)
                                     <tr>

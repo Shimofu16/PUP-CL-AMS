@@ -17,7 +17,7 @@ class AdminDashboardController extends Controller
     {
         $workingComputers = Computer::where('status', 'Working')->count();
         $activeUsers = User::where('status', 'online')->count();
-        $recentLogs = AttendanceLog::orderBy('created_at', 'desc')->take(5)->get(); 
+        $recentLogs = AttendanceLog::where('student_id','!=', null)->orderBy('created_at', 'desc')->take(5)->get();
         return view('AMS.backend.admin-layouts.dashboard.index', compact('workingComputers','activeUsers', 'recentLogs'));
     }
 
