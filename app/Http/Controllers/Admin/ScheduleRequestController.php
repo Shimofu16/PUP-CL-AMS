@@ -13,7 +13,7 @@ class ScheduleRequestController extends Controller
      */
     public function index()
     {
-        $requests = ScheduleRequest::with('teacherClass')->where('status', 'pending')->get();
+        $requests = ScheduleRequest::with('scheduleDate')->where('status', 'pending')->get();
         return view('AMS.backend.admin-layouts.reports.schedule.index', compact('requests'));
     }
 

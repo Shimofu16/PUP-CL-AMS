@@ -12,6 +12,7 @@
                         <tr>
                             <th scope="col">Date</th>
                             <th scope="col">Time</th>
+                            <th scope="col">Request Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -22,6 +23,19 @@
                                 </td>
                                 <td>
                                         {{ date('h:i A', strtotime($schedule->start_time)) }} - {{ date('h:i A', strtotime($schedule->end_time)) }}
+                                </td>
+                                <td>
+                                    @if ($schedule_date->request !== null)
+                                        @if ($schedule_date->request->status === 'pending')
+                                            <span class="badge bg-warning">Pending</span>
+                                        @elseif($schedule_date->request->status === 'approved')
+                                            <span class="badge bg-success">Approved</span>
+                                        @else
+                                            <span class="badge bg-danger">Rejected</span>
+                                        @endif
+                                    @else
+                                        
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

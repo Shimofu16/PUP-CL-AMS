@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('computer_id')->references('id')->on('computers');
             $table->string('status'); // Available, Not Available, Broken
+            $table->string('response'); // Available, Not Available, Broken
             $table->string('description');
             $table->timestamp('checked_at');
             $table->timestamps();

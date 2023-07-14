@@ -11,12 +11,11 @@ class ScheduleRequest extends Model
 
     protected $guarded = [];
 
-    public function teacherClass()
+    public function scheduleDate()
     {
-        return $this->belongsTo(TeacherClass::class, 'teacher_class_id', 'id')->withDefault([
-            'status' => 'No Request',
-        ]);
+        return $this->belongsTo(ScheduleDate::class, 'date_id', 'id')->withDefault();
     }
+
     /* get the latest request of specific teacher_class_id */
     public function getLatestRequest()
     {

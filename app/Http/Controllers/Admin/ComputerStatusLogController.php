@@ -52,9 +52,18 @@ class ComputerStatusLogController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ComputerStatusLog $computerStatusLog)
+    public function update(Request $request, $id)
     {
-        //
+        try {
+            $status = ComputerStatusLog::findOrFail($id);
+            $status->update([
+                'status' => $request->status,
+            ]);
+
+            return redirect()->back()->with('successToast', 'Status updated successfully!');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('errorAlert', 'Something went wrong!');
+        }
     }
 
     /**

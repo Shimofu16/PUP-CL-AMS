@@ -24,6 +24,7 @@
                                     <th scope="col">Date Checked</th>
                                     <th scope="col">Description</th>
                                     <th scope="col">Reported By</th>
+                                    <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,7 +40,7 @@
                                                 <span class="badge bg-warning">{{ $report->status }}</span>
                                             @endif
                                         </td>
-                                        <td>{{ date('M d, Y', strtotime($report->checked_at)) }}</td>
+                                        <td>{{ date('M d, Y', strtotime($report->checked_at)) }} at {{ date('h:i A', strtotime($report->checked_at)) }}</td>
                                         <td>
                                             <button class="btn btn-link text-info" type="button" data-bs-toggle="modal"
                                                 data-bs-target="#description{{ $report->id }}">
@@ -49,6 +50,19 @@
                                             @include('AMS.backend.admin-layouts.reports.computer.modal._description')
                                         </td>
                                         <td>{{ $report->user->facultyMember->getFullName() }}</td>
+                                        <td>
+                                            <div class="">
+
+                                                <button
+                                                    class="btn btn-link text-primary"
+                                                    type="button" data-bs-toggle="modal"
+                                                    data-bs-target="#edit{{ $report->id }}">
+                                                    <i class="ri-edit-line text-primary me-2" aria-hidden="true"></i>
+                                                    Edit
+                                                </button>
+                                                @include('AMS.backend.admin-layouts.reports.computer.modal._edit')
+                                            </div>
+                                        </td>
 
                                     </tr>
                                 @endforeach

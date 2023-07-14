@@ -264,6 +264,7 @@ Route::middleware(['auth', 'alert', 'checkStatus', 'isFaculty'])->prefix('facult
         Route::get('/', 'index')->name('index');
         Route::get('/{id?}/{date_id?}', 'show')->name('show');
         Route::post('/store', 'store')->name('store');
+        Route::post('/reschedule', 'reschedule')->name('reschedule');
         Route::put('/{id}/edit', 'edit')->name('edit');
         Route::put('/{type}/{id}/update', 'update')->name('update');
         Route::delete('/{id}/destroy', 'destroy')->name('destroy');

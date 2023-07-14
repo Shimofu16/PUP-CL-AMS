@@ -50,18 +50,15 @@
 
                                         <td>
                                             <div class="d-flex justify-content-center px-2 py-1">
-                                                {{-- @php
-                                                    $isPast = strtotime($schedule->date) < strtotime(date('Y-m-d')) ? true : false;
-                                                @endphp
 
                                                 <button
-                                                    class="btn btn-link text-primary px-3 mb-0 {{ $isPast? 'disabled': '' }}"
+                                                    class="btn btn-link text-primary px-3 mb-0"
                                                     type="button" data-bs-toggle="modal"
                                                     data-bs-target="#edit{{ $schedule->id }}">
                                                     <i class="ri-edit-line text-primary me-2" aria-hidden="true"></i>
                                                     Reschedule
-                                                </button> --}}
-
+                                                </button>
+                                                @include('AMS.backend.faculty-layouts.schedule.modal._edit')
 
                                             </div>
                                         </td>

@@ -30,16 +30,16 @@
                                 @foreach ($requests as $request)
                                     <tr>
                                         <td>
-                                            {{ $request->teacherClass->teacher->getFullName() }} <br>
-                                            {{ $request->teacherClass->subject->subject_name }}
+                                            {{ $request->scheduleDate->schedule->teacher->getFullName() }} <br>
+                                            {{ $request->scheduleDate->schedule->subject->subject_name }}
                                         </td>
 
                                         <td>
                                             <div class="d-flex flex-column">
                                                 <span>
-                                                    {{ date('F d, Y',strtotime($request->teacherClass->date)) }}
+                                                    {{ date('F d, Y',strtotime($request->scheduleDate->date)) }}
                                                 </span>
-                                                <span>At {{ date('h:i A', strtotime($request->teacherClass->start_time)) }} - {{ date('h:i A', strtotime($request->teacherClass->end_time)) }}</span>
+                                                <span>At {{ date('h:i A', strtotime($request->scheduleDate->start_time)) }} - {{ date('h:i A', strtotime($request->scheduleDate->end_time)) }}</span>
                                             </div>
 
                                         </td>
@@ -47,7 +47,7 @@
                                         <td>
                                             <div class="d-flex flex-column">
                                                 <span>
-                                                    {{ date('F d, Y',strtotime($request->date)) }}
+                                                    {{ date('F d, Y',strtotime($request->new_date)) }}
                                                 </span>
 
 

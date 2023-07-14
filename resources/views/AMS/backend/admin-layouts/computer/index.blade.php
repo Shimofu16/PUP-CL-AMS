@@ -50,10 +50,12 @@
                                             @include('AMS.backend.admin-layouts.computer.modal._specs')
                                         </td>
                                         <td>
-                                            @if ($computer->getStatus() === true)
+                                            @if ($computer->getStatus() === "Working")
                                                 <span class="badge bg-success">Working</span>
-                                            @elseif ($computer->getStatus() === false)
+                                            @elseif ($computer->getStatus() === "Not Working")
                                                 <span class="badge bg-danger">Not Working</span>
+                                            @elseif ($computer->getStatus() === "Undermaintenance")
+                                                <span class="badge bg-danger">Undermaintenance</span>
                                             @else
                                                 <span class="badge bg-warning">No data</span>
                                             @endif

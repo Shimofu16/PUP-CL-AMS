@@ -41,7 +41,7 @@ class ScheduleController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id, $date_id =null)
+    public function show(string $id, $date_id = null)
     {
         try {
             $schedule = Auth::user()->facultyMember->teacherClasses()->findOrFail($id);
@@ -52,9 +52,8 @@ class ScheduleController extends Controller
             }
             $ScheduleDate = ScheduleDate::whereDate('date', now())->first();
             if ($ScheduleDate) {
-                
             }
-            return view('AMS.backend.faculty-layouts.schedule.show', compact('schedule', 'section', 'subject','ScheduleDate'));
+            return view('AMS.backend.faculty-layouts.schedule.show', compact('schedule', 'section', 'subject', 'ScheduleDate'));
         } catch (\Throwable $th) {
             return redirect()->back()->with('errorAlert', $th->getMessage());
         }
@@ -73,8 +72,8 @@ class ScheduleController extends Controller
      */
     public function update($type, string $id)
     {
-        try{
-            $sy = SchoolYear::where('is_active',1)->first();
+        try {
+            $sy = SchoolYear::where('is_active', 1)->first();
             $schedule = ScheduleDate::findOrFail($id);
             if ($type === "in") {
                 AttendanceLog::create([
@@ -85,7 +84,7 @@ class ScheduleController extends Controller
                     'remarks' => 'present',
                     'time_in' => now()
                 ]);
-            }elseif($type ==="out"){
+            } elseif ($type === "out") {
                 $log = AttendanceLog::where('teacher_class_id', $schedule->teacher_class_id)
                     ->where('faculty_member_id', Auth::user()->faculty_member_id)
                     ->where('sy_id', $sy->id)
@@ -96,7 +95,7 @@ class ScheduleController extends Controller
                     'time_out' => now()
                 ]);
             }
-            return redirect()->back()->with('successToast', 'Successfully Taken an attendance for '. $schedule->schedule->subject->name);
+            return redirect()->back()->with('successToast', 'Successfully Taken an attendance for ' . $schedule->schedule->subject->name);
         } catch (\Throwable $th) {
             return redirect()->back()->with('errorAlert', $th->getMessage());
         }
@@ -141,8 +140,28 @@ class ScheduleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function reschedule(Request $request)
     {
-        //
+        try {
+            // dd($request->all());
+            if ($request->has('reason') && $request->reason != null) {
+                ScheduleRequest::create([
+                    'date_id' => $request->date_id,
+                    'new_date' => $request->new_date,
+                    'start_time' => $request->start_time,
+                    'end_time' => $request->end_time,
+                    'reason' => $request->reason,
+                ]);
+            }
+            ScheduleRequest::create([
+                'date_id' => $request->date_id,
+                'new_date' => $request->new_date,
+                'start_time' => $request->start_time,
+                'end_time' => $request->end_time,
+            ]);
+            return redirect()->back()->with('successToast', 'Request sent');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('errorAlert', $th->getMessage());
+        }
     }
 }

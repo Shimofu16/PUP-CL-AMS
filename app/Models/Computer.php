@@ -27,37 +27,20 @@ class Computer extends Model
         return $this->hasMany(AttendanceLog::class, 'computer_id');
     }
 
-    public function computerStatusLogs()
+    public function computerStatusLog()
     {
-        return $this->hasMany(ComputerStatusLog::class, 'computer_id');
+        return $this->hasOne(ComputerStatusLog::class, 'computer_id');
     }
 
     public function getStatus()
-    {
+    {   
 
         // Retrieve the latest computer status log (ordered by id in descending order)
-        $latestComputerStatusLog = $this->computerStatusLogs()->orderBy('id', 'desc')->first();
-
-        // Retrieve the last computer status log (ordered by id in ascending order)
-        $lastComputerStatusLog = $this->computerStatusLogs()->orderBy('id', 'asc')->first();
-
-        // Retrieve the latest attendance log (ordered by id in descending order)
-        $latestAttendanceLog = $this->attendanceLogs()->orderBy('id', 'desc')->first();
-
-        // Retrieve the last attendance log (ordered by id in ascending order)
-        $lastAttendanceLog = $this->attendanceLogs()->orderBy('id', 'asc')->first();
-
-        // Determine the computer status based on the latest or last log
-        $computer = $latestComputerStatusLog ?? $lastComputerStatusLog;
-
-        // Determine the attendance status based on the latest or last log
-        $attendance = $latestAttendanceLog ?? $lastAttendanceLog;
-
-        // Determine the overall status based on computer and attendance status
-        $status = $this->status ?? $computer->status ?? $attendance->status ?? 'no data';
-
-        // Return true if the status is "Working", false if "Not Working", or "no data" if none is available
-        return $status == 'Working' ? true : ($status == 'Not Working' ? false : 'no data');
+        $status = $this->computerStatusLog;
+        if ($status) {
+            return $status->status;
+        }
+        return $this->status;
     }
     public function isActive(){
         /* check if there is a student using this computer */
