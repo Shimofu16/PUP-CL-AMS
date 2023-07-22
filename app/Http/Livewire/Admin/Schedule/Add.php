@@ -120,12 +120,18 @@ class Add extends Component
                 })
                 ->whereDate('date', $date)
                 ->where(function ($query) use ($validatedData) {
-                    $query->where('start_time', '<=', $validatedData['start_time'])
-                        ->where('end_time', '>=', $validatedData['start_time'])
-                        ->orWhere('start_time', '<=', $validatedData['end_time'])
-                        ->where('end_time', '>=', $validatedData['end_time'])
-                        ->orWhere('start_time', '>=', $validatedData['start_time'])
-                        ->where('end_time', '<=', $validatedData['end_time']);
+                    $query->where(function ($query) use ($validatedData) {
+                        $query->where('start_time', '<=', $validatedData['start_time'])
+                            ->where('end_time', '>=', $validatedData['start_time']);
+                    })->orWhere(function ($query) use ($validatedData) {
+                        $query->where('start_time', '<=', $validatedData['end_time'])
+                            ->where('end_time', '>=', $validatedData['end_time']);
+                    })->orWhere(function ($query) use ($validatedData) {
+                        $query->where('start_time', '>=', $validatedData['start_time'])
+                            ->where('start_time', '<=', $validatedData['end_time'])
+                            ->orWhere('end_time', '>=', $validatedData['start_time'])
+                            ->where('end_time', '<=', $validatedData['end_time']);
+                    });
                 })
                 ->get();
             if ($scheduleDates->count() > 0) {

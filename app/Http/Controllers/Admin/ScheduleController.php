@@ -57,16 +57,23 @@ class ScheduleController extends Controller
             })
             ->whereDate('date', $request->date)
             ->where(function ($query) use ($validatedData) {
-                $query->where('start_time', '<=', $validatedData['start_time'])
-                    ->where('end_time', '>=', $validatedData['start_time'])
-                    ->orWhere('start_time', '<=', $validatedData['end_time'])
-                    ->where('end_time', '>=', $validatedData['end_time'])
-                    ->orWhere('start_time', '>=', $validatedData['start_time'])
-                    ->where('end_time', '<=', $validatedData['end_time']);
+                $query->where(function ($query) use ($validatedData) {
+                    $query->where('start_time', '<=', $validatedData['start_time'])
+                        ->where('end_time', '>=', $validatedData['start_time']);
+                })->orWhere(function ($query) use ($validatedData) {
+                    $query->where('start_time', '<=', $validatedData['end_time'])
+                        ->where('end_time', '>=', $validatedData['end_time']);
+                })->orWhere(function ($query) use ($validatedData) {
+                    $query->where('start_time', '>=', $validatedData['start_time'])
+                        ->where('start_time', '<=', $validatedData['end_time'])
+                        ->orWhere('end_time', '>=', $validatedData['start_time'])
+                        ->where('end_time', '<=', $validatedData['end_time']);
+                });
             })
             ->get();
 
-            if ($scheduleDates) {
+            // Check if there is a time conflict
+            if ($scheduleDates->count() > 0) {
                 $message = 'There is a conflict on Time for date ' . date('F d, Y', strtotime($request->date));
                 $key = 'errorAlert';
             } else {

@@ -39,7 +39,7 @@
                                     <option selected disabled>Select Computer</option>
                                     @foreach ($computers as $computer)
                                         @if ($computer->getStatus() == 'Working' && !$computer->isActive())
-                                        <option value="{{ $computer->id }}">{{ $computer->computer_name }}</option>
+                                            <option value="{{ $computer->id }}">{{ $computer->computer_name }}</option>
                                         @endif
                                     @endforeach
                                 </select>
